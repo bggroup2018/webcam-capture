@@ -330,7 +330,7 @@ public class Webcam {
 
 			// setup non-blocking configuration
 
-			if (asynchronous = async) {
+			if (asynchronous == async) {
 				if (updater == null) {
 					updater = new WebcamUpdater(this, delayCalculator);
 				}
