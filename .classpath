@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="webcam-capture-addons/webcam-capture-addon-spycam/src/main/java"/>
+	<classpathentry kind="src" path="webcam-capture-addons/webcam-capture-addon-swt/src/main/java"/>
+	<classpathentry kind="src" path="webcam-capture-drivers/driver-ffmpeg-cli/src/example/java"/>
+	<classpathentry kind="src" path="webcam-capture-drivers/driver-ffmpeg-cli/src/main/java"/>
+	<classpathentry kind="src" path="webcam-capture-drivers/driver-fswebcam/src/example/java"/>
+	<classpathentry kind="src" path="webcam-capture-drivers/driver-fswebcam/src/main/java"/>
+	<classpathentry kind="src" path="webcam-capture-drivers/driver-gst1/src/examples/java"/>
+	<classpathentry kind="src" path="webcam-capture-drivers/driver-gst1/src/main/java"/>
+	<classpathentry kind="src" path="webcam-capture-drivers/driver-gstreamer/src/example/java"/>
+	<classpathentry kind="src" path="webcam-capture-drivers/driver-gstreamer/src/main/java"/>
+	<classpathentry kind="src" path="webcam-capture-drivers/driver-ipcam/src/examples/java"/>
+	<classpathentry kind="src" path="webcam-capture-drivers/driver-ipcam/src/main/java"/>
+	<classpathentry kind="src" path="webcam-capture/src/example/java"/>
+	<classpathentry kind="src" path="webcam-capture/src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
