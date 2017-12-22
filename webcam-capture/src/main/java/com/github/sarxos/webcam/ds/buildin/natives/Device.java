@@ -88,13 +88,13 @@ public final class Device extends CPPObject {
 		return this;
 	}
 
-	private native Pointer<Byte> getName();
+	protected native Pointer<Byte> getName();
 
 	public String getNameStr() {
 		return getName().getCString();
 	}
 
-	private native Pointer<Byte> getIdentifier();
+	protected native Pointer<Byte> getIdentifier();
 
 	public String getIdentifierStr() {
 		return getIdentifier().getCString();
