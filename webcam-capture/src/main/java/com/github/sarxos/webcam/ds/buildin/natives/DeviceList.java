@@ -86,9 +86,9 @@ public class DeviceList extends CPPObject {
 		return this;
 	}
 
-	public native int getNumDevices();
+	private native int getNumDevices();
 
-	public native Pointer<Device> getDevice(int i);
+	private native Pointer<Device> getDevice(int i);
 
 	public List<Device> asArrayList() {
 		List<Device> devices = new ArrayList<Device>();

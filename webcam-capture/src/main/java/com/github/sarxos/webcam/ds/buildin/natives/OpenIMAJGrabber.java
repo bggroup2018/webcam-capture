@@ -69,23 +69,23 @@ public class OpenIMAJGrabber extends CPPObject {
 		super(pointer);
 	}
 
-	public native Pointer<DeviceList> getVideoDevices();
+	private native Pointer<DeviceList> getVideoDevices();
 
-	public native Pointer<Byte> getImage();
+	private native Pointer<Byte> getImage();
 
-	public native int nextFrame();
+	private native int nextFrame();
 
-	public native void setTimeout(int timeout);
+	private native void setTimeout(int timeout);
 
-	public native boolean startSession(int width, int height, double reqFPS);
+	private native boolean startSession(int width, int height, double reqFPS);
 
-	public native boolean startSession(int width, int height, double reqFPS, Pointer<Device> devptr);
+	private native boolean startSession(int width, int height, double reqFPS, Pointer<Device> devptr);
 
-	public native void stopSession();
+	private native void stopSession();
 
-	public native int getWidth();
+	private native int getWidth();
 
-	public native int getHeight();
+	private native int getHeight();
 
 	// / C type : void*
 	@Field(0)
