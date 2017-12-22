@@ -1209,11 +1209,13 @@ public class Webcam {
 	 *
 	 * @return Discovery service
 	 */
-	public static synchronized WebcamDiscoveryService getDiscoveryService() {
+	public static  WebcamDiscoveryService getDiscoveryService() {
+		synchronized (Webcam.class) {
+			
 		if (discovery == null) {
 			discovery = new WebcamDiscoveryService(getDriver());
 		}
-		return discovery;
+		return discovery;}
 	}
 
 	/**
