@@ -89,11 +89,13 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 		this.resolution = resolution;
 	}
 
-	private synchronized byte[] readBytes() {
-
+	private  byte[] readBytes() {
+		
 		if (!open.get()) {
 			return null;
 		}
+synchronized (FFmpegCliDevice.class) {
+	
 
 		baos.reset();
 
@@ -127,7 +129,7 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 		}
 
 		return baos.toByteArray();
-
+		}
 	}
 
 	@Override
