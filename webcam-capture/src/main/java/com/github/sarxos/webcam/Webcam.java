@@ -585,6 +585,8 @@ public class Webcam {
 			throw new IllegalStateException("Cannot change resolution when webcam is open, please close it first");
 		}
 
+	
+
 		// check if new resolution is valid
 
 		Dimension[] predefined = getViewSizes();
@@ -593,6 +595,14 @@ public class Webcam {
 		assert predefined != null;
 		assert custom != null;
 
+		isValidAndSet(predefined, custom, size);
+
+		LOG.debug("Setting new resolution {}x{}", size.width, size.height);
+
+		device.setResolution(size);
+	}
+	
+	private static void isValidAndSet(Dimension[] predefined,Dimension[] custom, Dimension size){
 		boolean ok = false;
 		for (Dimension d : predefined) {
 			if (d.width == size.width && d.height == size.height) {
@@ -621,10 +631,6 @@ public class Webcam {
 			}
 			throw new IllegalArgumentException(sb.toString());
 		}
-
-		LOG.debug("Setting new resolution {}x{}", size.width, size.height);
-
-		device.setResolution(size);
 	}
 
 	/**
