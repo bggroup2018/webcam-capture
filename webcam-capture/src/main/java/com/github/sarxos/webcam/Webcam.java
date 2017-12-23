@@ -585,13 +585,6 @@ public class Webcam {
 			throw new IllegalStateException("Cannot change resolution when webcam is open, please close it first");
 		}
 
-		// check if new resolution is the same as current one
-
-		Dimension current = getViewSize();
-		if (current != null && current.width == size.width && current.height == size.height) {
-			return;
-		}
-
 		// check if new resolution is valid
 
 		Dimension[] predefined = getViewSizes();
