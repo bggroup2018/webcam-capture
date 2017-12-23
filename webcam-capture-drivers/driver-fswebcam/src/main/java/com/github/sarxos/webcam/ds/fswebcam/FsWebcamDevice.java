@@ -259,7 +259,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 		//@formatter:off
 		List<String> c = new ArrayList<String>(24);
 		
-		c.add("/usr/bin/fswebcam");
+		c.add("usr/bin/fswebcam");
 		c.add("--skip");						// number of skipped images
 		c.add(String.valueOf(skip));
 		c.add("--frames");						// number of images merged to the single output (default 1)

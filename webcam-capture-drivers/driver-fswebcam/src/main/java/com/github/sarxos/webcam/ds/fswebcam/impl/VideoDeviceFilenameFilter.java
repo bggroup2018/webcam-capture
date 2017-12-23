@@ -6,7 +6,7 @@ import java.io.FilenameFilter;
 
 public class VideoDeviceFilenameFilter implements FilenameFilter {
 
-	private static final File DEV = new File("/dev");
+	private static final File DEV = new File("dev");
 
 	@Override
 	public boolean accept(File dir, String name) {
