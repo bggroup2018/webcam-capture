@@ -107,7 +107,7 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 		}		
 	}
 
-	private synchronized byte[] readBytes() {
+	private byte[] readBytes() {
 		synchronized (this) {
 			if (!open.get()) {
 				return null;

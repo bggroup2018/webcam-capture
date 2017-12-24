@@ -56,18 +56,24 @@ public class WebcamDriverUtils {
 
 			LOG.info("Webcam driver {} has been found", name);
 
-			try {
-				return (WebcamDriver) clazz.newInstance();
-			} catch (InstantiationException e) {
-				throw new RuntimeException(e);
-			} catch (IllegalAccessException e) {
-				throw new RuntimeException(e);
-			}
+			// create new istance 
+			return newIstance(clazz);
 		}
 
 		return null;
 	}
-
+	
+	// create new istance
+	private static WebcamDriver newIstance(Class<?> clazz){
+		try {
+			return (WebcamDriver) clazz.newInstance();
+		} catch (InstantiationException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	/**
 	 * Scans all classes accessible from the context class loader which belong
 	 * to the given package and subpackages.
