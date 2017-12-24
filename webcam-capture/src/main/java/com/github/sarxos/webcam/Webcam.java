@@ -398,27 +398,8 @@ public class Webcam {
 			lock.unlock();
 
 			// notify listeners
-
-			WebcamEvent we = new WebcamEvent(WebcamEventType.CLOSED, this);
-			Iterator<WebcamListener> wli = listeners.iterator();
-			WebcamListener l = null;
-
-			while (wli.hasNext()) {
-				l = wli.next();
-				try {
-					l.webcamClosed(we);
-				} catch (Exception e) {
-					LOG.error(String.format("Notify webcam closed, exception when calling %s listener", l.getClass()), e);
-				}
-			}
-
-			notificator.shutdown();
-			while (!notificator.isTerminated()) {
-				try {
-					notificator.awaitTermination(100, TimeUnit.MILLISECONDS);
-				} catch (InterruptedException e) {
-					return false;
-				}
+			if(notifyListeners()==false){
+				return false;
 			}
 
 			LOG.debug("Webcam {} has been closed", getName());
@@ -428,6 +409,33 @@ public class Webcam {
 		}
 
 		return true;
+	}
+	
+	private boolean notifyListeners(){
+		// notify listeners
+					
+					WebcamEvent we = new WebcamEvent(WebcamEventType.CLOSED, this);
+					Iterator<WebcamListener> wli = listeners.iterator();
+					WebcamListener l = null;
+
+					while (wli.hasNext()) {
+						l = wli.next();
+						try {
+							l.webcamClosed(we);
+						} catch (Exception e) {
+							LOG.error(String.format("Notify webcam closed, exception when calling %s listener", l.getClass()), e);
+						}
+					}
+
+					notificator.shutdown();
+					while (!notificator.isTerminated()) {
+						try {
+							notificator.awaitTermination(100, TimeUnit.MILLISECONDS);
+						} catch (InterruptedException e) {
+							return false;
+						}
+					}
+					return true;
 	}
 
 	/**

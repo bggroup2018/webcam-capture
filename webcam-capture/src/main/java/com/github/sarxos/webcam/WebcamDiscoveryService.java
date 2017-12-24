@@ -108,21 +108,8 @@ public class WebcamDiscoveryService implements Runnable {
 
 				executor.shutdown();
 
-				try {
-
-					executor.awaitTermination(timeout, tunit);
-
-					if (future.isDone()) {
-						webcams = future.get();
-					} else {
-						future.cancel(true);
-					}
-
-				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
-				} catch (ExecutionException e) {
-					throw new WebcamException(e);
-				}
+				//try executor termination
+				executorTermination(timeout, tunit, executor, future );
 
 				if (webcams == null) {
 					throw new TimeoutException(String.format("Webcams discovery timeout (%d ms) has been exceeded", timeout));
@@ -144,6 +131,25 @@ public class WebcamDiscoveryService implements Runnable {
 		}
 
 		return Collections.unmodifiableList(webcams);
+	}
+	
+	//try executor termination
+	private void executorTermination(long timeout, TimeUnit tunit, ExecutorService executor,Future<List<Webcam>> future){
+		try {
+
+			executor.awaitTermination(timeout, tunit);
+
+			if (future.isDone()) {
+				webcams = future.get();
+			} else {
+				future.cancel(true);
+			}
+
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		} catch (ExecutionException e) {
+			throw new WebcamException(e);
+		}
 	}
 
 	/**
@@ -195,8 +201,29 @@ public class WebcamDiscoveryService implements Runnable {
 				}
 			}
 		}
+		
+		// check if any left in old ones it means that devices has been removed
+		
+		checkRemoved(oldones, tmpnew, listeners);
 
-		// if any left in old ones it means that devices has been removed
+		// if any left in new ones it means that devices has been added
+		if (newones.size() > 0) {
+
+			setCurrentWebcams(tmpnew);
+
+			for (WebcamDevice device : newones) {
+				for (Webcam webcam : webcams) {
+					if (webcam.getDevice().getName().equals(device.getName())) {
+						notifyWebcamFound(webcam, listeners);
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+	// if any left in old ones it means that devices has been removed
+	private void checkRemoved(List<WebcamDevice> oldones, List<WebcamDevice> tmpnew ,WebcamDiscoveryListener[] listeners) {
 		if (oldones.size() > 0) {
 
 			List<Webcam> notified = new ArrayList<Webcam>();
@@ -218,20 +245,6 @@ public class WebcamDiscoveryService implements Runnable {
 			}
 		}
 
-		// if any left in new ones it means that devices has been added
-		if (newones.size() > 0) {
-
-			setCurrentWebcams(tmpnew);
-
-			for (WebcamDevice device : newones) {
-				for (Webcam webcam : webcams) {
-					if (webcam.getDevice().getName().equals(device.getName())) {
-						notifyWebcamFound(webcam, listeners);
-						break;
-					}
-				}
-			}
-		}
 	}
 
 	@Override
