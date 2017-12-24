@@ -12,12 +12,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
- * This class is used as a global (system) lock preventing other processes from using the same
- * camera while it's open. Whenever webcam is open there is a thread running in background which
- * updates the lock once per 2 seconds. Lock is being released whenever webcam is either closed or
- * completely disposed. Lock will remain for at least 2 seconds in case when JVM has not been
+ * This class is used as a global (system) lock preventing other processes from
+ * using the same camera while it's open. Whenever webcam is open there is a
+ * thread running in background which updates the lock once per 2 seconds. Lock
+ * is being released whenever webcam is either closed or completely disposed.
+ * Lock will remain for at least 2 seconds in case when JVM has not been
  * gracefully terminated (due to SIGSEGV, SIGTERM, etc).
  *
  * @author Bartosz Firyn (sarxos)
@@ -94,7 +94,8 @@ public class WebcamLock {
 	/**
 	 * Creates global webcam lock.
 	 *
-	 * @param webcam the webcam instance to be locked
+	 * @param webcam
+	 *            the webcam instance to be locked
 	 */
 	protected WebcamLock(Webcam webcam) {
 		super();
@@ -153,18 +154,7 @@ public class WebcamLock {
 		} else {
 
 			// create lock file if not exist
-
-			if (!lock.exists()) {
-				try {
-					if (lock.createNewFile()) {
-						LOG.info("Lock file {} for {} has been created", lock, webcam);
-					} else {
-						throw new RuntimeException("Not able to create file " + lock);
-					}
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
-			}
+			createLockFile();
 
 			FileOutputStream fos = null;
 			FileInputStream fis = null;
@@ -178,33 +168,8 @@ public class WebcamLock {
 
 			synchronized (webcam) {
 				do {
-					try {
-
-						fos = new FileOutputStream(lock);
-						fis = new FileInputStream(tmp);
-						while ((n = fis.read(buffer)) != -1) {
-							fos.write(buffer, 0, n);
-						}
-						rewritten = true;
-
-					} catch (IOException e) {
-						LOG.debug("Not able to rewrite lock file", e);
-					} finally {
-						if (fos != null) {
-							try {
-								fos.close();
-							} catch (IOException e) {
-								throw new RuntimeException(e);
-							}
-						}
-						if (fis != null) {
-							try {
-								fis.close();
-							} catch (IOException e) {
-								throw new RuntimeException(e);
-							}
-						}
-					}
+					rewritten = writeBuffer(n ,fos, fis, buffer, tmp, rewritten);
+					
 					if (rewritten) {
 						break;
 					}
@@ -222,6 +187,53 @@ public class WebcamLock {
 			}
 		}
 
+	}
+	
+	// create lock file if not exist
+	private void createLockFile(){
+		if (!lock.exists()) {
+			try {
+				if (lock.createNewFile()) {
+					LOG.info("Lock file {} for {} has been created", lock, webcam);
+				} else {
+					throw new RuntimeException("Not able to create file " + lock);
+				}
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+	
+	//write buffer
+	private boolean writeBuffer(int n,FileOutputStream fos, FileInputStream fis, byte[] buffer,File tmp, boolean rewritten){
+		try {
+
+			fos = new FileOutputStream(lock);
+			fis = new FileInputStream(tmp);
+			while ((n = fis.read(buffer)) != -1) {
+				fos.write(buffer, 0, n);
+			}
+			rewritten = true;
+
+		} catch (IOException e) {
+			LOG.debug("Not able to rewrite lock file", e);
+		} finally {
+			if (fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			if (fis != null) {
+				try {
+					fis.close();
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}
+		return rewritten;
 	}
 
 	private long read() {
@@ -298,8 +310,8 @@ public class WebcamLock {
 	}
 
 	/**
-	 * Completely disable locking mechanism. After this method is invoked, the lock will not have
-	 * any effect on the webcam runtime.
+	 * Completely disable locking mechanism. After this method is invoked, the
+	 * lock will not have any effect on the webcam runtime.
 	 */
 	public void disable() {
 		if (disabled.compareAndSet(false, true)) {
