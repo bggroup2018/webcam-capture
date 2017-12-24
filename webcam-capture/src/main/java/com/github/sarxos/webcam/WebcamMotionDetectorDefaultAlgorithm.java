@@ -132,20 +132,10 @@ public class WebcamMotionDetectorDefaultAlgorithm implements WebcamMotionDetecto
 					int pid = combinePixels(cpx, ppx) & 0x000000ff;
 
 					if (pid >= pixelThreshold) {
-						Point pp = new Point(x, y);
-						boolean keep = j < maxPoints;
-
-						if (keep) {
-							for (Point g : points) {
-								if (g.x != pp.x || g.y != pp.y) {
-									if (pp.distance(g) <= range) {
-										keep = false;
-										break;
-									}
-								}
-							}
-						}
-
+						
+						// verified pixel threshold
+						boolean keep = verifyPixelThreshold(x, y, j);
+						
 						if (keep) {
 							points.add(new Point(x, y));
 							j += 1;
@@ -159,9 +149,33 @@ public class WebcamMotionDetectorDefaultAlgorithm implements WebcamMotionDetecto
 				}
 			}
 		}
+		
+		//set area monitor
+		return setArea(p, w, h, cogX, cogY);
+	}
+	
+	// verified pixel threshold
+	private boolean verifyPixelThreshold(int x, int y, int j){
+		Point pp = new Point(x, y);
+		boolean keep = j < maxPoints;
 
+		if (keep) {
+			for (Point g : points) {
+				if (g.x != pp.x || g.y != pp.y) {
+					if (pp.distance(g) <= range) {
+						keep = false;
+						break;
+					}
+				}
+			}
+		}
+		return keep;
+	}
+	
+	// set area monitor
+	private boolean setArea(int p, int w, int h, int cogX, int cogY){
 		area = p * 100d / (w * h);
-
+		
 		if (area >= areaThreshold && area <= areaThresholdMax) {
 			cog = new Point(cogX / p, cogY / p);
 			return true;
