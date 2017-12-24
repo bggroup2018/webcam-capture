@@ -338,25 +338,30 @@ public class Webcam {
 			}
 
 			// notify listeners
-
-			WebcamEvent we = new WebcamEvent(WebcamEventType.OPEN, this);
-			Iterator<WebcamListener> wli = listeners.iterator();
-			WebcamListener l = null;
-
-			while (wli.hasNext()) {
-				l = wli.next();
-				try {
-					l.webcamOpen(we);
-				} catch (Exception e) {
-					LOG.error(String.format("Notify webcam open, exception when calling listener %s", l.getClass()), e);
-				}
-			}
-
+			notifyListener();
+			
 		} else {
 			LOG.debug("Webcam is already open {}", getName());
 		}
 
 		return true;
+	}
+	
+	// notify listeners
+	private void notifyListener(){
+		WebcamEvent we = new WebcamEvent(WebcamEventType.OPEN, this);
+		Iterator<WebcamListener> wli = listeners.iterator();
+		WebcamListener l = null;
+
+		while (wli.hasNext()) {
+			l = wli.next();
+			try {
+				l.webcamOpen(we);
+			} catch (Exception e) {
+				LOG.error(String.format("Notify webcam open, exception when calling listener %s", l.getClass()), e);
+			}
+		}
+
 	}
 
 	/**
@@ -610,7 +615,7 @@ public class Webcam {
 		device.setResolution(size);
 	}
 	
-	private static void isValidAndSet(Dimension[] predefined,Dimension[] custom, Dimension size){
+	private void isValidAndSet(Dimension[] predefined,Dimension[] custom, Dimension size){
 		boolean ok = false;
 		for (Dimension d : predefined) {
 			if (d.width == size.width && d.height == size.height) {
@@ -627,6 +632,12 @@ public class Webcam {
 			}
 		}
 
+		//incorrect dimension
+		incorrectDimension(ok, size, predefined, custom);
+		
+	}
+
+	private void incorrectDimension(boolean ok,Dimension size, Dimension[] predefined, Dimension[] custom){
 		if (!ok) {
 			StringBuilder sb = new StringBuilder("Incorrect dimension [");
 			sb.append(size.width).append("x").append(size.height).append("] ");
@@ -640,7 +651,6 @@ public class Webcam {
 			throw new IllegalArgumentException(sb.toString());
 		}
 	}
-
 	/**
 	 * Capture image from webcam and return it. Will return image object or null if webcam is closed
 	 * or has been already disposed by JVM.<br>

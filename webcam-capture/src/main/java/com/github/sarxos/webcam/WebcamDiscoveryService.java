@@ -174,33 +174,8 @@ public class WebcamDiscoveryService implements Runnable {
 		List<WebcamDevice> oldones = new LinkedList<WebcamDevice>(tmpold);
 		List<WebcamDevice> newones = new LinkedList<WebcamDevice>(tmpnew);
 
-		Iterator<WebcamDevice> oi = oldones.iterator();
-		Iterator<WebcamDevice> ni = null;
-
-		WebcamDevice od = null; // old device
-		WebcamDevice nd = null; // new device
-
-		// reduce lists
-
-		while (oi.hasNext()) {
-
-			od = oi.next();
-			ni = newones.iterator();
-
-			while (ni.hasNext()) {
-
-				nd = ni.next();
-
-				// remove both elements, if device name is the same, which
-				// actually means that device is exactly the same
-
-				if (nd.getName().equals(od.getName())) {
-					ni.remove();
-					oi.remove();
-					break;
-				}
-			}
-		}
+		//reduced list
+		reducedList(oldones, newones);
 		
 		// check if any left in old ones it means that devices has been removed
 		
@@ -245,6 +220,36 @@ public class WebcamDiscoveryService implements Runnable {
 			}
 		}
 
+	}
+	
+	private void reducedList(List<WebcamDevice> oldones, List<WebcamDevice> newones ){
+		Iterator<WebcamDevice> oi = oldones.iterator();
+		Iterator<WebcamDevice> ni = null;
+
+		WebcamDevice od = null; // old device
+		WebcamDevice nd = null; // new device
+
+		// reduce lists
+
+		while (oi.hasNext()) {
+
+			od = oi.next();
+			ni = newones.iterator();
+
+			while (ni.hasNext()) {
+
+				nd = ni.next();
+
+				// remove both elements, if device name is the same, which
+				// actually means that device is exactly the same
+
+				if (nd.getName().equals(od.getName())) {
+					ni.remove();
+					oi.remove();
+					break;
+				}
+			}
+		}
 	}
 
 	@Override
