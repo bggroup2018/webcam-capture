@@ -77,7 +77,7 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 				return;
 			}
 
-			result.set(grabber.nextFrame());
+			result.set(grabber.nextFrameP());
 			fresh.set(true);
 		}
 	}
@@ -386,7 +386,7 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 	 */
 	private void clearMemoryBuffer() {
 		for (int i = 0; i < DEVICE_BUFFER_SIZE; i++) {
-			grabber.nextFrame();
+			grabber.nextFrameP();
 		}
 	}
 

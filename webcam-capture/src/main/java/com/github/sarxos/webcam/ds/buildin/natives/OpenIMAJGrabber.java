@@ -29,6 +29,8 @@
  */
 package com.github.sarxos.webcam.ds.buildin.natives;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import org.bridj.BridJ;
 import org.bridj.Platform;
 import org.bridj.Pointer;
@@ -72,6 +74,10 @@ public class OpenIMAJGrabber extends CPPObject {
 	private native Pointer<DeviceList> getVideoDevices();
 
 	private native Pointer<Byte> getImage();
+	
+	public int nextFrameP() {
+		 this.nextFrame();
+	}
 
 	private native int nextFrame();
 
