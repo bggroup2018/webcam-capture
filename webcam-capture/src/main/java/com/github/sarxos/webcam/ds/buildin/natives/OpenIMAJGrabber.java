@@ -70,6 +70,10 @@ public class OpenIMAJGrabber extends CPPObject {
 	public OpenIMAJGrabber(Pointer pointer) {
 		super(pointer);
 	}
+	
+	public native Pointer<DeviceList> getVideoDevicesP(){
+		return this.getVideoDevice().get();
+	}
 
 	private native Pointer<DeviceList> getVideoDevices();
 	
@@ -95,8 +99,20 @@ public class OpenIMAJGrabber extends CPPObject {
 
 	private native boolean startSession(int width, int height, double reqFPS, Pointer<Device> devptr);
 
+	public void stopSessionP(){
+		this.stopSession();
+	}
+	
 	private native void stopSession();
+	
+	public int getWidthP(){
+		return this.getWidth();
+	}
 
+	public int getHeightP(){
+		return this.getHeight();
+	}
+	
 	private native int getWidth();
 
 	private native int getHeight();

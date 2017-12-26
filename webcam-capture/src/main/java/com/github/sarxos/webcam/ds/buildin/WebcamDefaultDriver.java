@@ -90,8 +90,7 @@ public class WebcamDefaultDriver implements WebcamDriver, WebcamDiscoverySupport
 
 			devices = new ArrayList<WebcamDevice>();
 
-			Pointer<DeviceList> pointer = grabber.getVideoDevices();
-			DeviceList list = pointer.get();
+			DeviceList list = grabber.getVideoDevicesP();
 
 			for (Device device : list.asArrayList()) {
 				devices.add(new WebcamDefaultDevice(device));

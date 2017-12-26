@@ -323,7 +323,7 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 		// issue on 32-bit systems which prevents grabber to find devices.
 		// According to the mentioned note this for loop shall fix the problem.
 
-		DeviceList list = grabber.getVideoDevices().get();
+		DeviceList list = grabber.getVideoDevicesP();
 		for (Device d : list.asArrayList()) {
 			d.getNameStr();
 			d.getIdentifierStr();
@@ -341,7 +341,7 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 
 		LOG.debug("Webcam device session started");
 
-		Dimension size2 = new Dimension(grabber.getWidth(), grabber.getHeight());
+		Dimension size2 = new Dimension(grabber.getWidthP(), grabber.getHeightP());
 
 		int w1 = size.width;
 		int w2 = size2.width;
@@ -412,7 +412,7 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 
 		LOG.debug("Closing webcam device");
 
-		grabber.stopSession();
+		grabber.stopSessionP();
 	}
 
 	@Override
