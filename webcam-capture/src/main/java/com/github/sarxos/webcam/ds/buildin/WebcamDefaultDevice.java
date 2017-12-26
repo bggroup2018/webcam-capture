@@ -214,7 +214,7 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 
 		LOG.trace("Webcam grabber get image pointer");
 
-		Pointer<Byte> image = grabber.getImage();
+		Pointer<Byte> image = grabber.getImageP();
 		fresh.set(false);
 
 		if (image == null) {
@@ -258,7 +258,7 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 
 		LOG.trace("Webcam grabber get image pointer");
 
-		Pointer<Byte> image = grabber.getImage();
+		Pointer<Byte> image = grabber.getImageP();
 		fresh.set(false);
 
 		if (image == null) {
@@ -337,7 +337,7 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 		// set timeout, this MUST be done after grabber is open and before it's closed, otherwise it
 		// will result as crash
 
-		grabber.setTimeout(timeout);
+		grabber.setTimeoutP(timeout);
 
 		LOG.debug("Webcam device session started");
 

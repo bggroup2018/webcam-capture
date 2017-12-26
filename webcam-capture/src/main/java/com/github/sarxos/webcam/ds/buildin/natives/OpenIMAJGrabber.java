@@ -72,14 +72,22 @@ public class OpenIMAJGrabber extends CPPObject {
 	}
 
 	private native Pointer<DeviceList> getVideoDevices();
+	
+	public Pointer<Byte> getImageP() {
+		return this.getImage();
+	}
 
 	private native Pointer<Byte> getImage();
 	
 	public int nextFrameP() {
-		 this.nextFrame();
+		 return this.nextFrame();
 	}
 
 	private native int nextFrame();
+	
+	public void setTimeoutP(int timeout) {
+		this.setTimeout(timeout);
+	}
 
 	private native void setTimeout(int timeout);
 
