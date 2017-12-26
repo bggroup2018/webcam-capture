@@ -172,6 +172,12 @@ public class IpCamDriver implements WebcamDriver, WebcamDiscoverySupport {
 
 		List<IpCamDevice> online = new ArrayList<IpCamDevice>(devices.size());
 
+		this.CiclomaticComplexityReduced(online, futures);
+
+		return Collections.unmodifiableList((List<? extends WebcamDevice>) online);
+	}
+	
+	private void CiclomaticComplexityReduced(List<IpCamDevice> online, List<Future<IpCamDevice>> futures){
 		for (Future<IpCamDevice> future : futures) {
 
 			IpCamDevice device = null;
@@ -187,8 +193,6 @@ public class IpCamDriver implements WebcamDriver, WebcamDiscoverySupport {
 				LOG.error(e.getMessage(), e);
 			}
 		}
-
-		return Collections.unmodifiableList((List<? extends WebcamDevice>) online);
 	}
 
 	public void register(IpCamDevice device) {
