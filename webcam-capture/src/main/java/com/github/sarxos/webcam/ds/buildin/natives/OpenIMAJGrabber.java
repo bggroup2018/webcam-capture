@@ -71,7 +71,7 @@ public class OpenIMAJGrabber extends CPPObject {
 		super(pointer);
 	}
 	
-	public native Pointer<DeviceList> getVideoDevicesP(){
+	public Pointer<DeviceList> getVideoDevicesP(){
 		return this.getVideoDevice().get();
 	}
 
