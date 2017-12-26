@@ -156,29 +156,7 @@ public class WebcamLock {
 			// create lock file if not exist
 			createLockFile();
 
-			FileOutputStream fos = null;
-			FileInputStream fis = null;
-
-			int k = 0;
-			int n = -1;
-			byte[] buffer = new byte[8];
-			boolean rewritten = false;
-
-			// rewrite temporary file content to lock, try max 5 times
-
-			synchronized (webcam) {
-				do {
-					rewritten = writeBuffer(n ,fos, fis, buffer, tmp, rewritten);
-					
-					if (rewritten) {
-						break;
-					}
-				} while (k++ < 5);
-			}
-
-			if (!rewritten) {
-				throw new WebcamException("Not able to write lock file");
-			}
+			rewriteTemporaryFile(tmp);
 
 			// remove temporary file
 
@@ -234,6 +212,31 @@ public class WebcamLock {
 			}
 		}
 		return rewritten;
+	} 
+	
+	// rewrite temporary file content to lock, try max 5 times
+	private void rewriteTemporaryFile(File tmp){
+		FileOutputStream fos = null;
+		FileInputStream fis = null;
+
+		int k = 0;
+		int n = -1;
+		byte[] buffer = new byte[8];
+		boolean rewritten = false;
+
+		synchronized (webcam) {
+			do {
+				rewritten = writeBuffer(n ,fos, fis, buffer, tmp, rewritten);
+				
+				if (rewritten) {
+					break;
+				}
+			} while (k++ < 5);
+		}
+
+		if (!rewritten) {
+			throw new WebcamException("Not able to write lock file");
+		}
 	}
 
 	private long read() {
