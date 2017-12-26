@@ -27,6 +27,26 @@ public class FFmpegCliDriver implements WebcamDriver, WebcamDiscoverySupport {
 	private static final String MARKER = "mjpeg";
 	private static final String STARTER = "[video4linux";
 
+	private final void CiclomaticComlexityReduced(File vfile, String[] cmd, List<WebcamDevice> devices, OutputStream os, InputStream is1, InputStream is2, Process process , String line , BufferedReader br1, BufferedReader br2){
+		while ((line = br2.readLine()) != null) {
+			if (line.startsWith(STARTER) && line.indexOf(MARKER) != -1) {
+				LOG.debug("Command stderr line: {}", line);
+				devices.add(new FFmpegCliDevice(vfile, line));
+				read = true;
+				break;
+			}
+		}
+		if (!read) {
+			while ((line = br1.readLine()) != null) {
+				if (line.startsWith(STARTER) && line.indexOf(MARKER) != -1) {
+					LOG.debug("Command stdout line: {}", line);
+					devices.add(new FFmpegCliDevice(vfile, line));
+					break;
+				}
+			}
+		}
+	}
+	
 	@Override
 	public List<WebcamDevice> getDevices() {
 
@@ -57,43 +77,19 @@ public class FFmpegCliDriver implements WebcamDriver, WebcamDiscoverySupport {
 
 			try {
 				process = RT.exec(cmd);
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
 
-			os = process.getOutputStream();
-			is1 = process.getInputStream();
-			is2 = process.getErrorStream();
+				os = process.getOutputStream();
+				is1 = process.getInputStream();
+				is2 = process.getErrorStream();
 
-			try {
 				os.close();
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
 
-			br1 = new BufferedReader(new InputStreamReader(is1));
-			br2 = new BufferedReader(new InputStreamReader(is2));
+				br1 = new BufferedReader(new InputStreamReader(is1));
+				br2 = new BufferedReader(new InputStreamReader(is2));
 
-			boolean read = false;
-
-			try {
-				while ((line = br2.readLine()) != null) {
-					if (line.startsWith(STARTER) && line.indexOf(MARKER) != -1) {
-						LOG.debug("Command stderr line: {}", line);
-						devices.add(new FFmpegCliDevice(vfile, line));
-						read = true;
-						break;
-					}
-				}
-				if (!read) {
-					while ((line = br1.readLine()) != null) {
-						if (line.startsWith(STARTER) && line.indexOf(MARKER) != -1) {
-							LOG.debug("Command stdout line: {}", line);
-							devices.add(new FFmpegCliDevice(vfile, line));
-							break;
-						}
-					}
-				}
+				boolean read = false;
+				
+				this.CiclomaticComlexityReduced(vfile, cmd, devices, os, is1, is2, process, line, br1, br2);		
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			} finally {
