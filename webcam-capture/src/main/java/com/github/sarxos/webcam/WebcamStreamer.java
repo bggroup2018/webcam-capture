@@ -73,24 +73,12 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 				bos = new BufferedOutputStream(socket.getOutputStream());
 			} catch (IOException e) {
 				LOG.error("Fatal I/O exception when creating socket streams", e);
-				try {
-					socket.close();
-				} catch (IOException e1) {
-					LOG.error("Canot close socket connection from " + socket.getRemoteSocketAddress(), e1);
-				}
+				closeSocket();
 				return;
 			}
 
 			// consume whole input
-
-			try {
-				while (br.ready()) {
-					br.readLine();
-				}
-			} catch (IOException e) {
-				LOG.error("Error when reading input", e);
-				return;
-			}
+			ConsumeWholeInput(br);
 
 			// stream
 
@@ -142,14 +130,7 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 							bos.write(CRLF.getBytes());
 							bos.flush();
 						} catch (SocketException e) {
-
-							if (!socket.isConnected()) {
-								LOG.debug("Connection to client has been lost");
-							}
-							if (socket.isClosed()) {
-								LOG.debug("Connection to client is closed");
-							}
-
+							socketDebug();
 							try {
 								br.close();
 								bos.close();
@@ -171,14 +152,8 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 				String message = e.getMessage();
 
 				if (message != null) {
-					if (message.startsWith("Software caused connection abort")) {
-						LOG.info("User closed stream");
-						return;
-					}
-					if (message.startsWith("Broken pipe")) {
-						LOG.info("User connection broken");
-						return;
-					}
+					messageDebug(message);
+					return;
 				}
 
 				LOG.error("Error", e);
@@ -205,6 +180,44 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 				} catch (IOException e) {
 					LOG.debug("Cannot close socket", e);
 				}
+			}
+		}
+		
+		// consume whole input
+		private void ConsumeWholeInput(BufferedReader br){
+			try {
+				while (br.ready()) {
+					br.readLine();
+				}
+			} catch (IOException e) {
+				LOG.error("Error when reading input", e);
+				return;
+			}
+		}
+		
+		private void closeSocket(){
+			try {
+				socket.close();
+			} catch (IOException e1) {
+				LOG.error("Canot close socket connection from " + socket.getRemoteSocketAddress(), e1);
+			}
+		}
+		
+		private void socketDebug(){
+			if (!socket.isConnected()) {
+				LOG.debug("Connection to client has been lost");
+			}
+			if (socket.isClosed()) {
+				LOG.debug("Connection to client is closed");
+			}
+		}
+		
+		private void messageDebug(String message){
+			if (message.startsWith("Software caused connection abort")) {
+				LOG.info("User closed stream");
+			}
+			if (message.startsWith("Broken pipe")) {
+				LOG.info("User connection broken");
 			}
 		}
 	}
