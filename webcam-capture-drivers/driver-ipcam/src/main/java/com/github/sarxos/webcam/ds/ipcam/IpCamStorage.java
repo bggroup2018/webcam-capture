@@ -11,6 +11,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.transform.stream.StreamSource;
+
 import com.github.sarxos.webcam.WebcamException;
 import com.github.sarxos.webcam.ds.ipcam.impl.IpCamDescriptor;
 
@@ -56,12 +61,21 @@ public class IpCamStorage {
 		return descriptors;
 	}
 
-	public void open() {
+	public void open() throws XMLStreamException {
 
 		IpCamStorage storage = null;
 		try {
-			Unmarshaller unmarshaller = CTX.createUnmarshaller();
-			storage = (IpCamStorage) unmarshaller.unmarshal(file);
+			
+			JAXBContext jc = JAXBContext.newInstance(IpCamStorage.class);
+
+			XMLInputFactory xif = XMLInputFactory.newFactory();
+			xif.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+			xif.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+			XMLStreamReader xsr = xif.createXMLStreamReader(new StreamSource("file"));
+			
+			Unmarshaller unmarshaller = jc.createUnmarshaller();
+			storage = (IpCamStorage) unmarshaller.unmarshal(xsr);
+			
 		} catch (JAXBException e) {
 			throw new WebcamException(e);
 		}
