@@ -78,6 +78,33 @@ public class JHFlipFilter extends JHFilter {
 		return operation;
 	}
 
+	private final void CiclomaticComplexityReduced(int h, int w, int width, int newW, int[] newPixels, int[] inPixels){
+		for (int row = 0; row < h; row++) {
+			for (int col = 0; col < w; col++) {
+				int index = row * width + col;
+				int newRow = row;
+				int newCol = col;
+				switch (operation) {
+					case FLIP_90CW:
+						newRow = col;
+						newCol = h - row - 1;
+						;
+						break;
+					case FLIP_90CCW:
+						newRow = w - col - 1;
+						newCol = row;
+						break;
+					case FLIP_180:
+						newRow = h - row - 1;
+						newCol = w - col - 1;
+						break;
+				}
+				int newIndex = newRow * newW + newCol;
+				newPixels[newIndex] = inPixels[index];
+			}
+		}		
+	}
+	
 	@Override
 	public BufferedImage filter(BufferedImage src, BufferedImage dst) {
 		int width = src.getWidth();
@@ -105,30 +132,7 @@ public class JHFlipFilter extends JHFilter {
 
 		int[] newPixels = new int[newW * newH];
 
-		for (int row = 0; row < h; row++) {
-			for (int col = 0; col < w; col++) {
-				int index = row * width + col;
-				int newRow = row;
-				int newCol = col;
-				switch (operation) {
-					case FLIP_90CW:
-						newRow = col;
-						newCol = h - row - 1;
-						;
-						break;
-					case FLIP_90CCW:
-						newRow = w - col - 1;
-						newCol = row;
-						break;
-					case FLIP_180:
-						newRow = h - row - 1;
-						newCol = w - col - 1;
-						break;
-				}
-				int newIndex = newRow * newW + newCol;
-				newPixels[newIndex] = inPixels[index];
-			}
-		}
+		this.CiclomaticComplexityReduced(h, newH, width, newW, newPixels, inPixels);
 
 		if (dst == null) {
 			ColorModel dstCM = src.getColorModel();
