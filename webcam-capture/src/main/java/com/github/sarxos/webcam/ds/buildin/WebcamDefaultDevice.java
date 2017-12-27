@@ -297,6 +297,24 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 		return bi;
 	}
 
+	private final void CiclomaticComplexityReduced(Dimension size2){
+		int w1 = size.width;
+		int w2 = size2.width;
+		int h1 = size.height;
+		int h2 = size2.height;
+
+		if (w1 != w2 || h1 != h2) {
+
+			if (failOnSizeMismatch) {
+				throw new WebcamException(String.format("Different size obtained vs requested - [%dx%d] vs [%dx%d]", w1, h1, w2, h2));
+			}
+
+			Object[] args = new Object[] { w1, h1, w2, h2, w2, h2 };
+			LOG.warn("Different size obtained vs requested - [{}x{}] vs [{}x{}]. Setting correct one. New size is [{}x{}]", args);
+
+			size = new Dimension(w2, h2);
+		}		
+	}
 	@Override
 	public void open() {
 
@@ -308,8 +326,6 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 
 		if (size == null) {
 			size = getResolutions()[0];
-		}
-		if (size == null) {
 			throw new RuntimeException("The resolution size cannot be null");
 		}
 
@@ -343,22 +359,7 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 
 		Dimension size2 = new Dimension(grabber.getWidthP(), grabber.getHeightP());
 
-		int w1 = size.width;
-		int w2 = size2.width;
-		int h1 = size.height;
-		int h2 = size2.height;
-
-		if (w1 != w2 || h1 != h2) {
-
-			if (failOnSizeMismatch) {
-				throw new WebcamException(String.format("Different size obtained vs requested - [%dx%d] vs [%dx%d]", w1, h1, w2, h2));
-			}
-
-			Object[] args = new Object[] { w1, h1, w2, h2, w2, h2 };
-			LOG.warn("Different size obtained vs requested - [{}x{}] vs [{}x{}]. Setting correct one. New size is [{}x{}]", args);
-
-			size = new Dimension(w2, h2);
-		}
+		this.CiclomaticComplexityReduced(size2);
 
 		smodel = new ComponentSampleModel(DATA_TYPE, size.width, size.height, 3, size.width * 3, BAND_OFFSETS);
 		cmodel = new ComponentColorModel(COLOR_SPACE, BITS, false, false, Transparency.OPAQUE, DATA_TYPE);
