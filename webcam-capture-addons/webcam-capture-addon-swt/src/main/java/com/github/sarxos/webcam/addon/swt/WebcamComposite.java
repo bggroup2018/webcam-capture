@@ -150,19 +150,32 @@ public class WebcamComposite extends Composite implements WebcamListener, PaintL
 				executor.shutdown();
 			}
 		}
+		
+		private final boolean CiclomaticComplexityReduced1(){
+			if (!running.get() || !webcam.isOpen() || paused) {
+				return true;
+			}else{
+				return false;
+			}
+			
+		}
+		
+		private final void CiclomaticComplexityReduced2(ImageData data, WritableRaster raster, int[] rgb, PaletteData palette){
+			int x = 0;
+			int y = 0;
+
+			for (x = 0; x < data.width; x++) {
+				for (y = 0; y < data.height; y++) {
+					raster.getPixel(x, y, rgb);
+					data.setPixel(x, y, palette.getPixel(new RGB(rgb[0], rgb[1], rgb[2])));
+				}
+			}			
+		}
 
 		@Override
 		public void run() {
 
-			if (!running.get()) {
-				return;
-			}
-
-			if (!webcam.isOpen()) {
-				return;
-			}
-
-			if (paused) {
+			if(this.CiclomaticComplexityReduced1()){
 				return;
 			}
 
@@ -190,15 +203,7 @@ public class WebcamComposite extends Composite implements WebcamListener, PaintL
 
 			int[] rgb = new int[3];
 
-			int x = 0;
-			int y = 0;
-
-			for (x = 0; x < data.width; x++) {
-				for (y = 0; y < data.height; y++) {
-					raster.getPixel(x, y, rgb);
-					data.setPixel(x, y, palette.getPixel(new RGB(rgb[0], rgb[1], rgb[2])));
-				}
-			}
+			this.CiclomaticComplexityReduced2(data, raster, rgb, palette);
 
 			Image previous = image;
 
