@@ -249,52 +249,8 @@ public class WebcamPanel extends JPanel implements WebcamListener, PropertyChang
 			if (w == image.getWidth() && h == image.getHeight() && !mirrored) {
 				resizedImage = image;
 			} else {
-
-				GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
-				GraphicsConfiguration gc = genv.getDefaultScreenDevice().getDefaultConfiguration();
-
-				Graphics2D gr = null;
-				try {
-
-					resizedImage = gc.createCompatibleImage(pw, ph);
-					gr = resizedImage.createGraphics();
-					gr.setComposite(AlphaComposite.Src);
-
-					for (Map.Entry<RenderingHints.Key, Object> hint : imageRenderingHints.entrySet()) {
-						gr.setRenderingHint(hint.getKey(), hint.getValue());
-					}
-
-					gr.setBackground(Color.BLACK);
-					gr.setColor(Color.BLACK);
-					gr.fillRect(0, 0, pw, ph);
-
-					int sx1, sx2, sy1, sy2; // source rectangle coordinates
-					int dx1, dx2, dy1, dy2; // destination rectangle coordinates
-
-					dx1 = x;
-					dy1 = y;
-					dx2 = x + w;
-					dy2 = y + h;
-
-					if (mirrored) {
-						sx1 = iw;
-						sy1 = 0;
-						sx2 = 0;
-						sy2 = ih;
-					} else {
-						sx1 = 0;
-						sy1 = 0;
-						sx2 = iw;
-						sy2 = ih;
-					}
-
-					gr.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
-
-				} finally {
-					if (gr != null) {
-						gr.dispose();
-					}
-				}
+				//set source and destination rectangle coordinates
+				setSourceAndDestinationCoordinates(pw, ph, x, y, w, h,iw, ih);
 			}
 
 			g2.drawImage(resizedImage, 0, 0, null);
@@ -310,6 +266,55 @@ public class WebcamPanel extends JPanel implements WebcamListener, PropertyChang
 
 			g2.setRenderingHint(KEY_ANTIALIASING, antialiasing);
 			g2.setRenderingHint(KEY_RENDERING, rendering);
+		}
+		
+		//set source and destination rectangle coordinates
+		private void setSourceAndDestinationCoordinates(int pw, int ph, int x, int y, int w, int h, int iw, int ih){
+			GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			GraphicsConfiguration gc = genv.getDefaultScreenDevice().getDefaultConfiguration();
+
+			Graphics2D gr = null;
+			try {
+
+				resizedImage = gc.createCompatibleImage(pw, ph);
+				gr = resizedImage.createGraphics();
+				gr.setComposite(AlphaComposite.Src);
+
+				for (Map.Entry<RenderingHints.Key, Object> hint : imageRenderingHints.entrySet()) {
+					gr.setRenderingHint(hint.getKey(), hint.getValue());
+				}
+
+				gr.setBackground(Color.BLACK);
+				gr.setColor(Color.BLACK);
+				gr.fillRect(0, 0, pw, ph);
+
+				int sx1, sx2, sy1, sy2; // source rectangle coordinates
+				int dx1, dx2, dy1, dy2; // destination rectangle coordinates
+
+				dx1 = x;
+				dy1 = y;
+				dx2 = x + w;
+				dy2 = y + h;
+
+				if (mirrored) {
+					sx1 = iw;
+					sy1 = 0;
+					sx2 = 0;
+					sy2 = ih;
+				} else {
+					sx1 = 0;
+					sy1 = 0;
+					sx2 = iw;
+					sy2 = ih;
+				}
+
+				gr.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+
+			} finally {
+				if (gr != null) {
+					gr.dispose();
+				}
+			}
 		}
 		
 		// Set repaint time
