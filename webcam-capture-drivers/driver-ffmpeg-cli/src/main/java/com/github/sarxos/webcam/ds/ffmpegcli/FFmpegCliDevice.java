@@ -103,7 +103,7 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 			} while (!founded);
 	
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("failed or interrupted I/O operation");
 		}		
 	}
 
@@ -130,7 +130,7 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 				CiclomaticComlexityReduced(c);
 				
 			} catch (IOException e) {
-				throw new RuntimeException(e);
+				throw new RuntimeException("failed or interrupted I/O operations");
 			}
 
 			return baos.toByteArray();	
@@ -164,12 +164,12 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 		try {
 			return ImageIO.read(bais);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("failed or interrupted I/O operations");
 		} finally {
 			try {
 				bais.close();
 			} catch (IOException e) {
-				throw new RuntimeException(e);
+				throw new RuntimeException("failed or interrupted I/O operations");
 			}
 		}
 	}
@@ -214,11 +214,11 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 			process = RT.exec(cmd);
 			dis = new DataInputStream(new FileInputStream(pipe));
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("failed or interrupted I/O operations");
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("failed or interrupted I/O operations");
 		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("failed or interrupted I/O operations");
 		}
 	}
 
@@ -232,7 +232,7 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 		try {
 			dis.close();
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("failed or interrupted I/O operations");
 		}
 
 		process.destroy();
@@ -240,7 +240,7 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 		try {
 			process.waitFor();
 		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("failed or interrupted I/O operations");
 		}
 
 		if (!pipe.delete()) {
