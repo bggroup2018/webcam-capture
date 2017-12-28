@@ -129,13 +129,13 @@ public class WebcamLock {
 			dos.flush();
 
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("failed or interrupted I/O operation");
 		} finally {
 			if (dos != null) {
 				try {
 					dos.close();
 				} catch (IOException e) {
-					throw new RuntimeException(e);
+					throw new RuntimeException("failed or interrupted I/O operation");
 				}
 			}
 		}
@@ -177,7 +177,7 @@ public class WebcamLock {
 					throw new RuntimeException("Not able to create file " + lock);
 				}
 			} catch (IOException e) {
-				throw new RuntimeException(e);
+				throw new RuntimeException("failed or interrupted I/O operation");
 			}
 		}
 	}
@@ -200,14 +200,14 @@ public class WebcamLock {
 				try {
 					fos.close();
 				} catch (IOException e) {
-					throw new RuntimeException(e);
+					throw new RuntimeException("failed or interrupted I/O operation");
 				}
 			}
 			if (fis != null) {
 				try {
 					fis.close();
 				} catch (IOException e) {
-					throw new RuntimeException(e);
+					throw new RuntimeException("failed or interrupted I/O operation");
 				}
 			}
 		}
@@ -258,13 +258,13 @@ public class WebcamLock {
 				LOG.debug("Webcam lock is broken - EOF when reading long variable from stream", e);
 				broken = true;
 			} catch (IOException e) {
-				throw new RuntimeException(e);
+				throw new RuntimeException("failed or interrupted I/O operation");
 			} finally {
 				if (dis != null) {
 					try {
 						dis.close();
 					} catch (IOException e) {
-						throw new RuntimeException(e);
+						throw new RuntimeException("failed or interrupted I/O operation");
 					}
 				}
 			}
