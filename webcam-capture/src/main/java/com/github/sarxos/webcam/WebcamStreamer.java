@@ -103,7 +103,6 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 					if(stringBuildAppend(br, bos,baos,sb)==true){
 						return;
 					}
-					
 				}
 			} catch (Exception e) {
 

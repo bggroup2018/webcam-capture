@@ -99,8 +99,10 @@ public class WebcamComposite extends Composite implements WebcamListener, PaintL
 			@Override
 			public void run() {
 
-				if (!running.get()) {
-					return;
+				if(running!=null){
+					if (!running.get()) {
+						return;
+					}
 				}
 
 				Display.getDefault().syncExec(new Runnable() {
