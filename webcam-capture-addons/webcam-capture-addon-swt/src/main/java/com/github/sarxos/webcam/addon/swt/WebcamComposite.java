@@ -120,15 +120,17 @@ public class WebcamComposite extends Composite implements WebcamListener, PaintL
 						throw new RuntimeException(e);
 					}
 				}
-
-				if (webcam.isOpen()) {
-					if (isFPSLimited()) {
-						executor.scheduleAtFixedRate(updater, 0, (long) (1000 / frequency), TimeUnit.MILLISECONDS);
+				
+				if(webcam != null && executor != null){
+					if (webcam.isOpen()) {
+						if (isFPSLimited()) {
+							executor.scheduleAtFixedRate(updater, 0, (long) (1000 / frequency), TimeUnit.MILLISECONDS);
+						} else {
+							executor.scheduleWithFixedDelay(updater, 100, 1, TimeUnit.MILLISECONDS);
+						}
 					} else {
-						executor.scheduleWithFixedDelay(updater, 100, 1, TimeUnit.MILLISECONDS);
+						executor.schedule(this, 500, TimeUnit.MILLISECONDS);
 					}
-				} else {
-					executor.schedule(this, 500, TimeUnit.MILLISECONDS);
 				}
 			}
 
