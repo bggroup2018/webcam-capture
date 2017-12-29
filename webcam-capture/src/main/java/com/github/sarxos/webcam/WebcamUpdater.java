@@ -48,7 +48,7 @@ public class WebcamUpdater implements Runnable {
 	 * Default impl of DelayCalculator, based on TARGET_FPS. Returns 0 delay for snapshotDuration
 	 * &gt; 20 millis.
 	 */
-	public static class DefaultDelayCalculator implements DelayCalculator {
+	protected static class DefaultDelayCalculator implements DelayCalculator {
 
 		@Override
 		public long calculateDelay(long snapshotDuration, double deviceFps) {
