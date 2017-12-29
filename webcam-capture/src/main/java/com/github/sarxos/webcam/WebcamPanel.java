@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bartosz Firyn (SarXos)
  */
-public class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListener {
+protected class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListener {
 
 	/**
 	 * This enum is to control of how image will be drawn in the panel bounds.
