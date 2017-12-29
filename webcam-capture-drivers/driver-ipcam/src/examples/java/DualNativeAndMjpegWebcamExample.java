@@ -24,7 +24,7 @@ public class DualNativeAndMjpegWebcamExample {
 	/**
 	 * Customized webcam driver.
 	 */
-	public static class MyCompositeDriver extends WebcamCompositeDriver {
+	protected static class MyCompositeDriver extends WebcamCompositeDriver {
 
 		public MyCompositeDriver() {
 			add(new WebcamDefaultDriver());
