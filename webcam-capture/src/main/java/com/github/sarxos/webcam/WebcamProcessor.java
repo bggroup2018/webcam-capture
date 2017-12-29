@@ -22,7 +22,7 @@ public class WebcamProcessor {
 	 *
 	 * @author sarxos
 	 */
-	public static final class ProcessorThread extends Thread {
+	protected static final class ProcessorThread extends Thread {
 
 		private static final AtomicInteger N = new AtomicInteger(0);
 
