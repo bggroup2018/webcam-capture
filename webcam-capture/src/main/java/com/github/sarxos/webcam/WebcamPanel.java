@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bartosz Firyn (SarXos)
  */
-protected class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListener {
+class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListener {
 
 	/**
 	 * This enum is to control of how image will be drawn in the panel bounds.
@@ -105,7 +105,7 @@ protected class WebcamPanel extends JPanel implements WebcamListener, PropertyCh
 	 * @author Bartosz Firyn (SarXos)
 	 * @author Sylwia Kauczor
 	 */
-	public class DefaultPainter implements Painter {
+	protected class DefaultPainter implements Painter {
 
 		/**
 		 * Webcam device name.
@@ -158,7 +158,9 @@ protected class WebcamPanel extends JPanel implements WebcamListener, PropertyCh
 
 
 			String str;
-			
+			if(rb == null){
+				return;
+			}else{
 			final String strInitDevice = rb.getString("INITIALIZING_DEVICE");
 			final String strNoImage = rb.getString("NO_IMAGE");
 			final String strDeviceError = rb.getString("DEVICE_ERROR");
@@ -180,7 +182,7 @@ protected class WebcamPanel extends JPanel implements WebcamListener, PropertyCh
 			g2.setColor(Color.WHITE);
 			g2.drawString(str, x, y);
 
-			if (name == null) {
+			if (name == null && webcam != null) {
 				name = webcam.getName();
 			}
 
@@ -191,6 +193,7 @@ protected class WebcamPanel extends JPanel implements WebcamListener, PropertyCh
 
 			g2.drawString(str, (getWidth() - w) / 2, cy - 2 * h);
 			g2.setRenderingHint(KEY_ANTIALIASING, antialiasing);
+			}
 		}
 
 		@Override
@@ -279,7 +282,9 @@ protected class WebcamPanel extends JPanel implements WebcamListener, PropertyCh
 				resizedImage = gc.createCompatibleImage(pw, ph);
 				gr = resizedImage.createGraphics();
 				gr.setComposite(AlphaComposite.Src);
-
+				if(imageRenderingHints == null){
+					return;
+				}else{
 				for (Map.Entry<RenderingHints.Key, Object> hint : imageRenderingHints.entrySet()) {
 					gr.setRenderingHint(hint.getKey(), hint.getValue());
 				}
@@ -310,7 +315,9 @@ protected class WebcamPanel extends JPanel implements WebcamListener, PropertyCh
 
 				gr.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
 
-			} finally {
+				}
+			}
+			finally {
 				if (gr != null) {
 					gr.dispose();
 				}
@@ -359,7 +366,9 @@ protected class WebcamPanel extends JPanel implements WebcamListener, PropertyCh
 		// Set FPS Displayed
 		private void SetFpsDisplayed(Graphics2D g2, int ph){
 			if (isFPSDisplayed()) {
-
+				if(webcam == null){
+					return;
+				}else{
 				String str = String.format("FPS: %.1f", webcam.getFPS());
 
 				int sx = 5;
@@ -370,6 +379,7 @@ protected class WebcamPanel extends JPanel implements WebcamListener, PropertyCh
 				g2.drawString(str, sx + 1, sy + 1);
 				g2.setColor(Color.WHITE);
 				g2.drawString(str, sx, sy);
+				}
 			}
 		}
 		
@@ -479,7 +489,10 @@ protected class WebcamPanel extends JPanel implements WebcamListener, PropertyCh
 			public void run() {
 
 				// do nothing when not running
-				if (!running.get()) {
+				if(running == null){
+					return;
+				}
+				else if (!running.get()) {
 					return;
 				}
 
@@ -502,19 +515,22 @@ protected class WebcamPanel extends JPanel implements WebcamListener, PropertyCh
 					// FPS limit means that panel rendering frequency is
 					// limited to the specific value and panel will not be
 					// rendered more often then specific value
+					if(webcam == null || executor == null){
+						return;
+					}else{
+						if (webcam.isOpen()) {
 
-					if (webcam.isOpen()) {
-
-						// TODO: rename FPS value in panel to rendering
-						// frequency
-
-						if (isFPSLimited()) {
-							executor.scheduleAtFixedRate(updater, 0, (long) (1000 / frequency), TimeUnit.MILLISECONDS);
+							// TODO: rename FPS value in panel to rendering
+							// frequency
+							
+							if (isFPSLimited()) {
+								executor.scheduleAtFixedRate(updater, 0, (long) (1000 / frequency), TimeUnit.MILLISECONDS);
+							} else {
+								executor.scheduleWithFixedDelay(updater, 100, 1, TimeUnit.MILLISECONDS);
+							}
 						} else {
-							executor.scheduleWithFixedDelay(updater, 100, 1, TimeUnit.MILLISECONDS);
+							executor.schedule(this, 500, TimeUnit.MILLISECONDS);
 						}
-					} else {
-						executor.schedule(this, 500, TimeUnit.MILLISECONDS);
 					}
 				} catch (RejectedExecutionException e) {
 
@@ -555,10 +571,14 @@ protected class WebcamPanel extends JPanel implements WebcamListener, PropertyCh
 		 * @throws InterruptedException
 		 */
 		public void stop() throws InterruptedException {
-			if (running.compareAndSet(true, false)) {
-				executor.shutdown();
-				executor.awaitTermination(5000, TimeUnit.MILLISECONDS);
-				scheduler.join();
+			if(executor == null || scheduler == null){
+				return;
+			}else{
+				if (running.compareAndSet(true, false)) {
+					executor.shutdown();
+					executor.awaitTermination(5000, TimeUnit.MILLISECONDS);
+					scheduler.join();
+				}
 			}
 		}
 
@@ -579,30 +599,34 @@ protected class WebcamPanel extends JPanel implements WebcamListener, PropertyCh
 
 			// do nothing when updater not running, when webcam is closed, or
 			// panel repainting is paused
-
-			if (!running.get() || !webcam.isOpen() || paused) {
+			if(running == null || webcam == null){
 				return;
 			}
-
-			// get new image from webcam
-
-			BufferedImage tmp = webcam.getImage();
-			boolean repaint = true;
-
-			if (tmp != null) {
-
-				// ignore repaint if image is the same as before
-				if (image == tmp) {
-					repaint = false;
+			else{	
+				if (!running.get() || !webcam.isOpen() || paused) {
+					return;
 				}
 
-				errored = false;
-				image = tmp;
-			}
+				// get new image from webcam
+			
+				BufferedImage tmp = webcam.getImage();
+				boolean repaint = true;
 
-			if (repaint) {
-				repaintPanel();
-			}
+				if (tmp != null) {
+
+					// ignore repaint if image is the same as before
+					if (image == tmp) {
+						repaint = false;
+					}
+
+					errored = false;
+					image = tmp;
+				}
+
+				if (repaint) {
+					repaintPanel();
+				}
+			}	
 		}
 	}
 
