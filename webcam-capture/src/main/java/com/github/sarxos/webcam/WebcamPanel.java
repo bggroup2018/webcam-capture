@@ -503,7 +503,7 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 					try {
 						Thread.sleep(50);
 					} catch (InterruptedException e) {
-						throw new RuntimeException(e);
+						throw new RuntimeException("The thread has been interrupted");
 					}
 				}
 
@@ -878,7 +878,7 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 		try {
 			updater.stop();
 		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("The thread has been interrupted");
 		}
 
 		image = null;

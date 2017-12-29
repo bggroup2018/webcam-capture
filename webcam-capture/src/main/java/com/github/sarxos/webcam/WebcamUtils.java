@@ -21,7 +21,7 @@ public class WebcamUtils {
 		try {
 			ImageIO.write(webcam.getImage(), ImageUtils.FORMAT_JPG, file);
 		} catch (IOException e) {
-			throw new WebcamException(e);
+			throw new WebcamException("failed or interrupted I/O operation");
 		}
 	}
 
@@ -32,7 +32,7 @@ public class WebcamUtils {
 		try {
 			ImageIO.write(webcam.getImage(), format, file);
 		} catch (IOException e) {
-			throw new WebcamException(e);
+			throw new WebcamException("failed or interrupted I/O operation");
 		}
 	}
 

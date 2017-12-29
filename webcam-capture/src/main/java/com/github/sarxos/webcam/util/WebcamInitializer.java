@@ -26,7 +26,7 @@ public class WebcamInitializer {
 			try {
 				initializable.initialize();
 			} catch (Exception e) {
-				throw new WebcamException(e);
+				throw new WebcamException("Error during initialization");
 			} finally {
 				latch.countDown();
 			}
@@ -44,7 +44,7 @@ public class WebcamInitializer {
 			try {
 				initializable.teardown();
 			} catch (Exception e) {
-				throw new WebcamException(e);
+				throw new WebcamException("Error during initialization");
 			}
 		}
 	}
