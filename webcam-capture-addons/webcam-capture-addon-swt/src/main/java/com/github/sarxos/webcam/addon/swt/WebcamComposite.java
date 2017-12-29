@@ -187,10 +187,10 @@ public class WebcamComposite extends Composite implements WebcamListener, PaintL
 
 			BufferedImage bi = null;
 			try {
-				if(webcam == null){
-					return;
-				}else{
+				if(webcam != null){
 					bi = webcam.getImage();
+				} else {
+					return;
 				}
 			} catch (Throwable t) {
 				LOG.error("Exception when getting image", t);
@@ -199,34 +199,31 @@ public class WebcamComposite extends Composite implements WebcamListener, PaintL
 			if (bi == null) {
 				LOG.debug("Image is null, ignore");
 				return;
-			}
-			
-			if(bi.getColorModel() == null){
-				return;
-			}
-			ComponentColorModel model = (ComponentColorModel) bi.getColorModel();
-			PaletteData palette = new PaletteData(0x0000FF, 0x00FF00, 0xFF0000);
-			ImageData data = new ImageData(bi.getWidth(), bi.getHeight(), model.getPixelSize(), palette);
+			} else{
+				ComponentColorModel model = (ComponentColorModel) bi.getColorModel();
+				PaletteData palette = new PaletteData(0x0000FF, 0x00FF00, 0xFF0000);
+				ImageData data = new ImageData(bi.getWidth(), bi.getHeight(), model.getPixelSize(), palette);
 
-			// this is valid because we are using a 3-byte data model without
-			// transparent pixels
-			data.transparentPixel = -1;
-			if(bi.getRaster() == null){
-				return;
-			}
-			WritableRaster raster = bi.getRaster();
+				// this is valid because we are using a 3-byte data model without
+				// transparent pixels
+				data.transparentPixel = -1;
+				if(bi.getRaster() == null){
+					return;
+				}
+				WritableRaster raster = bi.getRaster();
 
-			int[] rgb = new int[3];
+				int[] rgb = new int[3];
 
-			this.CiclomaticComplexityReduced2(data, raster, rgb, palette);
+				this.CiclomaticComplexityReduced2(data, raster, rgb, palette);
 
-			Image previous = image;
+				Image previous = image;
 
-			try {
-				image = new Image(Display.getDefault(), data);
-			} finally {
-				if (previous != null) {
-					previous.dispose();
+				try {
+					image = new Image(Display.getDefault(), data);
+				} finally {
+					if (previous != null) {
+						previous.dispose();
+					}
 				}
 			}
 
