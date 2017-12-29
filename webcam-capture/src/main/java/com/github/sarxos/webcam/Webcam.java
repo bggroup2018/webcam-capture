@@ -842,7 +842,7 @@ public class Webcam {
 		try {
 			return getWebcams(Long.MAX_VALUE);
 		} catch (TimeoutException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("No webcam detected");
 		}
 	}
 
@@ -910,7 +910,7 @@ public class Webcam {
 		} catch (TimeoutException e) {
 			// this should never happen since user would have to wait 300000000
 			// years for it to occur
-			throw new RuntimeException(e);
+			throw new RuntimeException("No default webcam");
 		}
 	}
 
@@ -1090,9 +1090,9 @@ public class Webcam {
 		try {
 			driver = driverClass.newInstance();
 		} catch (InstantiationException e) {
-			throw new WebcamException(e);
+			throw new WebcamException("Error in the Instantiation of the driver class for the webcam");
 		} catch (IllegalAccessException e) {
-			throw new WebcamException(e);
+			throw new WebcamException("The application does not have access to the definition of the specified constructor");
 		}
 	}
 
