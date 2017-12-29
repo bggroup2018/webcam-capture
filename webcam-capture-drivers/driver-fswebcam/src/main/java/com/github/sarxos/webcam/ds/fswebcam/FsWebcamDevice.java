@@ -41,7 +41,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 	public static final String PARAM_KEY_LOG = "log";
 	public static final String PARAM_KEY_VERBOSE = "verbose";
 
-	public static final class ExecutorThreadFactory implements ThreadFactory {
+	protected static final class ExecutorThreadFactory implements ThreadFactory {
 
 		private final AtomicInteger number = new AtomicInteger(0);
 
@@ -55,7 +55,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 		}
 	}
 
-	public static final class StreamReader implements Runnable {
+	protected static final class StreamReader implements Runnable {
 
 		private final BufferedReader br;
 		private final boolean err;
@@ -165,7 +165,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 				}
 			}			
 		} catch (IOException e) {
-			throw new RuntimeException("failed or interrupted I/O operation");
+			throw new RuntimeException(e);
 		}
 		
 	}
@@ -197,7 +197,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 			} while (!founded);
 
 		} catch (IOException e) {
-			throw new RuntimeException("failed or interrupted I/O operation");
+			throw new RuntimeException(e);
 		}
 
 		return baos.toByteArray();
@@ -209,7 +209,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 			if (dis != null)
 				dis.close();
 		} catch (IOException e) {
-			throw new RuntimeException("failed or interrupted I/O operation");
+			throw new RuntimeException(e);
 		}		
 	}
 	
@@ -236,7 +236,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 			try {
 				dis = new DataInputStream(new FileInputStream(pipe));
 			} catch (FileNotFoundException e) {
-				throw new RuntimeException("failed or interrupted I/O operation");
+				throw new RuntimeException(e);
 			}
 
 			ByteArrayInputStream bais = new ByteArrayInputStream(readBytes());
@@ -244,12 +244,12 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 				image = ImageIO.read(bais);
 			} catch (IOException e) {
 				process.destroy();
-				throw new RuntimeException("failed or interrupted I/O operation");
+				throw new RuntimeException(e);
 			} finally {
 				try {
 					bais.close();
 				} catch (IOException e) {
-					throw new RuntimeException("failed or interrupted I/O operation");
+					throw new RuntimeException(e);
 				}
 			}
 
@@ -356,7 +356,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 			p.waitFor();
 
 		} catch (IOException e) {
-			throw new RuntimeException("failed or interrupted I/O operation");
+			throw new RuntimeException(e);
 		} catch (InterruptedException e) {
 			return;
 		} finally {
@@ -375,7 +375,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 			try {
 				dis.close();
 			} catch (IOException e) {
-				throw new RuntimeException("failed or interrupted I/O operation");
+				throw new RuntimeException(e);
 			}
 		}
 
@@ -386,7 +386,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 		try {
 			process.waitFor();
 		} catch (InterruptedException e) {
-			throw new RuntimeException("failed or interrupted I/O operation");
+			throw new RuntimeException(e);
 		}
 
 		if (!pipe.delete()) {
