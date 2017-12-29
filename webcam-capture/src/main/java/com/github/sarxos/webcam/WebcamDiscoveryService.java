@@ -146,9 +146,9 @@ public class WebcamDiscoveryService implements Runnable {
 			}
 
 		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("Interruption of the thread");
 		} catch (ExecutionException e) {
-			throw new WebcamException(e);
+			throw new WebcamException("the result of the task can't be retrieve");
 		}
 	}
 
@@ -165,7 +165,7 @@ public class WebcamDiscoveryService implements Runnable {
 		try {
 			tmpold = getDevices(getWebcams(Long.MAX_VALUE, TimeUnit.MILLISECONDS));
 		} catch (TimeoutException e) {
-			throw new WebcamException(e);
+			throw new WebcamException("it's impossible to return the timeout value");
 		}
 
 		// convert to linked list due to O(1) on remove operation on
@@ -276,7 +276,7 @@ public class WebcamDiscoveryService implements Runnable {
 				} catch (InterruptedException e) {
 					break;
 				} catch (Exception e) {
-					throw new RuntimeException("Problem waiting on monitor", e);
+					throw new RuntimeException("Problem waiting on monitor");
 				}
 			}
 
