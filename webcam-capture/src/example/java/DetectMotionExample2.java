@@ -24,14 +24,16 @@ public class DetectMotionExample2 {
 
 			@Override
 			public void run() {
-				do {
-					System.out.println(detector.isMotion());
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						break;
-					}
-				} while (true);
+				if(detector != null){
+					do {
+						System.out.println(detector.isMotion());
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							break;
+						}
+					} while (true);
+				}
 			}
 		};
 

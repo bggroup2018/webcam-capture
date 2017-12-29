@@ -178,7 +178,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 
 		baos.reset();
 
-		int b, c;
+		int b=0, c=0;
 		try {
 			// search for SOI
 			this.CiclomaticComplexityReduced1(b, c);

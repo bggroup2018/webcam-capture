@@ -156,16 +156,15 @@ public class WebcamComposite extends Composite implements WebcamListener, PaintL
 		}
 		
 		private final boolean CiclomaticComplexityReduced1(){
-			if(running == null || webcam == null){
-				throw new RuntimeException();
+			if(running != null || webcam != null){
+				if (!running.get() || !webcam.isOpen() || paused) {
+					return true;
+				}
 			}
-			if (!running.get() || !webcam.isOpen() || paused) {
-				return true;
-			}else{
-				return false;
-			}
-			
+			return false;
 		}
+			
+		
 		
 		private final void CiclomaticComplexityReduced2(ImageData data, WritableRaster raster, int[] rgb, PaletteData palette){
 			int x = 0;
@@ -190,17 +189,21 @@ public class WebcamComposite extends Composite implements WebcamListener, PaintL
 			try {
 				if(webcam == null){
 					return;
+				}else{
+					bi = webcam.getImage();
 				}
-				bi = webcam.getImage();
 			} catch (Throwable t) {
 				LOG.error("Exception when getting image", t);
 			}
 
-			if (bi == null || bi.getColorModel() == null || bi.getRaster() == null) {
+			if (bi == null) {
 				LOG.debug("Image is null, ignore");
 				return;
 			}
-
+			
+			if(bi.getColorModel() == null){
+				return;
+			}
 			ComponentColorModel model = (ComponentColorModel) bi.getColorModel();
 			PaletteData palette = new PaletteData(0x0000FF, 0x00FF00, 0xFF0000);
 			ImageData data = new ImageData(bi.getWidth(), bi.getHeight(), model.getPixelSize(), palette);
@@ -208,7 +211,9 @@ public class WebcamComposite extends Composite implements WebcamListener, PaintL
 			// this is valid because we are using a 3-byte data model without
 			// transparent pixels
 			data.transparentPixel = -1;
-
+			if(bi.getRaster() == null){
+				return;
+			}
 			WritableRaster raster = bi.getRaster();
 
 			int[] rgb = new int[3];

@@ -37,7 +37,9 @@ final class WebcamSignalHandler implements SignalHandler {
 		}
 
 		try {
-			deallocator.deallocate();
+			if(deallocator != null){
+				deallocator.deallocate();
+			}
 		} finally {
 			handler.handle(signal);
 		}

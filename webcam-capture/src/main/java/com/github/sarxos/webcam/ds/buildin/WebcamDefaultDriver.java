@@ -44,7 +44,9 @@ public class WebcamDefaultDriver implements WebcamDriver, WebcamDiscoverySupport
 			try {
 				process();
 			} catch (InterruptedException e) {
-				LOG.error("Processor has been interrupted");
+				if(LOG != null){
+					LOG.error("Processor has been interrupted");
+				}
 				return null;
 			}
 			return grabber.get();
@@ -78,7 +80,9 @@ public class WebcamDefaultDriver implements WebcamDriver, WebcamDiscoverySupport
 			try {
 				process();
 			} catch (InterruptedException e) {
-				LOG.error("Processor has been interrupted");
+				if(LOG != null){
+					LOG.error("Processor has been interrupted");
+				}
 				return Collections.emptyList();
 			}
 
