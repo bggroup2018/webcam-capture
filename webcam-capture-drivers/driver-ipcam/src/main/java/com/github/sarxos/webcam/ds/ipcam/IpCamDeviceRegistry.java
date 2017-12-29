@@ -133,7 +133,7 @@ public class IpCamDeviceRegistry {
 		try {
 			return isRegistered(url.toURI());
 		} catch (URISyntaxException e) {
-			throw new WebcamException(e);
+			throw new WebcamException("String could not be parsed as a URI reference");
 		}
 	}
 
@@ -159,7 +159,7 @@ public class IpCamDeviceRegistry {
 					return true;
 				}
 			} catch (URISyntaxException e) {
-				throw new WebcamException(e);
+				throw new WebcamException("String could not be parsed as a URI reference");
 			}
 		}
 

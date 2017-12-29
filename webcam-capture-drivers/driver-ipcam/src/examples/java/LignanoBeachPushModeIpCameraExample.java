@@ -38,7 +38,7 @@ public class LignanoBeachPushModeIpCameraExample extends JFrame {
 		try {
 			IpCamDeviceRegistry.register("Lignano Beach IP Camera", "http://195.31.81.138/mjpg/video.mjpg", IpCamMode.PUSH);
 		} catch (MalformedURLException e) {
-			throw new IllegalStateException(e);
+			throw new IllegalStateException("detected a malformed URL");
 		}
 	}
 
@@ -61,7 +61,7 @@ public class LignanoBeachPushModeIpCameraExample extends JFrame {
 					System.out.format("Image for %s saved in %s \n", webcam.getName(), file);
 				}
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				System.out.println("failed or interrupted I/O operation");
 			}
 		}
 	}

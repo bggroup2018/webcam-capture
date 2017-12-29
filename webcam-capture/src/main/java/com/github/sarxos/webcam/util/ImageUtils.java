@@ -54,12 +54,12 @@ public class ImageUtils {
 			ImageIO.write(image, format, baos);
 			bytes = baos.toByteArray();
 		} catch (IOException e) {
-			throw new WebcamException(e);
+			throw new WebcamException("failed or interrupted I/O operation");
 		} finally {
 			try {
 				baos.close();
 			} catch (IOException e) {
-				throw new WebcamException(e);
+				throw new WebcamException("failed or interrupted I/O operation");
 			}
 		}
 
@@ -71,13 +71,13 @@ public class ImageUtils {
 		try {
 			return ImageIO.read(is = ImageUtils.class.getClassLoader().getResourceAsStream(resource));
 		} catch (IOException e) {
-			throw new IllegalStateException(e);
+			throw new IllegalStateException("failed or interrupted I/O operation");
 		} finally {
 			if (is != null) {
 				try {
 					is.close();
 				} catch (IOException e) {
-					throw new IllegalStateException(e);
+					throw new IllegalStateException("failed or interrupted I/O operation");
 				}
 			}
 		}

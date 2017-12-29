@@ -35,7 +35,7 @@ public class IpCamStorage {
 		try {
 			c = JAXBContext.newInstance(CLASSES);
 		} catch (JAXBException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("JAXB error");
 		} finally {
 			CTX = c;
 		}
@@ -77,7 +77,7 @@ public class IpCamStorage {
 			storage = (IpCamStorage) unmarshaller.unmarshal(xsr);
 			
 		} catch (JAXBException e) {
-			throw new WebcamException(e);
+			throw new WebcamException("JAXB error");
 		}
 
 		for (IpCamDescriptor d : storage.getDescriptors()) {

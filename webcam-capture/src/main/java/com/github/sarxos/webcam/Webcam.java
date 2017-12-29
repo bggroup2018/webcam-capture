@@ -321,7 +321,6 @@ public class Webcam {
 			} catch (IllegalStateException e) {
 
 				LOG.debug("Shutdown in progress, do not open device");
-				LOG.trace(e.getMessage(), e);
 
 				close();
 
