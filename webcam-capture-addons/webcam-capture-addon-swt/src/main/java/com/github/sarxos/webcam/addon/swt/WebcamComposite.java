@@ -150,12 +150,15 @@ public class WebcamComposite extends Composite implements WebcamListener, PaintL
 		}
 
 		public void stop() {
-			if (running.compareAndSet(true, false)) {
+			if (running.compareAndSet(true, false) && executor !=null) {
 				executor.shutdown();
 			}
 		}
 		
 		private final boolean CiclomaticComplexityReduced1(){
+			if(running == null || webcam == null){
+				throw new RuntimeException();
+			}
 			if (!running.get() || !webcam.isOpen() || paused) {
 				return true;
 			}else{
@@ -185,12 +188,15 @@ public class WebcamComposite extends Composite implements WebcamListener, PaintL
 
 			BufferedImage bi = null;
 			try {
+				if(webcam == null){
+					return;
+				}
 				bi = webcam.getImage();
 			} catch (Throwable t) {
 				LOG.error("Exception when getting image", t);
 			}
 
-			if (bi == null) {
+			if (bi == null || bi.getColorModel() == null || bi.getRaster() == null) {
 				LOG.debug("Image is null, ignore");
 				return;
 			}
