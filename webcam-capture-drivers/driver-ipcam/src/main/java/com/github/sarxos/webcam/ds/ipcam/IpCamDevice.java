@@ -77,7 +77,7 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 			try {
 				return new IpCamMJPEGStream(get(uri, true));
 			} catch (Exception e) {
-				throw new WebcamException("Cannot download image. " + e.getMessage(), e);
+				throw new WebcamException("Cannot download image. " + e.getMessage()); 
 			}
 		}
 
@@ -144,7 +144,7 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 			try (final InputStream is = request(uri)) {
 				return ImageIO.read(is);
 			} catch (IOException e) {
-				throw new WebcamException(e);
+				throw new WebcamException("Cannot read image");
 			} finally {
 				t2 = System.currentTimeMillis();
 				fps = (double) 1000 / (t2 - t1 + 1);
@@ -155,7 +155,7 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 			try {
 				return get(uri, false);
 			} catch (Exception e) {
-				throw new WebcamException("Cannot download image", e);
+				throw new WebcamException("Cannot download image");
 			}
 		}
 
@@ -223,7 +223,7 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 		try {
 			return new URL(url);
 		} catch (MalformedURLException e) {
-			throw new WebcamException(String.format("Incorrect URL '%s'", url), e);
+			throw new WebcamException(String.format("Incorrect URL '%s'", url));
 		}
 	}
 
@@ -231,7 +231,7 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 		try {
 			return url.toURI();
 		} catch (URISyntaxException e) {
-			throw new WebcamException(e);
+			throw new WebcamException(String.format("Incorrect URL '%s'", url.toURI()));
 		}
 	}
 
@@ -358,7 +358,7 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 		try {
 			return reader.readImage();
 		} catch (InterruptedException e) {
-			throw new WebcamException(e);
+			throw new WebcamException("Cannot read image");
 		}
 	}
 
@@ -391,7 +391,7 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 			try {
 				reader.readImage();
 			} catch (InterruptedException e) {
-				throw new WebcamException(e);
+				throw new WebcamException("Cannot read image");
 			}
 		}
 		open = true;

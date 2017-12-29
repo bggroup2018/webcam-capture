@@ -308,7 +308,7 @@ public class Webcam {
 			} catch (WebcamException e) {
 				lock.unlock();
 				open.set(false);
-				LOG.debug("Webcam exception when opening", e);
+				LOG.debug("Webcam exception when opening");
 				throw e;
 			}
 
