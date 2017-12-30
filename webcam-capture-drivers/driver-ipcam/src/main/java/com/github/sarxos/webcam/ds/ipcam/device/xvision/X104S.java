@@ -96,7 +96,7 @@ public class X104S extends IpCamDevice {
 		try {
 			return new URL(url);
 		} catch (MalformedURLException e) {
-			throw new WebcamException(String.format("Incorrect URL %s", url), e);
+			throw new WebcamException(String.format("Incorrect URL %s", url));
 		}
 	}
 
