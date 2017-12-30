@@ -393,7 +393,7 @@ public class Gst1Device implements WebcamDevice, Initializable {
 		try {
 			return exchanger.exchange(null);
 		} catch (InterruptedException e) {
-			throw new WebcamException("Image exchange has been interrupted", e);
+			throw new WebcamException("Image exchange has been interrupted");
 		}
 	}
 

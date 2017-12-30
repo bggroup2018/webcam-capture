@@ -47,7 +47,7 @@ public class AppSinkNewSampleListener implements AppSink.NEW_SAMPLE {
 		try {
 			exchanger.exchange(image);
 		} catch (InterruptedException e) {
-			throw new WebcamException("Exchange has been interrupted", e);
+			throw new WebcamException("Exchange has been interrupted");
 		}
 	}
 

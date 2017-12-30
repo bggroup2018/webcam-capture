@@ -27,7 +27,7 @@ public class IPRobocam641 extends IpCamDevice {
 		try {
 			return new URL(url);
 		} catch (MalformedURLException e) {
-			throw new WebcamException(String.format("Incorrect URL %s", url), e);
+			throw new WebcamException(String.format("Incorrect URL %s", url));
 		}
 	}
 }

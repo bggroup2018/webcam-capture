@@ -50,7 +50,7 @@ public class DetectMotionEventsExample {
 					try {
 						Thread.sleep(50); // must be smaller than interval
 					} catch (InterruptedException e) {
-						e.printStackTrace();
+						System.out.println("The thread has been interrupted");
 					}
 				}
 			}

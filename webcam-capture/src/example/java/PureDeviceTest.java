@@ -23,7 +23,7 @@ public class PureDeviceTest {
 				BufferedImage image = d.getImage();
 				ImageIO.write(image, "jpg", new File(System.currentTimeMillis() + ".jpg"));
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("Operation of writing an image to file failed or interrupted");
 			} finally {
 				d.close();
 			}

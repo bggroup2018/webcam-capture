@@ -37,7 +37,7 @@ public class TakeSnapshotFromVideoExample extends JFrame {
 					System.out.format("Image for %s saved in %s \n", webcam.getName(), file);
 				}
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				System.out.println("Operation of writing an image to file failed or interrupted");
 			}
 		}
 	}

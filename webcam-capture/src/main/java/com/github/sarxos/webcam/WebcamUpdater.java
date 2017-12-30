@@ -282,7 +282,7 @@ public class WebcamUpdater implements Runnable {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
+				throw new RuntimeException("The thread has been interrupted");
 			}
 
 			// Return null if more than 10 seconds passed (timeout).

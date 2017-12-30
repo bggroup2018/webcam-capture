@@ -92,7 +92,7 @@ public class WebcamProcessor {
 						} catch (InterruptedException e) {
 							break;
 						} catch (Exception e) {
-							throw new RuntimeException("Cannot put task into outbound queue", e);
+							throw new RuntimeException("Cannot put task into outbound queue");
 						}
 					}
 				}

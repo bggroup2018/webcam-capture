@@ -68,14 +68,14 @@ public class WebcamLogConfigurator {
 			configure(fis);
 		} catch (FileNotFoundException e) {
 			LOG.error("File not found " + file, e);
-			e.printStackTrace();
+			System.out.println("File not found or inaccessible");
 		} finally {
 			if (fis != null) {
 				try {
 					fis.close();
 				} catch (IOException e) {
 					LOG.error("Cannot close file " + file, e);
-					e.printStackTrace();
+					System.out.println("Cannot close file");
 				}
 			}
 		}

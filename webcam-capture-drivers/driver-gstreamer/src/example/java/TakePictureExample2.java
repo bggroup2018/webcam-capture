@@ -39,7 +39,7 @@ public class TakePictureExample2 {
 					ImageIO.write(webcam.getImage(), "JPG", new File(name));
 					System.out.format("File %s has been saved\n", name);
 				} catch (IOException t) {
-					t.printStackTrace();
+					System.out.println("Operation of writing an image to file failed or interrupted");
 				}
 			}
 		});
