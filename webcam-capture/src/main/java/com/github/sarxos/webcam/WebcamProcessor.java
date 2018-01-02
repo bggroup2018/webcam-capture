@@ -168,7 +168,10 @@ public class WebcamProcessor {
 
 	}
 
-	public static synchronized WebcamProcessor getInstance() {
-		return INSTANCE;
+	public static  WebcamProcessor getInstance() {
+		synchronized (INSTANCE) {
+			return INSTANCE;
+		}
+	
 	}
 }

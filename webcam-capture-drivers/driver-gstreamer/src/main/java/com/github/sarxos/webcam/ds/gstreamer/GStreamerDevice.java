@@ -109,37 +109,39 @@ public class GStreamerDevice implements WebcamDevice, RGBDataSink.Listener, Webc
 	/**
 	 * Initialize webcam device.
 	 */
-	private synchronized void init() {
-
-		if (!initialized.compareAndSet(false, true)) {
-			return;
+	private void init() {
+		synchronized (this) {
+	
+			if (!initialized.compareAndSet(false, true)) {
+				return;
+			}
+	
+			LOG.debug("GStreamer webcam device initialization");
+	
+			pipe = new Pipeline(getName());
+			source = ElementFactory.make(GStreamerDriver.getSourceBySystem(), "source");
+	
+			if (Platform.isWindows()) {
+				source.set("device-index", deviceIndex);
+			} else if (Platform.isLinux()) {
+				source.set("device", videoFile.getAbsolutePath());
+			} else if (Platform.isMacOSX()) {
+				throw new IllegalStateException("not yet implemented");
+			}
+	
+			sink = new RGBDataSink(getName(), this);
+			sink.setPassDirectBuffer(true);
+			sink.getSinkElement().setMaximumLateness(LATENESS, TimeUnit.MILLISECONDS);
+			sink.getSinkElement().setQOSEnabled(true);
+	
+			filter = ElementFactory.make("capsfilter", "capsfilter");
+	
+			jpegdec = ElementFactory.make("jpegdec", "jpegdec");
+	
+			pipelineReady();
+			resolutions = parseResolutions(source.getPads().get(0));
+			pipelineStop();
 		}
-
-		LOG.debug("GStreamer webcam device initialization");
-
-		pipe = new Pipeline(getName());
-		source = ElementFactory.make(GStreamerDriver.getSourceBySystem(), "source");
-
-		if (Platform.isWindows()) {
-			source.set("device-index", deviceIndex);
-		} else if (Platform.isLinux()) {
-			source.set("device", videoFile.getAbsolutePath());
-		} else if (Platform.isMacOSX()) {
-			throw new IllegalStateException("not yet implemented");
-		}
-
-		sink = new RGBDataSink(getName(), this);
-		sink.setPassDirectBuffer(true);
-		sink.getSinkElement().setMaximumLateness(LATENESS, TimeUnit.MILLISECONDS);
-		sink.getSinkElement().setQOSEnabled(true);
-
-		filter = ElementFactory.make("capsfilter", "capsfilter");
-
-		jpegdec = ElementFactory.make("jpegdec", "jpegdec");
-
-		pipelineReady();
-		resolutions = parseResolutions(source.getPads().get(0));
-		pipelineStop();
 	}
 
 	/**

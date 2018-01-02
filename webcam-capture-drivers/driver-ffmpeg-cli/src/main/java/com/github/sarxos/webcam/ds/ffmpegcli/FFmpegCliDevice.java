@@ -138,11 +138,13 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 	}
 
 	@Override
-	public synchronized ByteBuffer getImageBytes() {
-		if (!open.get()) {
-			return null;
+	public ByteBuffer getImageBytes() {
+		synchronized (this){	
+			if (!open.get()) {
+				return null;
+			}
+			return ByteBuffer.wrap(readBytes());
 		}
-		return ByteBuffer.wrap(readBytes());
 	}
 
 	@Override
@@ -175,14 +177,15 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 	}
 
 	@Override
-	public synchronized void open() {
-
-		if (disposed.get()) {
-			return;
-		}
-
-		if (!open.compareAndSet(false, true)) {
-			return;
+	public void open() {
+		synchronized(this){
+			if (disposed.get()) {
+				return;
+			}
+	
+			if (!open.compareAndSet(false, true)) {
+				return;
+			}
 		}
 
 		pipe = new File(File.separator + "tmp" + File.separator + vfile.getName() + ".mjpeg");
@@ -223,28 +226,29 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 	}
 
 	@Override
-	public synchronized void close() {
-
-		if (!open.compareAndSet(true, false)) {
-			return;
-		}
-
-		try {
-			dis.close();
-		} catch (IOException e) {
-			throw new RuntimeException("failed or interrupted I/O operations");
-		}
-
-		process.destroy();
-
-		try {
-			process.waitFor();
-		} catch (InterruptedException e) {
-			throw new RuntimeException("failed or interrupted I/O operations");
-		}
-
-		if (!pipe.delete()) {
-			pipe.deleteOnExit();
+	public void close() {
+		synchronized(this){
+			if (!open.compareAndSet(true, false)) {
+				return;
+			}
+	
+			try {
+				dis.close();
+			} catch (IOException e) {
+				throw new RuntimeException("failed or interrupted I/O operations");
+			}
+	
+			process.destroy();
+	
+			try {
+				process.waitFor();
+			} catch (InterruptedException e) {
+				throw new RuntimeException("failed or interrupted I/O operations");
+			}
+	
+			if (!pipe.delete()) {
+				pipe.deleteOnExit();
+			}
 		}
 	}
 

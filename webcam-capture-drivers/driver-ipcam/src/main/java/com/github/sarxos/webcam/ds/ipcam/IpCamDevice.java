@@ -351,15 +351,18 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 	}
 
 	@Override
-	public synchronized BufferedImage getImage() {
-		if (!open) {
-			return null;
+	public BufferedImage getImage() {
+		synchronized (this) {
+			if (!open) {
+				return null;
+			}
+			try {
+				return reader.readImage();
+			} catch (InterruptedException e) {
+				throw new WebcamException("Cannot read image");
+			}
 		}
-		try {
-			return reader.readImage();
-		} catch (InterruptedException e) {
-			throw new WebcamException("Cannot read image");
-		}
+
 	}
 
 	/**

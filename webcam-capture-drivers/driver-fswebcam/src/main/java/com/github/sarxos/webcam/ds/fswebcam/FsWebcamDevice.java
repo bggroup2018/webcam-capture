@@ -170,38 +170,38 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 		
 	}
 
-	private synchronized byte[] readBytes() {
-
-		if (!open.get()) {
-			return null;
-		}
-
-		baos.reset();
-
-		int b=0, c=0;
-		try {
-			// search for SOI
-			this.CiclomaticComplexityReduced1(b, c);
-			
-			boolean founded = false;
-			
-			// read until EOI
-			do {
-				baos.write(c = dis.readUnsignedByte());
-				if (c == 0xFF) {
+	private byte[] readBytes() {
+		synchronized(this){
+			if (!open.get()) {
+				return null;
+			}
+	
+			baos.reset();
+	
+			int b=0, c=0;
+			try {
+				// search for SOI
+				this.CiclomaticComplexityReduced1(b, c);
+				
+				boolean founded = false;
+				
+				// read until EOI
+				do {
 					baos.write(c = dis.readUnsignedByte());
-					if (c == 0xD9) {
-						founded=true; // EOI found
+					if (c == 0xFF) {
+						baos.write(c = dis.readUnsignedByte());
+						if (c == 0xD9) {
+							founded=true; // EOI found
+						}
 					}
-				}
-			} while (!founded);
-
-		} catch (IOException e) {
-			throw new RuntimeException("failed or interrupted I/O operation");
+				} while (!founded);
+	
+			} catch (IOException e) {
+				throw new RuntimeException("failed or interrupted I/O operation");
+			}
+	
+			return baos.toByteArray();
 		}
-
-		return baos.toByteArray();
-
 	}
 	
 	private final void CiclomaticComplexityReduced2(){
@@ -326,71 +326,74 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 	}
 	
 	@Override
-	public synchronized void open() {
-
-		if (disposed.get()) {
-			return;
-		}
-
-		if (!open.compareAndSet(false, true)) {
-			return;
-		}
-
-		pipe = new File(File.separator + "tmp" + File.separator + "fswebcam-pipe-" + vfile.getName() + ".mjpeg");
-
-		if (pipe.exists()) {
-			if (!pipe.delete()) {
-				throw new RuntimeException("Cannot remove streaming pipe " + pipe);
+	public void open() {
+		synchronized (this) {	
+	
+			if (disposed.get()) {
+				return;
 			}
-		}
-
-		LOG.debug("Creating pipe: mkfifo {}", pipe.getAbsolutePath());
-
-		Process p = null;
-		try {
-			p = RT.exec(new String[] { "mkfifo", pipe.getAbsolutePath() });
-
-			EXECUTOR.execute(new StreamReader(p.getInputStream(), false));
-			EXECUTOR.execute(new StreamReader(p.getErrorStream(), true));
-
-			p.waitFor();
-
-		} catch (IOException e) {
-			throw new RuntimeException("failed or interrupted I/O operation");
-		} catch (InterruptedException e) {
-			return;
-		} finally {
-			p.destroy();
+	
+			if (!open.compareAndSet(false, true)) {
+				return;
+			}
+	
+			pipe = new File(File.separator + "tmp" + File.separator + "fswebcam-pipe-" + vfile.getName() + ".mjpeg");
+	
+			if (pipe.exists()) {
+				if (!pipe.delete()) {
+					throw new RuntimeException("Cannot remove streaming pipe " + pipe);
+				}
+			}
+	
+			LOG.debug("Creating pipe: mkfifo {}", pipe.getAbsolutePath());
+	
+			Process p = null;
+			try {
+				p = RT.exec(new String[] { "mkfifo", pipe.getAbsolutePath() });
+	
+				EXECUTOR.execute(new StreamReader(p.getInputStream(), false));
+				EXECUTOR.execute(new StreamReader(p.getErrorStream(), true));
+	
+				p.waitFor();
+	
+			} catch (IOException e) {
+				throw new RuntimeException("failed or interrupted I/O operation");
+			} catch (InterruptedException e) {
+				return;
+			} finally {
+				p.destroy();
+			}
 		}
 	}
 
 	@Override
-	public synchronized void close() {
-
-		if (!open.compareAndSet(true, false)) {
-			return;
-		}
-
-		if (dis != null) {
-			try {
-				dis.close();
-			} catch (IOException e) {
-				throw new RuntimeException("failed or interrupted I/O operation");
-			}
-		}
-
-		if (process != null) {
-			process.destroy();
-		}
-
-		try {
-			process.waitFor();
-		} catch (InterruptedException e) {
-			throw new RuntimeException("failed or interrupted I/O operation");
-		}
-
-		if (!pipe.delete()) {
-			pipe.deleteOnExit();
+	public void close() {
+		synchronized(this){
+				if (!open.compareAndSet(true, false)) {
+					return;
+				}
+		
+				if (dis != null) {
+					try {
+						dis.close();
+					} catch (IOException e) {
+						throw new RuntimeException("failed or interrupted I/O operation");
+					}
+				}
+		
+				if (process != null) {
+					process.destroy();
+				}
+		
+				try {
+					process.waitFor();
+				} catch (InterruptedException e) {
+					throw new RuntimeException("failed or interrupted I/O operation");
+				}
+		
+				if (!pipe.delete()) {
+					pipe.deleteOnExit();
+				}
 		}
 	}
 

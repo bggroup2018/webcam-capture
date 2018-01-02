@@ -875,25 +875,27 @@ public class Webcam {
 	 * @throws WebcamException when something is wrong
 	 * @throws IllegalArgumentException when timeout is negative or tunit null
 	 */
-	public static synchronized List<Webcam> getWebcams(long timeout, TimeUnit tunit) throws TimeoutException, WebcamException {
-
-		if (timeout < 0) {
-			throw new IllegalArgumentException(String.format("Timeout cannot be negative (%d)", timeout));
+	public static  List<Webcam> getWebcams(long timeout, TimeUnit tunit) throws TimeoutException, WebcamException {
+		synchronized (getDiscoveryService()) {
+			
+			if (timeout < 0) {
+				throw new IllegalArgumentException(String.format("Timeout cannot be negative (%d)", timeout));
+			}
+			if (tunit == null) {
+				throw new IllegalArgumentException("Time unit cannot be null!");
+			}
+	
+			WebcamDiscoveryService discovery = getDiscoveryService();
+	
+			assert discovery != null;
+	
+			List<Webcam> webcams = discovery.getWebcams(timeout, tunit);
+			if (!discovery.isRunning()) {
+				discovery.start();
+			}
+	
+			return webcams;
 		}
-		if (tunit == null) {
-			throw new IllegalArgumentException("Time unit cannot be null!");
-		}
-
-		WebcamDiscoveryService discovery = getDiscoveryService();
-
-		assert discovery != null;
-
-		List<Webcam> webcams = discovery.getWebcams(timeout, tunit);
-		if (!discovery.isRunning()) {
-			discovery.start();
-		}
-
-		return webcams;
 	}
 
 	/**
@@ -1030,9 +1032,9 @@ public class Webcam {
 	 *
 	 * @return Webcam driver
 	 */
-	public static synchronized WebcamDriver getDriver() {
-
-		if (driver != null) {
+	public static  WebcamDriver getDriver() {
+		synchronized (DRIVERS_LIST) {
+			if (driver != null) {
 			return driver;
 		}
 
@@ -1046,6 +1048,7 @@ public class Webcam {
 		LOG.info("{} capture driver will be used", driver.getClass().getSimpleName());
 
 		return driver;
+		}
 	}
 
 	/**
@@ -1240,8 +1243,10 @@ public class Webcam {
 	 *
 	 * @return Discovery service or null if not yet created
 	 */
-	public static synchronized WebcamDiscoveryService getDiscoveryServiceRef() {
-		return discovery;
+	public static  WebcamDiscoveryService getDiscoveryServiceRef() {
+		synchronized (discovery) {
+			return discovery;
+		}
 	}
 
 	/**
