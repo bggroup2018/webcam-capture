@@ -67,17 +67,20 @@ public class WebcamMotionDetector {
 		@Override
 		public void run() {
 
+			boolean interrupt = false;
 			running.set(true);
-
-			while (running.get() && webcam.isOpen()) {
-				try {
+			try {
+				while (running.get() && webcam.isOpen()) {
+					if (interrupt == true) {
+						break;
+					}
 					detect();
 					Thread.sleep(interval);
-				} catch (InterruptedException e) {
-					break;
-				} catch (Exception e) {
-					WebcamExceptionHandler.handle(e);
 				}
+			} catch (InterruptedException e) {
+				interrupt = true;
+			} catch (Exception e) {
+				WebcamExceptionHandler.handle(e);
 			}
 
 			running.set(false);
@@ -95,20 +98,24 @@ public class WebcamMotionDetector {
 		public void run() {
 
 			int delay = 0;
+			boolean interrupt = false;
+			
+			try {
+				while (running.get()) {
 
-			while (running.get()) {
-
-				try {
+					if (interrupt == true) {
+						break;
+					}
 					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					break;
 				}
+			} catch (InterruptedException e) {
+				interrupt = true;
+			}
 
-				delay = inertia != -1 ? inertia : 2 * interval;
+			delay = inertia != -1 ? inertia : 2 * interval;
 
-				if (lastMotionTimestamp + delay < System.currentTimeMillis()) {
-					motion = false;
-				}
+			if (lastMotionTimestamp + delay < System.currentTimeMillis()) {
+				motion = false;
 			}
 		}
 	}
@@ -275,12 +282,12 @@ public class WebcamMotionDetector {
 	 */
 	private void notifyMotionListeners(BufferedImage currentOriginal) {
 		WebcamMotionEvent wme = new WebcamMotionEvent(this, previousOriginal, currentOriginal, algorithm.getArea(), algorithm.getCog(), algorithm.getPoints());
-		for (WebcamMotionListener l : listeners) {
-			try {
+		try {
+			for (WebcamMotionListener l : listeners) {
 				l.motionDetected(wme);
-			} catch (Exception e) {
-				WebcamExceptionHandler.handle(e);
 			}
+		} catch (Exception e) {
+			WebcamExceptionHandler.handle(e);
 		}
 	}
 

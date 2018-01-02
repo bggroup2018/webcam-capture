@@ -63,19 +63,20 @@ public class FFmpegCliDriver implements WebcamDriver, WebcamDiscoverySupport {
 		BufferedReader br1 = null;
 		BufferedReader br2 = null;
 
-		for (File vfile : vfiles) {
+		try {
+			for (File vfile : vfiles) {
 
-			String[] cmd = new String[] { "ffmpeg", "-f", "video4linux2", "-list_formats", "all", "-i", vfile.getAbsolutePath() };
+				String[] cmd = new String[] { "ffmpeg", "-f", "video4linux2", "-list_formats", "all", "-i", vfile.getAbsolutePath() };
 
-			if (LOG.isDebugEnabled()) {
-				StringBuilder sb = new StringBuilder();
-				for (String c : cmd) {
-					sb.append(c).append(' ');
+				if (LOG.isDebugEnabled()) {
+					StringBuilder sb = new StringBuilder();
+					for (String c : cmd) {
+						sb.append(c).append(' ');
+					}
+					LOG.debug("Executing command: {}", sb.toString());
 				}
-				LOG.debug("Executing command: {}", sb.toString());
-			}
 
-			try {
+
 				process = RT.exec(cmd);
 
 				os = process.getOutputStream();
@@ -88,17 +89,17 @@ public class FFmpegCliDriver implements WebcamDriver, WebcamDiscoverySupport {
 				br2 = new BufferedReader(new InputStreamReader(is2));
 
 				boolean read = false;
-				
+
 				this.CiclomaticComlexityReduced(vfile, cmd, devices, os, is1, is2, process, line, br1, br2);		
+			} 
+		}catch (IOException e) {
+			throw new RuntimeException("failed or interrupted I/O operation");
+		} finally {
+			try {
+				is1.close();
+				is2.close();
 			} catch (IOException e) {
 				throw new RuntimeException("failed or interrupted I/O operation");
-			} finally {
-				try {
-					is1.close();
-					is2.close();
-				} catch (IOException e) {
-					throw new RuntimeException("failed or interrupted I/O operation");
-				}
 			}
 		}
 
