@@ -71,14 +71,16 @@ public class Webcam {
 
 		@Override
 		public void run() {
+			Class<? extends WebcamListener> classe = null;
 			if (image != null) {
 				WebcamEvent we = new WebcamEvent(WebcamEventType.NEW_IMAGE, webcam, image);
-				for (WebcamListener l : webcam.getWebcamListeners()) {
-					try {
+				try {
+					for (WebcamListener l : webcam.getWebcamListeners()) {
 						l.webcamImageObtained(we);
-					} catch (Exception e) {
-						LOG.error(String.format("Notify image acquired, exception when calling listener %s", l.getClass()), e);
+						classe = l.getClass();
 					}
+				} catch (Exception e) {
+					LOG.error(String.format("Notify image acquired, exception when calling listener %s", classe), e);
 				}
 			}
 		}
@@ -351,16 +353,15 @@ public class Webcam {
 		WebcamEvent we = new WebcamEvent(WebcamEventType.OPEN, this);
 		Iterator<WebcamListener> wli = listeners.iterator();
 		WebcamListener l = null;
-
-		while (wli.hasNext()) {
-			l = wli.next();
-			try {
+		
+		try {
+			while (wli.hasNext()) {
+				l = wli.next();
 				l.webcamOpen(we);
-			} catch (Exception e) {
-				LOG.error(String.format("Notify webcam open, exception when calling listener %s", l.getClass()), e);
 			}
+		} catch (Exception e) {
+			LOG.error(String.format("Notify webcam open, exception when calling listener %s", l.getClass()), e);
 		}
-
 	}
 
 	/**
@@ -417,29 +418,29 @@ public class Webcam {
 	
 	private boolean notifyListeners(){
 		// notify listeners
-					
-					WebcamEvent we = new WebcamEvent(WebcamEventType.CLOSED, this);
-					Iterator<WebcamListener> wli = listeners.iterator();
-					WebcamListener l = null;
 
-					while (wli.hasNext()) {
-						l = wli.next();
-						try {
-							l.webcamClosed(we);
-						} catch (Exception e) {
-							LOG.error(String.format("Notify webcam closed, exception when calling %s listener", l.getClass()), e);
-						}
-					}
+		WebcamEvent we = new WebcamEvent(WebcamEventType.CLOSED, this);
+		Iterator<WebcamListener> wli = listeners.iterator();
+		WebcamListener l = null;
 
-					notificator.shutdown();
-					while (!notificator.isTerminated()) {
-						try {
-							notificator.awaitTermination(100, TimeUnit.MILLISECONDS);
-						} catch (InterruptedException e) {
-							return false;
-						}
-					}
-					return true;
+		try {
+			while (wli.hasNext()) {
+				l = wli.next();
+				l.webcamClosed(we);
+			}
+		} catch (Exception e) {
+			LOG.error(String.format("Notify webcam closed, exception when calling %s listener", l.getClass()), e);
+		}
+
+		notificator.shutdown();
+		try {
+			while (!notificator.isTerminated()) {
+				notificator.awaitTermination(100, TimeUnit.MILLISECONDS);
+			}
+		} catch (InterruptedException e) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -486,16 +487,16 @@ public class Webcam {
 		Iterator<WebcamListener> wli = listeners.iterator();
 		WebcamListener l = null;
 
-		while (wli.hasNext()) {
-			l = wli.next();
-			try {
+		try {
+			while (wli.hasNext()) {
+				l = wli.next();
 				l.webcamClosed(we);
 				l.webcamDisposed(we);
-			} catch (Exception e) {
-				LOG.error(String.format("Notify webcam disposed, exception when calling %s listener", l.getClass()), e);
 			}
+		} catch (Exception e) {
+			LOG.error(String.format("Notify webcam disposed, exception when calling %s listener", l.getClass()), e);
 		}
-
+		
 		removeShutdownHook();
 
 		LOG.debug("Webcam disposed {}", getName());
