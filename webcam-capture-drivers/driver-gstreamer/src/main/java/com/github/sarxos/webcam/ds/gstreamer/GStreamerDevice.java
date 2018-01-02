@@ -415,11 +415,7 @@ public class GStreamerDevice implements WebcamDevice, RGBDataSink.Listener, Webc
 		image = tmp;
 
 		if (starting.compareAndSet(true, false)) {
-
-			synchronized (this) {
-				this.notifyAll();
-			}
-
+			this.notifyAll();			
 			LOG.debug("GStreamer device ready");
 		}
 
