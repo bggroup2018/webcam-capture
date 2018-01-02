@@ -40,13 +40,12 @@ public class WebcamDriverUtils {
 					break;
 				}
 			}
-
-			if (clazz == null) {
-				try {
+			try {
+				if (clazz == null) {
 					clazz = Class.forName(name);
-				} catch (ClassNotFoundException e) {
-					LOG.trace("Class not found {}, fall thru", name);
 				}
+			} catch (ClassNotFoundException e) {
+				LOG.trace("Class not found {}, fall thru", name);
 			}
 
 			if (clazz == null) {
@@ -103,15 +102,13 @@ public class WebcamDriverUtils {
 			URL resource = resources.nextElement();
 			dirs.add(new File(resource.getFile()));
 		}
-
-		for (File directory : dirs) {
-			try {
+		try {
+			for (File directory : dirs) {
 				classes.addAll(findClasses(directory, pkgname, flat));
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException("Class not found");
 			}
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Class not found");
 		}
-
 		return classes.toArray(new Class<?>[classes.size()]);
 	}
 

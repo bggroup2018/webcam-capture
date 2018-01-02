@@ -123,44 +123,44 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 		}
 		
 		private boolean stringBuildAppend(BufferedReader br, BufferedOutputStream bos,ByteArrayOutputStream baos,StringBuilder sb) throws IOException, InterruptedException{
-			do {
-				if (!webcam.isOpen() || socket.isInputShutdown() || socket.isClosed()) {
-					br.close();
-					bos.close();
-					return true;
-				}
+			try {
+				do {
+					if (!webcam.isOpen() || socket.isInputShutdown() || socket.isClosed()) {
+						br.close();
+						bos.close();
+						return true;
+					}
 
-				baos.reset();
-				setImmage();
-				
-				ImageIO.write(image, "JPG", baos);
+					baos.reset();
+					setImmage();
 
-				sb.delete(0, sb.length());
-				sb.append("--").append(BOUNDARY).append(CRLF);
-				sb.append("Content-type: image/jpeg").append(CRLF);
-				sb.append("Content-Length: ").append(baos.size()).append(CRLF);
-				sb.append(CRLF);
+					ImageIO.write(image, "JPG", baos);
 
-				try {
+					sb.delete(0, sb.length());
+					sb.append("--").append(BOUNDARY).append(CRLF);
+					sb.append("Content-type: image/jpeg").append(CRLF);
+					sb.append("Content-Length: ").append(baos.size()).append(CRLF);
+					sb.append(CRLF);
+
 					bos.write(sb.toString().getBytes());
 					bos.write(baos.toByteArray());
 					bos.write(CRLF.getBytes());
 					bos.flush();
-				} catch (SocketException e) {
-					socketDebug();
-					closeConnection(br, bos);
 
-					LOG.debug("Socket exception from " + socket.getRemoteSocketAddress(), e);
 
-					return true;
-				}
+					Thread.sleep(delay);
 
-				Thread.sleep(delay);
+				} while (started.get());
 
-			} while (started.get());
+			} catch (SocketException e) {
+				socketDebug();
+				closeConnection(br, bos);
+				LOG.debug("Socket exception from " + socket.getRemoteSocketAddress(), e);
+				return true;
+			}
 			return false;
 		}
-		
+
 		private void setImmage(){
 			long now = System.currentTimeMillis();
 			if (now > last + delay) {
@@ -191,12 +191,12 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 		private void closeConnection(BufferedReader br, BufferedOutputStream bos, ByteArrayOutputStream baos){
 			LOG.info("Closing connection from {}", socket.getRemoteSocketAddress());
 
-			for (Closeable closeable : new Closeable[] { br, bos, baos }) {
-				try {
+			try {
+				for (Closeable closeable : new Closeable[] { br, bos, baos }) {
 					closeable.close();
-				} catch (IOException e) {
-					LOG.debug("Cannot close socket", e);
 				}
+			} catch (IOException e) {
+				LOG.debug("Cannot close socket", e);
 			}
 			try {
 				socket.close();

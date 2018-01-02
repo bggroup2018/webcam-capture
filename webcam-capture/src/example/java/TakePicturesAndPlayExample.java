@@ -32,14 +32,15 @@ public class TakePicturesAndPlayExample {
 
 				@Override
 				public void run() {
-					do {
-						repaint();
-						try {
+					try {
+						do {
+							repaint();
 							Thread.sleep(100);
-						} catch (InterruptedException e) {
-							return;
-						}
-					} while (++offset < images.size());
+						} while (++offset < images.size());
+
+					}catch (InterruptedException e) {
+						return;
+					}
 				}
 			};
 			t.setDaemon(true);
@@ -63,13 +64,13 @@ public class TakePicturesAndPlayExample {
 
 		System.out.println("recording, please wait");
 
-		for (int i = 0; i < 100; i++) {
-			images.add(w.getImage());
-			try {
+		try {
+			for (int i = 0; i < 100; i++) {
+				images.add(w.getImage());
 				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				return;
 			}
+		} catch (InterruptedException e) {
+			return;
 		}
 
 		w.close();
