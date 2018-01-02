@@ -243,6 +243,8 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 					x = (int) dx;
 					y = (int) dy;
 					break;
+				default:
+					break;
 			}
 
 			if (resizedImage != null) {
