@@ -336,7 +336,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 			return;
 		}
 
-		pipe = new File("/tmp/fswebcam-pipe-" + vfile.getName() + ".mjpeg");
+		pipe = new File(File.separator + "tmp" + File.separator + "fswebcam-pipe-" + vfile.getName() + ".mjpeg");
 
 		if (pipe.exists()) {
 			if (!pipe.delete()) {

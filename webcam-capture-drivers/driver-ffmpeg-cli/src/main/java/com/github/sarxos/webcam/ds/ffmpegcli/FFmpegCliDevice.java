@@ -185,8 +185,8 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 			return;
 		}
 
-		pipe = new File("/tmp/" + vfile.getName() + ".mjpeg");
-
+		pipe = new File(File.separator + "tmp" + File.separator + vfile.getName() + ".mjpeg");
+		
 		//@formatter:off
 		String[] cmd = new String[] { 
 			"ffmpeg", 
