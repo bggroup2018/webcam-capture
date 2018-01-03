@@ -7,7 +7,9 @@ import com.github.sarxos.webcam.WebcamDevice.BufferAccess;
 import com.github.sarxos.webcam.WebcamDriver;
 import com.github.sarxos.webcam.WebcamTask;
 
-
+/**
+ * WebcamReadBufferTask 
+ */
 public class WebcamReadBufferTask extends WebcamTask {
 
 	private volatile ByteBuffer target = null;

@@ -7,7 +7,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-
+/**
+ * WebcamPickerCellRenderer
+ */
 public class WebcamPickerCellRenderer extends JLabel implements ListCellRenderer {
 
 	private static final long serialVersionUID = 1L;

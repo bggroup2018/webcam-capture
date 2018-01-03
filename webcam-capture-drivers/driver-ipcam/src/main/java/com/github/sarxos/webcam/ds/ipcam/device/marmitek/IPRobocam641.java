@@ -7,7 +7,9 @@ import com.github.sarxos.webcam.WebcamException;
 import com.github.sarxos.webcam.ds.ipcam.IpCamDevice;
 import com.github.sarxos.webcam.ds.ipcam.IpCamMode;
 
-
+/**
+ * IPRobocam641
+ */
 public class IPRobocam641 extends IpCamDevice {
 
 	private URL base = null;

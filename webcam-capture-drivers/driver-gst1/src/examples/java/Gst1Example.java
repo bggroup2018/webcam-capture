@@ -2,7 +2,9 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamViewer;
 import com.github.sarxos.webcam.ds.gst1.Gst1Driver;
 
-
+/**
+ * Gst1Example
+ */
 public class Gst1Example {
 
 	static {

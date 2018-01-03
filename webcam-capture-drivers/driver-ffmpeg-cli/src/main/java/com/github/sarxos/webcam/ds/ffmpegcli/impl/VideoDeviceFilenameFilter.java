@@ -3,7 +3,9 @@ package com.github.sarxos.webcam.ds.ffmpegcli.impl;
 import java.io.File;
 import java.io.FilenameFilter;
 
-
+/**
+ *VideoDeviceFilenameFilter
+ */
 public class VideoDeviceFilenameFilter implements FilenameFilter {
 
 	private static final File DEV = new File("dev");

@@ -2,7 +2,9 @@ import java.io.IOException;
 
 import com.github.sarxos.webcam.Webcam;
 
-
+/**
+ * NonBlockingModeExample
+ */
 public class NonBlockingModeExample {
 
 	// this should be set only in development phase, it shall NOT be used in

@@ -19,7 +19,9 @@ package com.github.sarxos.webcam.util.jh;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 
-
+/**
+ * JHGrayFilter
+ */
 public class JHGrayFilter extends JHFilter {
 
 	protected boolean canFilterIndexColorModel = true;

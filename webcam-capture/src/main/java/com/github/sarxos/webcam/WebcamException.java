@@ -1,5 +1,7 @@
 package com.github.sarxos.webcam;
-
+/**
+ * WebcamException
+ */
 public class WebcamException extends RuntimeException {
 
 	private static final long serialVersionUID = 4305046981807594375L;

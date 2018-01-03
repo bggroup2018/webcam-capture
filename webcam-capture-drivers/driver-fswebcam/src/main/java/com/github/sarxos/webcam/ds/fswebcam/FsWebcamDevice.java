@@ -31,7 +31,9 @@ import com.github.sarxos.webcam.WebcamDevice.Configurable;
 import com.github.sarxos.webcam.WebcamExceptionHandler;
 import com.github.sarxos.webcam.WebcamResolution;
 
-
+/**
+ *FsWebcamDevice
+ */
 public class FsWebcamDevice implements WebcamDevice, Configurable {
 	/**
 	 * {@link #PARAM_KEY_COMPRESSION} String

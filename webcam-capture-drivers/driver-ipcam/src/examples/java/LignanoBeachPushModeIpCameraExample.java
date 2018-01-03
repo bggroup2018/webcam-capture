@@ -22,6 +22,9 @@ import com.github.sarxos.webcam.ds.ipcam.IpCamDeviceRegistry;
 import com.github.sarxos.webcam.ds.ipcam.IpCamDriver;
 import com.github.sarxos.webcam.ds.ipcam.IpCamMode;
 
+/**
+ * LignanoBeachPushModeIpCameraExample
+ */
 @SuppressWarnings("serial")
 public class LignanoBeachPushModeIpCameraExample extends JFrame {
 

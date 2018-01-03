@@ -1,7 +1,9 @@
 package com.github.sarxos.webcam;
 
 
-
+/**
+ * WebcamTask
+ */
 public abstract class WebcamTask {
 
 	private boolean doSync = true;

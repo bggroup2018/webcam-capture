@@ -6,7 +6,9 @@ import com.github.sarxos.webcam.WebcamPanel.DrawMode;
 import com.github.sarxos.webcam.WebcamResolution;
 import com.github.sarxos.webcam.ds.gstreamer.GStreamerDriver;
 
-
+/**
+ * WebcamPanelExample
+ */
 public class WebcamPanelExample {
 
 	static {

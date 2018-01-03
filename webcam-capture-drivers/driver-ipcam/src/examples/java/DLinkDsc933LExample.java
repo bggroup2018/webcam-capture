@@ -8,7 +8,9 @@ import com.github.sarxos.webcam.ds.ipcam.IpCamDeviceRegistry;
 import com.github.sarxos.webcam.ds.ipcam.IpCamDriver;
 import com.github.sarxos.webcam.ds.ipcam.device.dlink.DSC933L;
 
-
+/**
+ * DLinkDsc933LExample
+ */
 public class DLinkDsc933LExample {
 
 	static {

@@ -9,7 +9,9 @@ import javax.swing.JPanel;
 
 import com.github.sarxos.webcam.Webcam;
 
-
+/**
+ * TakePicturesAndPlayExample
+ */
 public class TakePicturesAndPlayExample {
 
 	private static final class PlayerPanel extends JPanel {

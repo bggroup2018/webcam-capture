@@ -11,7 +11,9 @@ import javax.imageio.ImageIO;
 
 import com.github.sarxos.webcam.util.ImageUtils;
 
-
+/**
+ * WebcamUtils
+ */
 public class WebcamUtils {
 
 	public static final void capture(Webcam webcam, File file) {

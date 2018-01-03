@@ -8,7 +8,9 @@ import javax.imageio.ImageIO;
 import com.github.sarxos.webcam.WebcamDevice;
 import com.github.sarxos.webcam.ds.buildin.WebcamDefaultDriver;
 
-
+/**
+ * PureDeviceTest
+ */
 public class PureDeviceTest {
 
 	public static void main(String[] args) {

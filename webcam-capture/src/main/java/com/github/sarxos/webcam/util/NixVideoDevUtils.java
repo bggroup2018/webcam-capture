@@ -3,7 +3,9 @@ package com.github.sarxos.webcam.util;
 import java.io.File;
 import java.io.FilenameFilter;
 
-
+/**
+ * NixVideoDevUtils
+ */
 public class NixVideoDevUtils implements FilenameFilter {
 
 	private static final File DEV = new File("dev");

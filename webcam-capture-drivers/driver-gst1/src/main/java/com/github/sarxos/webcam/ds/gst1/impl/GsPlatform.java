@@ -2,7 +2,9 @@ package com.github.sarxos.webcam.ds.gst1.impl;
 
 import java.io.File;
 
-
+/**
+ * GsPlatform
+ */
 public class GsPlatform {
 
 	private static final String OS_NAME = System.getProperty("os.name", "");

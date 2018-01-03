@@ -19,7 +19,9 @@ import javax.xml.transform.stream.StreamSource;
 import com.github.sarxos.webcam.WebcamException;
 import com.github.sarxos.webcam.ds.ipcam.impl.IpCamDescriptor;
 
-
+/**
+ * IpCamStorage
+ */
 @XmlRootElement(name = "storage")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class IpCamStorage {

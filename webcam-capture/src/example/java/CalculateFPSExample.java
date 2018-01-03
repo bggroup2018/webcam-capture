@@ -1,7 +1,9 @@
 
 import com.github.sarxos.webcam.Webcam;
 
-
+/**
+ * CalculateFPSExample
+ */
 public class CalculateFPSExample {
 
 	public static void main(String[] args) {

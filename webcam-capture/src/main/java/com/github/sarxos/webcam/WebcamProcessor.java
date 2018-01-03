@@ -12,7 +12,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * WebcamProcessor
+ */
 public class WebcamProcessor {
 
 	private static final Logger LOG = LoggerFactory.getLogger(WebcamProcessor.class);

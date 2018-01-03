@@ -16,7 +16,9 @@ import org.freedesktop.gstreamer.Structure;
 
 import com.github.sarxos.webcam.WebcamException;
 
-
+/**
+ * GsUtils
+ */
 public class GsUtils {
 
 	public static Element getCompatibleSource(String name) {

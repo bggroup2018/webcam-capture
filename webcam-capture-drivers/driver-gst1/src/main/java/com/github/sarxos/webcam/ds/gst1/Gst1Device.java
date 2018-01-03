@@ -27,7 +27,9 @@ import com.github.sarxos.webcam.ds.gst1.impl.GsUtils;
 import com.github.sarxos.webcam.util.Initializable;
 import com.github.sarxos.webcam.util.WebcamInitializer;
 
-
+/**
+ * Gst1Device
+ */
 public class Gst1Device implements WebcamDevice, Initializable {
 
 	/**

@@ -18,7 +18,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * WebcamDiscoveryService
+ */
 public class WebcamDiscoveryService implements Runnable {
 
 	private static final Logger LOG = LoggerFactory.getLogger(WebcamDiscoveryService.class);

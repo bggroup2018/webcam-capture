@@ -5,7 +5,9 @@ import java.awt.image.BufferedImage;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamResolution;
 
-
+/**
+ * CustomResolutionExample
+ */
 public class CustomResolutionExample {
 
 	public static void main(String[] args) {

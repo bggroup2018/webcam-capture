@@ -7,7 +7,9 @@ import com.github.sarxos.webcam.WebcamDevice;
 import com.github.sarxos.webcam.WebcamDriver;
 import com.github.sarxos.webcam.WebcamTask;
 
-
+/**
+ * WebcamOpenTask
+ */
 public class WebcamOpenTask extends WebcamTask {
 
 	private static final Logger LOG = LoggerFactory.getLogger(WebcamOpenTask.class);

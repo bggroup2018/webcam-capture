@@ -9,7 +9,9 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 
-
+/**
+ * WebcamPanelFlippingExample
+ */
 @SuppressWarnings("serial")
 public class WebcamPanelFlippingExample {
 

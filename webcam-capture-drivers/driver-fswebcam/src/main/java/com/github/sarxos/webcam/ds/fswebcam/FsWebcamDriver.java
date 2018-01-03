@@ -12,7 +12,9 @@ import com.github.sarxos.webcam.WebcamDiscoverySupport;
 import com.github.sarxos.webcam.WebcamDriver;
 import com.github.sarxos.webcam.ds.fswebcam.impl.VideoDeviceFilenameFilter;
 
-
+/**
+ * FsWebcamDriver
+ */
 public class FsWebcamDriver implements WebcamDriver, WebcamDiscoverySupport {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FsWebcamDriver.class);

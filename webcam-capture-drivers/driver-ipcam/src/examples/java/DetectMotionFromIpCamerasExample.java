@@ -15,7 +15,9 @@ import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.ds.ipcam.IpCamDriver;
 import com.github.sarxos.webcam.ds.ipcam.IpCamStorage;
 
-
+/**
+ * DetectMotionFromIpCamerasExample.java
+ */
 public class DetectMotionFromIpCamerasExample {
 
 	static {

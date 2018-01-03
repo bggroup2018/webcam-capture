@@ -29,7 +29,9 @@ import com.github.sarxos.webcam.ds.buildin.natives.Device;
 import com.github.sarxos.webcam.ds.buildin.natives.DeviceList;
 import com.github.sarxos.webcam.ds.buildin.natives.OpenIMAJGrabber;
 
-
+/**
+ * WebcamDefaultDevice
+ */
 public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable, WebcamDevice.FPSSource {
 
 	/**

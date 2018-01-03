@@ -22,7 +22,9 @@ import com.github.sarxos.webcam.ds.gst1.impl.GsUtils;
 import com.github.sarxos.webcam.util.NixVideoDevUtils;
 import com.sun.jna.Platform;
 
-
+/**
+ * Gst1Driver
+ */
 public class Gst1Driver implements WebcamDriver {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Gst1Driver.class);

@@ -4,7 +4,9 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.ds.dummy.WebcamDummyDriver;
 
-
+/**
+ * DummyDeviceExample
+ */
 public class DummyDeviceExample {
 
 	static {

@@ -4,7 +4,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.github.sarxos.webcam.Webcam;
 
-
+/**
+ * ConcurrentThreadsExample
+ */
 public class ConcurrentThreadsExample {
 
 	private static AtomicInteger counter = new AtomicInteger(0);

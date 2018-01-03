@@ -4,7 +4,9 @@ import static com.github.sarxos.webcam.util.ImageUtils.clamp;
 
 import java.awt.image.BufferedImage;
 
-
+/**
+ * JHNormalizeFilter
+ */
 public class JHNormalizeFilter extends JHFilter {
 
 	@Override

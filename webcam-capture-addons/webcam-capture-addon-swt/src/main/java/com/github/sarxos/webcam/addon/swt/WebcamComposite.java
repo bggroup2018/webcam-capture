@@ -34,7 +34,9 @@ import com.github.sarxos.webcam.WebcamException;
 import com.github.sarxos.webcam.WebcamExceptionHandler;
 import com.github.sarxos.webcam.WebcamListener;
 
-
+/**
+ *WebcamComposite
+ */
 public class WebcamComposite extends Composite implements WebcamListener, PaintListener {
 
 	private static final class CompositeThreadFactory implements ThreadFactory {

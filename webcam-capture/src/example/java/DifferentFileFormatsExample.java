@@ -6,7 +6,9 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamUtils;
 import com.github.sarxos.webcam.util.ImageUtils;
 
-
+/**
+ * DifferentFileFormatsExample
+ */
 public class DifferentFileFormatsExample {
 
 	public static void main(String[] args) {

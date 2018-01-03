@@ -8,7 +8,9 @@ import com.github.sarxos.webcam.WebcamDevice;
 import com.github.sarxos.webcam.WebcamDiscoverySupport;
 import com.github.sarxos.webcam.WebcamDriver;
 
-
+/**
+ * WebcamDummyDriver
+ */
 public class WebcamDummyDriver implements WebcamDriver, WebcamDiscoverySupport {
 
 	private int count;

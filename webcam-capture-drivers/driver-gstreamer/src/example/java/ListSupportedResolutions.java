@@ -3,7 +3,9 @@ import java.awt.Dimension;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.ds.gstreamer.GStreamerDriver;
 
-
+/**
+ * ListSupportedResolutions
+ */
 public class ListSupportedResolutions {
 
 	// uncomment if you would like debug prints to be visible, and don't

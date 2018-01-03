@@ -1,5 +1,8 @@
 package com.github.sarxos.webcam;
 
+/**
+ * WebcamLockException
+ */
 public class WebcamLockException extends WebcamException {
 
 	private static final long serialVersionUID = 1L;

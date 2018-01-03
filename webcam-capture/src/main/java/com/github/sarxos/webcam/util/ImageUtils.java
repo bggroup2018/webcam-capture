@@ -10,7 +10,9 @@ import javax.imageio.ImageIO;
 
 import com.github.sarxos.webcam.WebcamException;
 
-
+/**
+ * ImageUtils
+ */
 public class ImageUtils {
 
 	/**

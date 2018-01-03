@@ -1,7 +1,9 @@
 
 
 import com.github.sarxos.webcam.Webcam;
-
+/**
+ * DetectWebcamExample
+ */
 public class DetectWebcamExample {
 
 	public static void main(String[] args) {

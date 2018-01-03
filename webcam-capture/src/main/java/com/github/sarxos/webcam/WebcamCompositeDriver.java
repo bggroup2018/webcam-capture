@@ -3,7 +3,9 @@ package com.github.sarxos.webcam;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * WebcamCompositeDriver
+ */
 public class WebcamCompositeDriver implements WebcamDriver, WebcamDiscoverySupport {
 
 	private List<WebcamDriver> drivers = new ArrayList<WebcamDriver>();

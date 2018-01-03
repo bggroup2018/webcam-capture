@@ -28,7 +28,9 @@ import org.slf4j.LoggerFactory;
 import com.github.sarxos.webcam.WebcamDevice;
 import com.github.sarxos.webcam.WebcamResolution;
 
-
+/**
+ * GStreamerDevice
+ */
 public class GStreamerDevice implements WebcamDevice, RGBDataSink.Listener, WebcamDevice.FPSSource {
 
 	/**

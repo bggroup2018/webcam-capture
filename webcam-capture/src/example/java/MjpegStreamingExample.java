@@ -1,7 +1,9 @@
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamStreamer;
 
-
+/**
+ * MjpegStreamingExample
+ */
 public class MjpegStreamingExample {
 
 	public static void main(String[] args) throws InterruptedException {

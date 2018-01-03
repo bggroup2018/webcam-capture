@@ -21,7 +21,9 @@ import org.slf4j.LoggerFactory;
 
 import com.github.sarxos.webcam.WebcamDevice;
 
-
+/**
+ *FFmpegCliDevice
+ */
 public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FFmpegCliDevice.class);

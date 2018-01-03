@@ -9,7 +9,9 @@ import com.github.sarxos.webcam.WebcamDevice;
 import com.github.sarxos.webcam.WebcamDriver;
 import com.github.sarxos.webcam.WebcamTask;
 
-
+/**
+ * WebcamGetImageTask
+ */
 public class WebcamGetImageTask extends WebcamTask {
 
 	private static final Logger LOG = LoggerFactory.getLogger(WebcamGetImageTask.class);

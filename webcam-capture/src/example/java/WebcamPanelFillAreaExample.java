@@ -3,7 +3,9 @@ import javax.swing.JFrame;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 
-
+/**
+ * WebcamPanelFillAreaExample
+ */
 public class WebcamPanelFillAreaExample {
 
 	public static void main(String[] args) throws InterruptedException {

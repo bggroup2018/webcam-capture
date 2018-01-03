@@ -47,6 +47,10 @@ public interface WebcamDevice {
 
 	}
 
+	/**
+	 * {@link FPSSource}
+	 *  Get current device FPS.
+	 */
 	public static interface FPSSource {
 
 		/**

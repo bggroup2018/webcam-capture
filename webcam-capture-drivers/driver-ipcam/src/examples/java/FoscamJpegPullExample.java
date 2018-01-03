@@ -9,7 +9,9 @@ import com.github.sarxos.webcam.ds.ipcam.IpCamDeviceRegistry;
 import com.github.sarxos.webcam.ds.ipcam.IpCamDriver;
 import com.github.sarxos.webcam.ds.ipcam.IpCamMode;
 
-
+/**
+ * FoscamJpegPullExample
+ */
 public class FoscamJpegPullExample {
 
 	static {

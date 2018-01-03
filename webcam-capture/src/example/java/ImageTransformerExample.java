@@ -8,7 +8,9 @@ import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 import com.github.sarxos.webcam.util.jh.JHGrayFilter;
 
-
+/**
+ * ImageTransformerExample
+ */
 public class ImageTransformerExample implements WebcamImageTransformer {
 
 	private static final JHGrayFilter GRAY = new JHGrayFilter();
