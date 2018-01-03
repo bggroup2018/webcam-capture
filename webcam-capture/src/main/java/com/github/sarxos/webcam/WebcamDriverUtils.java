@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 public class WebcamDriverUtils {
 
 	private static final Logger LOG = LoggerFactory.getLogger(WebcamDriverUtils.class);
+	
+	static Class<?> clazz = null;
+	String nome = null;
 
 	private WebcamDriverUtils() {
 	}
@@ -40,13 +43,8 @@ public class WebcamDriverUtils {
 					break;
 				}
 			}
-			try {
-				if (clazz == null) {
-					clazz = Class.forName(name);
-				}
-			} catch (ClassNotFoundException e) {
-				LOG.trace("Class not found {}, fall thru", name);
-			}
+
+			MetodoDiAppoggio(name);
 
 			if (clazz == null) {
 				LOG.debug("Driver {} not found", name);
@@ -61,7 +59,17 @@ public class WebcamDriverUtils {
 
 		return null;
 	}
-	
+
+	private static void MetodoDiAppoggio(String nome) {
+		try {
+			if (clazz == null) {
+				clazz = Class.forName(nome);
+			}
+		} catch (ClassNotFoundException e) {
+			LOG.trace("Class not found {}, fall thru", nome);
+		}
+	}
+
 	// create new istance
 	private static WebcamDriver newIstance(Class<?> clazz){
 		try {
