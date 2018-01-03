@@ -44,8 +44,9 @@ public class ImageUtils {
 	 * @param image the image to be converted
 	 * @param format the output image format
 	 * @return New array of bytes
+	 * @throws IOException 
 	 */
-	public static byte[] toByteArray(BufferedImage image, String format) {
+	public static byte[] toByteArray(BufferedImage image, String format) throws IOException {
 
 		byte[] bytes = null;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -56,31 +57,22 @@ public class ImageUtils {
 		} catch (IOException e) {
 			throw new WebcamException("failed or interrupted I/O operation");
 		} finally {
-			try {
 				baos.close();
-			} catch (IOException e) {
-				throw new WebcamException("failed or interrupted I/O operation");
-			}
 		}
 
 		return bytes;
 	}
 
-	public static BufferedImage readFromResource(String resource) {
+	public static BufferedImage readFromResource(String resource) throws IOException {
 		InputStream is = null;
 		try {
 			return ImageIO.read(is = ImageUtils.class.getClassLoader().getResourceAsStream(resource));
 		} catch (IOException e) {
 			throw new IllegalStateException("failed or interrupted I/O operation");
 		} finally {
-			if (is != null) {
-				try {
-					is.close();
-				} catch (IOException e) {
-					throw new IllegalStateException("failed or interrupted I/O operation");
-				}
-			}
+				is.close();
 		}
+		
 	}
 
 	public static BufferedImage createEmptyImage(final BufferedImage source) {

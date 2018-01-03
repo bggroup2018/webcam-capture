@@ -49,7 +49,7 @@ public class FFmpegCliDriver implements WebcamDriver, WebcamDiscoverySupport {
 	}
 	
 	@Override
-	public List<WebcamDevice> getDevices() {
+	public List<WebcamDevice> getDevices() throws IOException {
 
 		File[] vfiles = VFFILTER.getVideoFiles();
 
@@ -94,12 +94,8 @@ public class FFmpegCliDriver implements WebcamDriver, WebcamDiscoverySupport {
 		}catch (IOException e) {
 			throw new RuntimeException("failed or interrupted I/O operation");
 		} finally {
-			try {
 				is1.close();
 				is2.close();
-			} catch (IOException e) {
-				throw new RuntimeException("failed or interrupted I/O operation");
-			}
 		}
 
 		return devices;

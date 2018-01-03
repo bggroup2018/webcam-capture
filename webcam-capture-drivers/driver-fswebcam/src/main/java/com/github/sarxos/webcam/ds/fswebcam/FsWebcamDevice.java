@@ -246,11 +246,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 				process.destroy();
 				throw new RuntimeException("failed or interrupted I/O operation");
 			} finally {
-				try {
-					bais.close();
-				} catch (IOException e) {
-					throw new RuntimeException("failed or interrupted I/O operation");
-				}
+				bais.close();
 			}
 
 			process.waitFor();

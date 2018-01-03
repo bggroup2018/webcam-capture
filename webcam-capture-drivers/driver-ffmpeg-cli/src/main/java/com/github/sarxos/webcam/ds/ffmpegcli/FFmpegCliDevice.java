@@ -156,7 +156,7 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 	}
 
 	@Override
-	public BufferedImage getImage() {
+	public BufferedImage getImage() throws IOException {
 
 		if (!open.get()) {
 			return null;
@@ -168,11 +168,7 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 		} catch (IOException e) {
 			throw new RuntimeException("failed or interrupted I/O operations");
 		} finally {
-			try {
 				bais.close();
-			} catch (IOException e) {
-				throw new RuntimeException("failed or interrupted I/O operations");
-			}
 		}
 	}
 

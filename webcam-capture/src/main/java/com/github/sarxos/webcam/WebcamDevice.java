@@ -2,6 +2,7 @@ package com.github.sarxos.webcam;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Map;
 
@@ -110,8 +111,9 @@ public interface WebcamDevice {
 	 * Fetch image from underlying camera.
 	 * 
 	 * @return Image
+	 * @throws IOException 
 	 */
-	BufferedImage getImage();
+	BufferedImage getImage() throws IOException;
 
 	/**
 	 * Open device, it can be closed any time.

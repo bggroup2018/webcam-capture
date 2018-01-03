@@ -1,5 +1,6 @@
 package com.github.sarxos.webcam;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -15,8 +16,9 @@ public interface WebcamDriver {
 	 * Return all registered webcam devices.
 	 * 
 	 * @return List of webcam devices
+	 * @throws IOException 
 	 */
-	List<WebcamDevice> getDevices();
+	List<WebcamDevice> getDevices() throws IOException;
 
 	/**
 	 * Is driver thread-safe. Thread safe drivers operations does not have to be
