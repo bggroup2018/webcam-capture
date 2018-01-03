@@ -40,7 +40,8 @@ public class DualNativeAndMjpegWebcamExample {
 	public static void main(String[] args) throws MalformedURLException {
 
 		// register IP camera device
-		IpCamDeviceRegistry.register(new IpCamDevice("Lignano Beach", "http://88.37.116.138/mjpg/video.mjpg", IpCamMode.PUSH));
+		String ip =  "http://88.37.116.138/mjpg/video.mjpg";
+		IpCamDeviceRegistry.register(new IpCamDevice("Lignano Beach",ip, IpCamMode.PUSH));
 
 		JFrame window = new JFrame("Live Views From Lignano Beach (Italy)");
 		window.setLayout(new FlowLayout());
