@@ -1,1 +1,5 @@
 /bin/
+webcam-capture-drivers/driver-gst1/src/main/java/com/github/sarxos/webcam/ds/gst1/impl/GsUtils.java
+webcam-capture-drivers/driver-gst1/src/main/java/com/github/sarxos/webcam/ds/gst1/impl/GsUtils.java
+webcam-capture-drivers/driver-ipcam/src/examples/java/DetectMotionFromIpCamerasExample.java
+webcam-capture/src/main/java/com/github/sarxos/webcam/WebcamPanel.java
