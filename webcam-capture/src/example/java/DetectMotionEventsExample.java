@@ -34,24 +34,24 @@ public class DetectMotionEventsExample {
 				boolean motion = false;
 				long now = 0;
 
-				while (true) {
-					now = System.currentTimeMillis();
-					if (detector.isMotion()) {
-						if (!motion) {
-							motion = true;
-							System.out.println(now + " MOTION STARTED");
+				try {
+					while (true) {
+						now = System.currentTimeMillis();
+						if (detector.isMotion()) {
+							if (!motion) {
+								motion = true;
+								System.out.println(now + " MOTION STARTED");
+							}
+						} else {
+							if (motion) {
+								motion = false;
+								System.out.println(now + " MOTION STOPPED");
+							}
 						}
-					} else {
-						if (motion) {
-							motion = false;
-							System.out.println(now + " MOTION STOPPED");
-						}
-					}
-					try {
 						Thread.sleep(50); // must be smaller than interval
-					} catch (InterruptedException e) {
-						System.out.println("The thread has been interrupted");
 					}
+				} catch (InterruptedException e) {
+					System.out.println("The thread has been interrupted");
 				}
 			}
 		};

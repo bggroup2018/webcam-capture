@@ -45,12 +45,12 @@ final class WebcamDeallocator {
 	}
 
 	protected void deallocate() {
-		for (Webcam w : webcams) {
-			try {
+		try {
+			for (Webcam w : webcams) {
 				w.dispose();
-			} catch (Throwable t) {
-				caugh(t);
 			}
+		} catch (Throwable t) {
+			caugh(t);
 		}
 	}
 
@@ -67,5 +67,4 @@ final class WebcamDeallocator {
 			}
 		}
 	}
-
 }

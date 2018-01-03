@@ -114,26 +114,26 @@ public class GsUtils {
 	public List<String> getVideoIdentifiers() {
 
 		final List<String> ids = new ArrayList<>();
+		final Element source = null;
+		
+		try {
+			for (int i = 0; i < 50; i++) {
 
-		for (int i = 0; i < 50; i++) {
+				final String id = getCompatibleSourceIdentifier(i);
+				final String property = getCompatibleSourceProperty();
+				source = getCompatibleSource(id);
 
-			final String id = getCompatibleSourceIdentifier(i);
-			final String property = getCompatibleSourceProperty();
-			final Element source = getCompatibleSource(id);
+				source.set(property, id);
+				source.setState(State.NULL);
 
-			source.set(property, id);
-			source.setState(State.NULL);
-
-			try {
 				if (source.setState(State.READY) != StateChangeReturn.FAILURE) {
 					ids.add(id);
 				}
-			} finally {
-				source.setState(State.NULL);
-				source.dispose();
 			}
+		} finally {
+			source.setState(State.NULL);
+			source.dispose();
 		}
-
 		return ids;
 	}
 }

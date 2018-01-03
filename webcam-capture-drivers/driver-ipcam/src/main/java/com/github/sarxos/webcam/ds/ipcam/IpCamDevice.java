@@ -84,25 +84,30 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 		@Override
 		public void run() {
 
+			while (running) {
+				MetodoDiAppoggio();
+			}
+		}
+
+		private void MetodoDiAppoggio () {
+
 			long t1;
 			long t2;
 
-			while (running) {
-				try (final IpCamMJPEGStream stream = request(uri)) {
-					do {
-						t1 = System.currentTimeMillis();
-						if ((tmp = stream.readFrame()) != null) {
-							image = tmp;
-						}
-						t2 = System.currentTimeMillis();
-						fps = (double) 1000 / (t2 - t1 + 1);
-					} while (running && !stream.isClosed());
-				} catch (IOException e) {
-					if (e instanceof EOFException) { // EOF, ignore error and recreate stream
-						continue;
+			try (final IpCamMJPEGStream stream = request(uri)) {
+				do {
+					t1 = System.currentTimeMillis();
+					if ((tmp = stream.readFrame()) != null) {
+						image = tmp;
 					}
-					LOG.error("Cannot read MJPEG frame", e);
+					t2 = System.currentTimeMillis();
+					fps = (double) 1000 / (t2 - t1 + 1);
+				} while (running && !stream.isClosed());
+			} catch (IOException e) {
+				if (e instanceof EOFException) { // EOF, ignore error and recreate stream
+					continue;
 				}
+				LOG.error("Cannot read MJPEG frame", e);
 			}
 		}
 

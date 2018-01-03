@@ -173,20 +173,21 @@ public class WebcamUpdater implements Runnable {
 	 * Stop updater.
 	 */
 	public void stop() {
-		if (running.compareAndSet(true, false)) {
-
-			executor.shutdown();
-			while (!executor.isTerminated()) {
-				try {
+		try {
+			if (running.compareAndSet(true, false)) {
+				
+				executor.shutdown();
+				
+				while (!executor.isTerminated()) {
 					executor.awaitTermination(100, TimeUnit.MILLISECONDS);
-				} catch (InterruptedException e) {
-					return;
-				}
-			}
-
-			LOG.debug("Webcam updater has been stopped");
-		} else {
-			LOG.debug("Webcam updater is already stopped");
+				} 
+				LOG.debug("Webcam updater has been stopped");
+				
+			} else {
+				LOG.debug("Webcam updater is already stopped");
+			} 
+		} catch (InterruptedException e) {
+			return;
 		}
 	}
 
@@ -273,24 +274,25 @@ public class WebcamUpdater implements Runnable {
 	public BufferedImage getImage() {
 
 		int i = 0;
-		while (image.get() == null) {
+		
+		try {
+			while (image.get() == null) {
 
-			// Just in case if another thread starts calling this method before
-			// updater has been properly started. This will loop while image is
-			// not available.
+				// Just in case if another thread starts calling this method before
+				// updater has been properly started. This will loop while image is
+				// not available.
 
-			try {
 				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				throw new RuntimeException("The thread has been interrupted");
-			}
 
-			// Return null if more than 10 seconds passed (timeout).
+				// Return null if more than 10 seconds passed (timeout).
 
-			if (i++ > 100) {
-				LOG.error("Image has not been found for more than 10 seconds");
-				return null;
+				if (i++ > 100) {
+					LOG.error("Image has not been found for more than 10 seconds");
+					return null;
+				}
 			}
+		} catch (InterruptedException e) {
+			throw new RuntimeException("The thread has been interrupted");
 		}
 
 		imageNew = false;

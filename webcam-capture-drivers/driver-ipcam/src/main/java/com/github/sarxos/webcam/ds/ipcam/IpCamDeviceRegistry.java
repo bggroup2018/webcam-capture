@@ -149,20 +149,19 @@ public class IpCamDeviceRegistry {
 			throw new IllegalArgumentException("Camera device URI cannot be null");
 		}
 
-		for (IpCamDevice d : DEVICES) {
+		try {
+			for (IpCamDevice d : DEVICES) {
 
-			// URL.euals() method is broken and thus we shall not depend on
-			// it, the best w/a is to use URI instead
+				// URL.euals() method is broken and thus we shall not depend on
+				// it, the best w/a is to use URI instead
 
-			try {
 				if (d.getURL().toURI().equals(uri)) {
 					return true;
 				}
-			} catch (URISyntaxException e) {
-				throw new WebcamException("String could not be parsed as a URI reference");
 			}
+		} catch (URISyntaxException e) {
+			throw new WebcamException("String could not be parsed as a URI reference");
 		}
-
 		return false;
 	}
 

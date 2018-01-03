@@ -50,21 +50,20 @@ public class WebcamLock {
 
 		@Override
 		public void run() {
-			do {
-				if (disabled.get()) {
-					return;
-				}
-				update();
-				try {
+			try {
+				do {
+					if (disabled.get()) {
+						return;
+					}
+					update();
 					Thread.sleep(INTERVAL);
-				} catch (InterruptedException e) {
-					LOG.debug("Lock updater has been interrupted");
-					return;
-				}
-			} while (locked.get());
-		}
+				} while (locked.get());
 
-	}
+			} catch (InterruptedException e) {
+				LOG.debug("Lock updater has been interrupted");
+			}
+
+		}
 
 	/**
 	 * And the Webcam we will be locking.

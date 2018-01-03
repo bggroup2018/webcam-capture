@@ -178,21 +178,33 @@ public class IpCamDriver implements WebcamDriver, WebcamDiscoverySupport {
 	}
 	
 	private void CiclomaticComplexityReduced(List<IpCamDevice> online, List<Future<IpCamDevice>> futures){
+
+		IpCamDevice device = null;
+
 		for (Future<IpCamDevice> future : futures) {
 
-			IpCamDevice device = null;
-			try {
-				if ((device = future.get()) != null) {
-					online.add(device);
-				}
-			} catch (InterruptedException e) {
-				LOG.debug(e.getMessage(), e);
-			} catch (CancellationException e) {
-				continue;
-			} catch (ExecutionException e) {
-				LOG.error(e.getMessage(), e);
-			}
+			if (MetodoDiAppoggio(future) != null)
+				online.add(device);
 		}
+	}
+
+	private IpCamDevice MetodoDiAppoggio (Future<IpCamDevice> future) {
+
+		IpCamDevice device = null;
+
+		try {
+			if ((future.get()) != null) {
+				device = future.get();
+			}
+		} catch (InterruptedException e) {
+			LOG.debug(e.getMessage(), e);
+		} catch (CancellationException e) {
+			device = null;
+		} catch (ExecutionException e) {
+			LOG.error(e.getMessage(), e);
+			device = null;
+		}
+		return device;
 	}
 
 	public void register(IpCamDevice device) {

@@ -501,12 +501,12 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 				repaintPanel();
 
 				// loop when starting, to wait for images
-				while (starting) {
-					try {
+				try {
+					while (starting) {
 						Thread.sleep(50);
-					} catch (InterruptedException e) {
-						throw new RuntimeException("The thread has been interrupted");
 					}
+				} catch (InterruptedException e) {
+					throw new RuntimeException("The thread has been interrupted");
 				}
 
 				// schedule update when webcam is open, otherwise schedule
