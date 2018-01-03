@@ -133,16 +133,22 @@ public class WebcamDummyDevice implements WebcamDevice {
 
 	@Override
 	public void open() {
-		if (open.compareAndSet(false, true)) {
-			// ...
-		}
+//		if (open.compareAndSet(false, true)) {
+//			// ...
+//		}
+		if(!this.isOpen())
+			open.lazySet(true);
+		else
+			System.err.println("Already open");
 	}
 
 	@Override
 	public void close() {
-		if (open.compareAndSet(true, false)) {
-			// ...
-		}
+//		if (open.compareAndSet(true, false)) {
+//		
+//		}
+		if(this.isOpen())
+			open.lazySet(false);
 	}
 
 	@Override
