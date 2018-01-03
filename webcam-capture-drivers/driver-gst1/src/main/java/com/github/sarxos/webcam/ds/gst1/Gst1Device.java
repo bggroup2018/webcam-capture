@@ -342,6 +342,7 @@ public class Gst1Device implements WebcamDevice, Initializable {
 							return f;
 						}
 						break;
+					default:
 				}
 			}
 		}

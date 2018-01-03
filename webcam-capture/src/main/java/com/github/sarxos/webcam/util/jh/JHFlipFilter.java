@@ -98,6 +98,7 @@ public class JHFlipFilter extends JHFilter {
 						newRow = h - row - 1;
 						newCol = w - col - 1;
 						break;
+					default:
 				}
 				int newIndex = newRow * newW + newCol;
 				newPixels[newIndex] = inPixels[index];
@@ -128,6 +129,7 @@ public class JHFlipFilter extends JHFilter {
 				break;
 			case FLIP_180:
 				break;
+			default:
 		}
 
 		int[] newPixels = new int[newW * newH];
@@ -152,6 +154,7 @@ public class JHFlipFilter extends JHFilter {
 				return "Rotate -90";
 			case FLIP_180:
 				return "Rotate 180";
+			default:
 		}
 		return "Flip";
 	}
