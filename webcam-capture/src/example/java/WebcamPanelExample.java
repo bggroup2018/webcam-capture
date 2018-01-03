@@ -4,7 +4,9 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 
-
+/**
+ * WebcamPanelExample
+ */
 public class WebcamPanelExample {
 
 	public static void main(String[] args) throws InterruptedException {
