@@ -140,13 +140,13 @@ public class MultipointMotionDetectionExample implements WebcamMotionListener, W
 
 		// Gets all the remaining points after removing the exceeded ones and then renders the
 		// current ones as a red square
-
+		
 		for (Map.Entry<Point, Integer> ent : motionPoints.entrySet()) {
 
 			Point p = ent.getKey();
 			int xx = p.x - (renderSize / 2), yy = p.y - (renderSize / 2);
 
-			Rectangle bounds = new Rectangle(xx, yy, renderSize, renderSize);
+			Rectangle bounds = createRectangle(xx, yy);
 
 			int dx = (int) (0.1 * bounds.width);
 			int dy = (int) (0.2 * bounds.height);
@@ -159,5 +159,9 @@ public class MultipointMotionDetectionExample implements WebcamMotionListener, W
 			g2.setColor(Color.RED);
 			g2.drawRect(x, y, w, h);
 		}
+	}
+	
+	private Rectangle createRectangle(int xx, int yy){
+		return new Rectangle(xx, yy, renderSize, renderSize);
 	}
 }

@@ -70,17 +70,22 @@ public class DetectMotionFromIpCamerasExample {
 
 		for (int i = 0; i < webcams.size(); i++) {
 			final int x = i;
-			Thread t = new Thread() {
-
-				@Override
-				public void run() {
-					webcams.get(x).open(); // open in asynchronous mode
-					panels.get(x).start();
-					detectors.get(x).start();
-				}
-			};
+			Thread t = createThread(x, webcams, panels, detectors);
+			
 			t.setDaemon(true);
 			t.start();
 		}
+	}
+
+	private Thread createThread(int x, List<Webcam>webcams, List<WebcamPanel> panels, List<WebcamMotionDetector> detectors){
+		return new Thread(){
+
+			@Override
+			public void run() {
+				webcams.get(x).open(); // open in asynchronous mode
+				panels.get(x).start();
+				detectors.get(x).start();
+			}
+		};
 	}
 }

@@ -27,7 +27,8 @@ public class FFmpegCliDriver implements WebcamDriver, WebcamDiscoverySupport {
 	private static final String MARKER = "mjpeg";
 	private static final String STARTER = "[video4linux";
 
-	private final void CiclomaticComlexityReduced(File vfile, String[] cmd, List<WebcamDevice> devices, OutputStream os, InputStream is1, InputStream is2, Process process , String line , BufferedReader br1, BufferedReader br2){
+	private final void CiclomaticComlexityReduced(File vfile, String[] cmd, List<WebcamDevice> devices, OutputStream os, InputStream is1, InputStream is2, Process process , String line , BufferedReader br1, BufferedReader br2) throws IOException{
+		boolean read = false;
 		while ((line = br2.readLine()) != null) {
 			if (line.startsWith(STARTER) && line.indexOf(MARKER) != -1) {
 				LOG.debug("Command stderr line: {}", line);
@@ -63,13 +64,13 @@ public class FFmpegCliDriver implements WebcamDriver, WebcamDiscoverySupport {
 		BufferedReader br1 = null;
 		BufferedReader br2 = null;
 
-		try {
+		try {String[] cmd = new String[]{"ffmpeg", "-f", "video4linux2", "-list_formats", "all", "-i",""};
+			StringBuilder sb = new StringBuilder();
 			for (File vfile : vfiles) {
 
-				String[] cmd = new String[] { "ffmpeg", "-f", "video4linux2", "-list_formats", "all", "-i", vfile.getAbsolutePath() };
+				cmd[6] = vfile.getAbsolutePath();
 
 				if (LOG.isDebugEnabled()) {
-					StringBuilder sb = new StringBuilder();
 					for (String c : cmd) {
 						sb.append(c).append(' ');
 					}
@@ -87,8 +88,6 @@ public class FFmpegCliDriver implements WebcamDriver, WebcamDiscoverySupport {
 
 				br1 = new BufferedReader(new InputStreamReader(is1));
 				br2 = new BufferedReader(new InputStreamReader(is2));
-
-				boolean read = false;
 
 				this.CiclomaticComlexityReduced(vfile, cmd, devices, os, is1, is2, process, line, br1, br2);		
 			} 

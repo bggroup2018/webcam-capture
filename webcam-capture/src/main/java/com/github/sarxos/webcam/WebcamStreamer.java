@@ -86,10 +86,11 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 				socket.setSoTimeout(0);
 				socket.setKeepAlive(false);
 				socket.setTcpNoDelay(true);
-
+				
+				StringBuilder sb = new StringBuilder();
 				while (started.get()) {
 
-					StringBuilder sb = new StringBuilder();
+					
 					sb.append("HTTP/1.0 200 OK").append(CRLF);
 					sb.append("Connection: close").append(CRLF);
 					sb.append("Cache-Control: no-cache").append(CRLF);
@@ -192,7 +193,8 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 			LOG.info("Closing connection from {}", socket.getRemoteSocketAddress());
 
 			try {
-				for (Closeable closeable : new Closeable[] { br, bos, baos }) {
+				Closeable []toClose = new Closeable[] { br, bos, baos };
+				for (Closeable closeable : toClose) {
 					closeable.close();
 				}
 			} catch (IOException e) {

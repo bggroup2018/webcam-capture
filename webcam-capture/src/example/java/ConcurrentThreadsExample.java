@@ -42,21 +42,4 @@ public class ConcurrentThreadsExample {
 		}
 	}
 
-	public static void main(String[] args) throws Throwable {
-
-		/**
-		 * This example will start several concurrent threads which use single
-		 * webcam instance.
-		 */
-
-		int n = Runtime.getRuntime().availableProcessors() * 4;
-		for (int i = 0; i < n; i++) {
-			System.out.println("Thread: " + i);
-			new Capture().start();
-		}
-
-		Thread.sleep(5 * 60 * 1000); // 5 minutes
-
-		System.exit(1);
-	}
 }

@@ -1,4 +1,4 @@
-package com.github.sarxos.webcam.ds.gst1;
+	package com.github.sarxos.webcam.ds.gst1;
 
 import java.io.File;
 import java.io.IOException;
@@ -103,7 +103,9 @@ public class Gst1Driver implements WebcamDriver {
 	}
 
 	public static void main(String[] args) throws IOException {
-		for (WebcamDevice d : new Gst1Driver().getDevices()) {
+		List<WebcamDevice> device = new Gst1Driver().getDevices();
+		
+		for (WebcamDevice d : device) {
 			System.out.println(d);
 			d.getResolutions();
 			d.open();
