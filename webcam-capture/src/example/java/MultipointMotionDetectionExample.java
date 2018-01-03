@@ -32,7 +32,14 @@ public class MultipointMotionDetectionExample implements WebcamMotionListener, W
 
 	private static final int INTERVAL = 100; // ms
 
+	/**
+	 * {@link webcam} Webcam
+	 */
 	public static Webcam webcam;
+	
+	/**
+	 * {@link painter}  WebcamPanel.Painter
+	 */
 	public static WebcamPanel.Painter painter = null;
 
 	public MultipointMotionDetectionExample() {

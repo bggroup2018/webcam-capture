@@ -15,10 +15,24 @@ import com.github.sarxos.webcam.ds.ipcam.IpCamMode;
  * @author Bartosz Firyn (SarXos)
  */
 public class X104S extends IpCamDevice {
-
+	/**
+	 * {@link #SIZE_SXGA} Dimension
+	 */
 	public static final Dimension SIZE_SXGA = new Dimension(1280, 1024);
+	
+	/**
+	 * {@link #SIZE_VGA} Dimension
+	 */
 	public static final Dimension SIZE_VGA = new Dimension(640, 480);
+	
+	/**
+	 * {@link #SIZE_QVGA} Dimension
+	 */
 	public static final Dimension SIZE_QVGA = new Dimension(320, 240);
+	
+	/**
+	 * {@link #SIZE_QQVGA} Dimension
+	 */
 	public static final Dimension SIZE_QQVGA = new Dimension(160, 128);
 
 	//@formatter:off

@@ -28,7 +28,7 @@ import com.sun.jna.Platform;
  * @author Bartosz Firyn (sarxos)
  */
 public class GStreamerDriver implements WebcamDriver {
-
+	
 	private static final Logger LOG = LoggerFactory.getLogger(GStreamerDriver.class);
 
 	private static final class GStreamerShutdownHook extends Thread {
@@ -100,9 +100,20 @@ public class GStreamerDriver implements WebcamDriver {
 
 		Runtime.getRuntime().addShutdownHook(new GStreamerShutdownHook());
 	}
-
+	
+	/**
+	 * {@link #FORMAT_RGB} String
+	 */
 	public static final String FORMAT_RGB = "video/x-raw-rgb";
+	
+	/**
+	 * {@link #FORMAT_YUV} String
+	 */
 	public static final String FORMAT_YUV = "video/x-raw-yuv";
+	
+	/**
+	 * {@link #FORMAT_MJPEG} String
+	 */
 	public static final String FORMAT_MJPEG = "image/jpeg";
 
 	protected static final String SRC_WINDOWS_KERNEL_STREAMING = "ksvideosrc";

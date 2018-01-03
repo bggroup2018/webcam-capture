@@ -16,8 +16,19 @@ import com.github.sarxos.webcam.ds.ipcam.IpCamMode;
  */
 public class B7210 extends IpCamDevice {
 
+	/**
+	 * {@link #SIZE_HD_1080} Dimension
+	 */
 	public static final Dimension SIZE_HD_1080 = new Dimension(1280, 1024);
+	
+	/**
+	 * {@link #SIZE_43_960} Dimension
+	 */
 	public static final Dimension SIZE_43_960 = new Dimension(1280, 960);
+	
+	/**
+	 * {@link #SIZE_QVGA} Dimension
+	 */
 	public static final Dimension SIZE_QVGA = new Dimension(320, 240);
 
 	//@formatter:off

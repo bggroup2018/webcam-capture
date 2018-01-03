@@ -15,9 +15,19 @@ import com.github.sarxos.webcam.ds.ipcam.IpCamMode;
  * @author Bartosz Firyn (SarXos)
  */
 public class F3201 extends IpCamDevice {
-
+	/**
+	 * {@link #SIZE_HD_1080} Dimension
+	 */
 	public static final Dimension SIZE_HD_1080 = new Dimension(1280, 1024);
+	
+	/**
+	 * {@link #SIZE_HD_720} Dimension
+	 */
 	public static final Dimension SIZE_HD_720 = new Dimension(1280, 720);
+	
+	/**
+	 * {@link #SIZE_QVGA} Dimension
+	 */
 	public static final Dimension SIZE_QVGA = new Dimension(320, 240);
 
 	//@formatter:off

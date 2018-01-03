@@ -442,6 +442,9 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 	 */
 	private static final ThreadFactory THREAD_FACTORY = new PanelThreadFactory();
 
+	/**
+	 * {@link #DEFAULT_IMAGE_RENDERING_HINTS} Map<RenderingHints.Key, Object>
+	 */
 	public static final Map<RenderingHints.Key, Object> DEFAULT_IMAGE_RENDERING_HINTS = new HashMap<RenderingHints.Key, Object>();
 	static {
 		DEFAULT_IMAGE_RENDERING_HINTS.put(KEY_INTERPOLATION, VALUE_INTERPOLATION_BILINEAR);
