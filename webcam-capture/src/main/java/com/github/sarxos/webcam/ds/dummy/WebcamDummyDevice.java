@@ -64,13 +64,17 @@ public class WebcamDummyDevice implements WebcamDevice {
 
 	private void drawRect(Graphics2D g2, int w, int h) {
 
-		int rx = (int) (w * Math.random() / 1.5);
-		int ry = (int) (h * Math.random() / 1.5);
-		int rw = (int) (w * Math.random() / 1.5);
-		int rh = (int) (w * Math.random() / 1.5);
+		int rx = randNumber(w);
+		int ry = randNumber(h);
+		int rw = randNumber(w);
+		int rh = randNumber(w);
 
 		g2.setColor(new Color((int) (Integer.MAX_VALUE * Math.random())));
 		g2.fillRect(rx, ry, rw, rh);
+	}
+	
+	private static int randNumber(int i){
+		return (int) (i * Math.random() / 1.5);
 	}
 
 	@Override
