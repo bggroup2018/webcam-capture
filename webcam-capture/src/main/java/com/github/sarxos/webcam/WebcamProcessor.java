@@ -76,19 +76,14 @@ public class WebcamProcessor {
 		@Override
 		public void run() {
 
-			boolean interrupt = false;
 			WebcamTask t = null;
 
 			try {
 				while (true) {
-					if (interrupt == true) {
-						break;
-					}
-
 					(t = inbound.take()).handle();
 				}
 			} catch (InterruptedException e) {
-				interrupt = true;
+				System.out.println("The thread has been interrupted");
 			} catch (Throwable e) {
 				if (t != null) {
 					t.setThrowable(e);
@@ -99,7 +94,7 @@ public class WebcamProcessor {
 						outbound.put(t);
 					}
 				} catch (InterruptedException e) {
-					interrupt = true;
+					System.out.println("The thread has been interrupted");
 				} catch (Exception e) {
 					throw new RuntimeException("Cannot put task into outbound queue");
 				}

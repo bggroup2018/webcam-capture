@@ -268,13 +268,9 @@ public class WebcamDiscoveryService implements Runnable {
 		// discovered
 
 		Object monitor = new Object();
-		boolean interrupt = false;
 
 		try {
 			do {
-				if (interrupt == true) {
-					break;
-				}
 				synchronized (monitor) {
 					monitor.wait(support.getScanInterval()); 
 				}
@@ -282,7 +278,7 @@ public class WebcamDiscoveryService implements Runnable {
 			} while (running.get());
 			
 		} catch (InterruptedException e) {
-			interrupt = true;
+			System.out.println("The thread has been interrupted");
 		} catch (Exception e) {
 			throw new RuntimeException("Problem waiting on monitor");
 		}

@@ -67,23 +67,24 @@ public class WebcamMotionDetector {
 		@Override
 		public void run() {
 
-			boolean interrupt = false;
 			running.set(true);
-			try {
-				while (running.get() && webcam.isOpen()) {
-					if (interrupt == true) {
-						break;
-					}
-					detect();
-					Thread.sleep(interval);
-				}
-			} catch (InterruptedException e) {
-				interrupt = true;
-			} catch (Exception e) {
-				WebcamExceptionHandler.handle(e);
+
+			while (running.get() && webcam.isOpen()) {
+				MetodoDiAppoggio();
 			}
 
 			running.set(false);
+		}
+		
+		private void MetodoDiAppoggio() {
+			try {
+				detect();
+				Thread.sleep(interval);
+			} catch (InterruptedException e) {
+				System.out.println("The thread has been interrupted");
+			} catch (Exception e) {
+				WebcamExceptionHandler.handle(e);
+			}
 		}
 	}
 
