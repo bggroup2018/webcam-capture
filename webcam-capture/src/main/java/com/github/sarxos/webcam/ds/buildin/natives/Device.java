@@ -106,7 +106,10 @@ public final class Device extends CPPObject {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		return o.toString().equals(this.toString());
+		if(o instanceof Device){
+			return o.toString().equals(this.toString());
+		}
+		else return false; 
 	}
 
 	/*

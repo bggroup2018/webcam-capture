@@ -52,7 +52,7 @@ public class WebcamLogConfigurator {
 		} catch (NoClassDefFoundError e) {
 			System.err.println("WLogC: Logback JARs are missing in classpath");
 		} catch (Throwable e) {
-			e.printStackTrace();
+			e.toString();
 		}
 	}
 
