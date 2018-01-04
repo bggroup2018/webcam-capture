@@ -69,8 +69,8 @@ public class DetectMotionFromIpCamerasExample {
 
 		f.pack();
 		f.setVisible(true);
-
-		for (int i = 0; i < webcams.size(); i++) {
+		int webcamSize = webcams.size();
+		for (int i = 0; i < webcamSize; i++) {
 			final int x = i;
 			Thread t = createThread(x, webcams, panels, detectors);
 			
