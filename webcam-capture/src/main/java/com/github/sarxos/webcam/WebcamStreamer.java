@@ -270,8 +270,12 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 		this.delay = (long) (1000 / fps);
 
 		if (start) {
-			start();
+			constructorStart();
 		}
+	}
+	
+	private final void constructorStart(){
+		start();
 	}
 
 	@Override

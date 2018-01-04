@@ -186,6 +186,10 @@ public class WebcamMotionDetector {
 	public WebcamMotionDetector(Webcam webcam, WebcamMotionDetectorAlgorithm algorithm, int interval) {
 		this.webcam = webcam;
 		this.algorithm = algorithm;
+		set(interval);
+	}
+	
+	private final void set(int interval){
 		setInterval(interval);
 	}
 

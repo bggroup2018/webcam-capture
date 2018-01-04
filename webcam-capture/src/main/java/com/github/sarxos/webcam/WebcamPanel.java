@@ -793,8 +793,12 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 		}
 
 		if (start) {
-			start();
+			constructorStart();
 		}
+	}
+	
+	private final void constructorStart(){
+		start();
 	}
 
 	/**
