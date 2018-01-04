@@ -1,6 +1,6 @@
 package com.github.sarxos.webcam;
 
-import static java.awt.*;
+import static java.awt.RenderingHints.*;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
