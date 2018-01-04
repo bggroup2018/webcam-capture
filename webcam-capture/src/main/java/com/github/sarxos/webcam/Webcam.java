@@ -40,6 +40,27 @@ import com.github.sarxos.webcam.ds.cgt.WebcamReadBufferTask;
  * @author Bartosz Firyn (bfiryn)
  */
 public class Webcam {
+	
+	/**
+	 * Is automated deallocation on TERM signal enabled.
+	 */
+	private boolean deallocOnTermSignal;
+
+	/**
+	 * Is auto-open feature enabled?
+	 */
+	private boolean autoOpen;
+	
+	public Webcam(boolean a,boolean b){
+		this.autoOpen = a;
+		this.deallocOnTermSignal = b;	
+	}
+	
+	/**
+	 * oggetto creato per risolvere il problema dell'uso eccessivo di attributi statici (non-final static).
+	 */
+	
+	Webcam oggettoWebcam = new Webcam (false,false);
 
 	/**
 	 * Class used to asynchronously notify all webcam listeners about new image available.
@@ -128,16 +149,6 @@ public class Webcam {
 	private static volatile WebcamDiscoveryService discovery = null;
 
 	/**
-	 * Is automated deallocation on TERM signal enabled.
-	 */
-	private static boolean deallocOnTermSignal = false;
-
-	/**
-	 * Is auto-open feature enabled?
-	 */
-	private static boolean autoOpen = false;
-
-	/**
 	 * Webcam listeners.
 	 */
 	private List<WebcamListener> listeners = new CopyOnWriteArrayList<WebcamListener>();
@@ -210,6 +221,8 @@ public class Webcam {
 		}
 		this.device = device;
 		this.lock = new WebcamLock(this);
+		this.autoOpen = false;
+		this.deallocOnTermSignal = false;
 	}
 
 	/**
@@ -1155,11 +1168,11 @@ public class Webcam {
 	 *
 	 * @param on signal handling will be enabled if true, disabled otherwise
 	 */
-	public static void setHandleTermSignal(boolean on) {
+	public void setHandleTermSignal(boolean on) {
 		if (on) {
 			LOG.warn("Automated deallocation on TERM signal is now enabled! Make sure to not use it in production!");
 		}
-		deallocOnTermSignal = on;
+		oggettoWebcam.deallocOnTermSignal = on;
 	}
 
 	/**
@@ -1167,8 +1180,8 @@ public class Webcam {
 	 *
 	 * @return True if enabled, false otherwise
 	 */
-	public static boolean isHandleTermSignal() {
-		return deallocOnTermSignal;
+	public boolean isHandleTermSignal() {
+		return oggettoWebcam.deallocOnTermSignal;
 	}
 
 	/**
@@ -1180,8 +1193,8 @@ public class Webcam {
 	 *
 	 * @param on true to enable, false to disable
 	 */
-	public static void setAutoOpenMode(boolean on) {
-		autoOpen = on;
+	public void setAutoOpenMode(boolean on) {
+		oggettoWebcam.autoOpen = on;
 	}
 
 	/**
@@ -1192,8 +1205,8 @@ public class Webcam {
 	 *
 	 * @return True if mode is enabled, false otherwise
 	 */
-	public static boolean isAutoOpenMode() {
-		return autoOpen;
+	public boolean isAutoOpenMode() {
+		return oggettoWebcam.autoOpen;
 	}
 
 	/**
