@@ -51,13 +51,15 @@ public class WebcamLock {
 		@Override
 		public void run() {
 			try {
+				boolean isLocked = true;
 				do {
 					if (disabled.get()) {
 						return;
 					}
 					update();
 					Thread.sleep(INTERVAL);
-				} while (locked.get());
+					isLocked = locked.get();
+				} while (isLocked);
 
 			} catch (InterruptedException e) {
 				LOG.debug("Lock updater has been interrupted");
@@ -187,8 +189,10 @@ public class WebcamLock {
 
 			fos = new FileOutputStream(lock);
 			fis = new FileInputStream(tmp);
-			while ((n = fis.read(buffer)) != -1) {
+			n = fis.read(buffer);
+			while (n != -1) {
 				fos.write(buffer, 0, n);
+				n = fis.read(buffer);
 			}
 			rewritten = true;
 
