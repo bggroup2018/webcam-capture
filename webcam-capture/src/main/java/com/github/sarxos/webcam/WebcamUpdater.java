@@ -178,8 +178,10 @@ public class WebcamUpdater implements Runnable {
 				
 				executor.shutdown();
 				
-				while (!executor.isTerminated()) {
+				boolean isTerminated = executor.isTerminated();
+				while (!isTerminated) {
 					executor.awaitTermination(100, TimeUnit.MILLISECONDS);
+					isTerminated = executor.isTerminated();					
 				} 
 				LOG.debug("Webcam updater has been stopped");
 				
@@ -276,7 +278,8 @@ public class WebcamUpdater implements Runnable {
 		int i = 0;
 		
 		try {
-			while (image.get() == null) {
+			V isGetted = image.get();
+			while (isGetted == null) {
 
 				// Just in case if another thread starts calling this method before
 				// updater has been properly started. This will loop while image is
@@ -290,6 +293,7 @@ public class WebcamUpdater implements Runnable {
 					LOG.error("Image has not been found for more than 10 seconds");
 					return null;
 				}
+				isGetted = image.get();
 			}
 		} catch (InterruptedException e) {
 			throw new RuntimeException("The thread has been interrupted");

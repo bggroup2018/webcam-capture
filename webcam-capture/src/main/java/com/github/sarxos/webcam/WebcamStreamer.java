@@ -42,8 +42,10 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 		@Override
 		public void run() {
 			try (ServerSocket server = new ServerSocket(port, 50, InetAddress.getByName("0.0.0.0"))) {
-				while (started.get()) {
+				boolean isStarted = started.get();
+				while (isStarted) {
 					executor.execute(new Connection(server.accept()));
+					isStarted = started.get();
 				}
 			} catch (Exception e) {
 				LOG.error("Cannot accept socket connection", e);
@@ -87,7 +89,10 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 				socket.setTcpNoDelay(true);
 				
 				StringBuilder sb = new StringBuilder();
-				while (started.get()()) {
+				
+				boolean isStarted = started.get();
+				
+				while (isStarted) {
 					
 					sb.append("HTTP/1.0 200 OK").append(CRLF);
 					sb.append("Connection: close").append(CRLF);
@@ -98,6 +103,8 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 					sb.append(CRLF);
 
 					bos.write(sb.toString().getBytes());
+					
+					isStarted = started.get();
 					
 					if(stringBuildAppend(br, bos,baos,sb)==true){
 						return;
@@ -123,6 +130,7 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 		
 		private boolean stringBuildAppend(BufferedReader br, BufferedOutputStream bos,ByteArrayOutputStream baos,StringBuilder sb) throws IOException, InterruptedException{
 			try {
+				boolean isStarted = true;
 				do {
 					if (!webcam.isOpen() || socket.isInputShutdown() || socket.isClosed()) {
 						br.close();
@@ -148,8 +156,9 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 
 
 					Thread.sleep(delay);
+					isStarted = started.get();
 
-				} while (started.get());
+				} while (isStarted);
 
 			} catch (SocketException e) {
 				socketDebug();
@@ -208,8 +217,9 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 		// consume whole input
 		private void ConsumeWholeInput(BufferedReader br){
 			try {
-				while (br.ready()) {
-					br.readLine();
+				boolean isReady = br.ready();
+				while (isReady) {
+					isReady = br.ready();
 				}
 			} catch (IOException e) {
 				LOG.error("Error when reading input", e);
