@@ -5,31 +5,11 @@ import java.awt.image.BufferedImage;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.net.*;
 
 import javax.imageio.ImageIO;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.Credentials;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.AuthCache;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.BasicAuthCache;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.protocol.HttpContext;
+import org.apache.http.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,9 +53,9 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 			this.setDaemon(true);
 		}
 
-		private IpCamMJPEGStream request(final URI parameterUri) {
+		private IpCamMJPEGStream request(final URI uri) {
 			try {
-				return new IpCamMJPEGStream(get(parameterUri, true));
+				return new IpCamMJPEGStream(get(uri, true));
 			} catch (Exception e) {
 				throw new WebcamException("Cannot download image. " + e.getMessage()); 
 			}
@@ -156,9 +136,9 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 			}
 		}
 
-		private InputStream request(final URI parameterUri) {
+		private InputStream request(final URI uri) {
 			try {
-				return get(parameterUri, false);
+				return get(uri, false);
 			} catch (Exception e) {
 				throw new WebcamException("Cannot download image");
 			}
@@ -221,22 +201,22 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 
 	}
 
-	protected static final URL toURL(String parameterUrl) {
-		if (!parameterUrl.startsWith("http://")) {
-			parameterUrl = "http://" + parameterUrl;
+	protected static final URL toURL(String url) {
+		if (!url.startsWith("http://")) {
+			url = "http://" + url;
 		}
 		try {
-			return new URL(parameterUrl);
+			return new URL(url);
 		} catch (MalformedURLException e) {
-			throw new WebcamException(String.format("Incorrect URL '%s'", parameterUrl));
+			throw new WebcamException(String.format("Incorrect URL '%s'", url));
 		}
 	}
 
-	private static final URI toURI(URL parameterUrl) {
+	private static final URI toURI(URL url) {
 		try {
-			return parameterUrl.toURI();
+			return url.toURI();
 		} catch (URISyntaxException e) {
-			throw new WebcamException(String.format("Incorrect URL '%s'", parameterUrl.toURI()));
+			throw new WebcamException(String.format("Incorrect URL '%s'", url.toURI()));
 		}
 	}
 
