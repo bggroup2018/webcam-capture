@@ -89,8 +89,12 @@ public class WebcamMotionDetectorDefaultAlgorithm implements WebcamMotionDetecto
 	 * @param areaThreshold percentage threshold of image covered by motion
 	 */
 	public WebcamMotionDetectorDefaultAlgorithm(int pixelThreshold, double areaThreshold) {
-		setPixelThreshold(pixelThreshold);
-		setAreaThreshold(areaThreshold);
+		SetPixelANdAreaThreshold( pixelThreshold, areaThreshold);
+	}
+	
+	private final void SetPixelANdAreaThreshold(int pixel, double area){
+		setPixelThreshold(pixel);
+		setAreaThreshold(area);
 	}
 
 	@Override

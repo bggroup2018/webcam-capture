@@ -22,7 +22,8 @@ public class CalculateFPSExample {
 			webcam.getImage();
 
 			t1 = System.currentTimeMillis();
-			for (int i = 0; ++i <= r; webcam.getImage()) {
+			for (int i = 0; i <= r; ++i) {
+				webcam.getImage();
 			}
 			t2 = System.currentTimeMillis();
 

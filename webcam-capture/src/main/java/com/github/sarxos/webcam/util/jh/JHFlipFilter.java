@@ -55,6 +55,10 @@ public class JHFlipFilter extends JHFilter {
 	 * @param operation the filter operation
 	 */
 	public JHFlipFilter(int operation) {
+		constructorSetOperation(operation);
+	}
+
+	private final void constructorSetOperation(int operation){
 		setOperation(operation);
 	}
 

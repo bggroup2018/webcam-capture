@@ -52,9 +52,13 @@ public class GStreamerDriver implements WebcamDriver {
 
 	public GStreamerDriver(final List<String> preferredFormats) {
 		init();
-		setPreferredFormats(preferredFormats);
+		setPreferred(preferredFormats);
 	}
-
+	
+	private final void setPreferred(final List<String> preferred){
+		setPreferredFormats(preferred);
+	}
+	
 	private static final void init() {
 
 		if (!INITIALIZED.compareAndSet(false, true)) {
