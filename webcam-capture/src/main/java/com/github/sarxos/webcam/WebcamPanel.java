@@ -1,12 +1,6 @@
 package com.github.sarxos.webcam;
 
-import static java.awt.RenderingHints.KEY_ANTIALIASING;
-import static java.awt.RenderingHints.KEY_INTERPOLATION;
-import static java.awt.RenderingHints.KEY_RENDERING;
-import static java.awt.RenderingHints.VALUE_ANTIALIAS_OFF;
-import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
-import static java.awt.RenderingHints.VALUE_INTERPOLATION_BILINEAR;
-import static java.awt.RenderingHints.VALUE_RENDER_SPEED;
+import static java.awt.*;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
