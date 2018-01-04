@@ -42,7 +42,8 @@ public class TakeSnapshotFromAllWebcamsExample {
 		}
 
 		// capture picture from all of them
-		for (int i = 0; i < webcams.size(); i++) {
+		int webcamSize = webcams.size();
+		for (int i = 0; i < webcamSize; i++) {
 			Webcam webcam = webcams.get(i);
 			System.out.format("Capturing %s\n", webcam.getName());
 			ImageIO.write(webcam.getImage(), "PNG", new File(String.format("test-%d.png", i)));

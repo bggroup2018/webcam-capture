@@ -59,7 +59,8 @@ public class LignanoBeachPushModeIpCameraExample extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				File file = new File(String.format("test-%d.jpg", 0));
-				for (int i = 0; i < webcams.size(); i++) {
+				int webcamsSize = webcams.size();
+				for (int i = 0; i < webcamsSize; i++) {
 					Webcam webcam = webcams.get(i);
 					file = new File(String.format("test-%d.jpg", i));
 					ImageIO.write(webcam.getImage(), "JPG", file);
