@@ -75,8 +75,8 @@ public class GsUtils {
 	public static Dimension[] getResolutionsFromCaps(Caps caps, String format) {
 
 		final Map<String, Dimension> map = new LinkedHashMap<>();
-
-		for (int i = 0; i < caps.size(); i++) {
+		int capsSize = caps.size();
+		for (int i = 0; i < capsSize; i++) {
 
 			final Structure structure = caps.getStructure(i);
 			final String f = structure.getString("format");
