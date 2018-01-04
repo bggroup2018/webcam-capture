@@ -77,6 +77,10 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 			t.setDaemon(true);
 			return t;
 		}
+
+		public boolean isInterrupted() {
+			return this.isInterrupted();
+		}
 	}
 
 	protected static final class StreamReader implements Runnable {
@@ -238,7 +242,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 	}
 	
 	private final void CiclomaticComplexityReduced3(){
-		if (Thread.interrupted()) {
+		if (THREAD_FACTORY.isInterrupted()) {
 			throw new RuntimeException("Thread has been interrupted #"+counter);
 		}
 	}

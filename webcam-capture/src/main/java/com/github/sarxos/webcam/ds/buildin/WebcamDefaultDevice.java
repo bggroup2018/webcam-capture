@@ -497,7 +497,7 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 
 		do {
 
-			if (Thread.interrupted()) {
+			if (refresher.isInterrupted()){
 				LOG.debug("Refresher has been interrupted");
 				return;
 			}
