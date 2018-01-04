@@ -205,14 +205,10 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 			}
 		}
 		
-		private boolean isReady(BufferedReader br){
-			return br.ready();
-		}
-		
 		// consume whole input
 		private void ConsumeWholeInput(BufferedReader br){
 			try {
-				while (isReady(br)) {
+				while (br.ready()) {
 					br.readLine();
 				}
 			} catch (IOException e) {
