@@ -10,9 +10,6 @@ public class ListSupportedResolutions {
 
 	// uncomment if you would like debug prints to be visible, and don't
 	// forget to add logback JAR and XML file as well
-	static {
-		// WebcamLogConfigurator.configure("src/example/resources/logback.xml");
-	}
 
 	static {
 		Webcam.setDriver(new GStreamerDriver());
