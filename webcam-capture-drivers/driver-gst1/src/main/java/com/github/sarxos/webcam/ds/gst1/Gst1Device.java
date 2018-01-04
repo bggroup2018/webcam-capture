@@ -320,13 +320,14 @@ public class Gst1Device implements WebcamDevice, Initializable {
 		final Caps caps = pad.getCaps();
 
 		if (LOG.isDebugEnabled()) {
-			for (int i = 0; i < caps.size(); i++) {
+			int capsSize = caps.size();
+			for (int i = 0; i < capsSize; i++) {
 				LOG.debug("Device {} has caps structure {}", name, caps.getStructure(i));
 			}
 		}
 
 		for (String f : BEST_FORMAT) {
-			for (int i = 0; i < caps.size(); i++) {
+			for (int i = 0; i < capsSize; i++) {
 
 				final Structure struct = caps.getStructure(i);
 				final String name = struct.getName();
