@@ -31,6 +31,7 @@ public class FFmpegCliDriver implements WebcamDriver, WebcamDiscoverySupport {
 
 	private final void CiclomaticComlexityReduced(File vfile, String[] cmd, List<WebcamDevice> devices, OutputStream os, InputStream is1, InputStream is2, Process process , String line , BufferedReader br1, BufferedReader br2) throws IOException{
 		boolean read = false;
+		line = br2.readLine();
 		while ((line = br2.readLine()) != null) {
 			if (line.startsWith(STARTER) && line.indexOf(MARKER) != -1) {
 				LOG.debug("Command stderr line: {}", line);
@@ -38,14 +39,17 @@ public class FFmpegCliDriver implements WebcamDriver, WebcamDiscoverySupport {
 				read = true;
 				break;
 			}
+			line = br2.readLine();
 		}
 		if (!read) {
-			while ((line = br1.readLine()) != null) {
+			line = br1.readLine();
+			while ((line) != null) {
 				if (line.startsWith(STARTER) && line.indexOf(MARKER) != -1) {
 					LOG.debug("Command stdout line: {}", line);
 					devices.add(new FFmpegCliDevice(vfile, line));
 					break;
 				}
+				line = br1.readLine();
 			}
 		}
 	}
