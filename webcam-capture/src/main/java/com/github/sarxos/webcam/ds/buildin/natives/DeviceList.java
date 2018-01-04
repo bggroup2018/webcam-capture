@@ -68,8 +68,8 @@ public class DeviceList extends CPPObject {
 	}
 
 	@Field(0)
-	protected DeviceList nDevices(int nDevices) {
-		this.io.setIntField(this, 0, nDevices);
+	protected DeviceList nDevices(int parameterNDevices) {
+		this.io.setIntField(this, 0, parameterNDevices);
 		return this;
 	}
 
@@ -81,8 +81,8 @@ public class DeviceList extends CPPObject {
 
 	// / C type : Device**
 	@Field(1)
-	protected DeviceList devices(Pointer<Pointer<Device>> devices) {
-		this.io.setPointerField(this, 1, devices);
+	protected DeviceList devices(Pointer<Pointer<Device>> parameterDevices) {
+		this.io.setPointerField(this, 1, parameterDevices);
 		return this;
 	}
 

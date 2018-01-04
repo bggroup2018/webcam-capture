@@ -196,10 +196,10 @@ public class GStreamerDevice implements WebcamDevice, RGBDataSink.Listener, Webc
 		return resolutions;
 	}
 
-	private String findPreferredFormat(Caps caps) {
+	private String findPreferredFormat(Caps parameterCaps) {
 		for (String f : driver.getPreferredFormats()) {
-			for (int i = 0, n = caps.size(); i < n; i++) {
-				if (f.equals(caps.getStructure(i).getName())) {
+			for (int i = 0, n = parameterCaps.size(); i < n; i++) {
+				if (f.equals(parameterCaps.getStructure(i).getName())) {
 					return f;
 				}
 			}

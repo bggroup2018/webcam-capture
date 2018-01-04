@@ -73,9 +73,9 @@ public class WebcamDefaultDriver implements WebcamDriver, WebcamDiscoverySupport
 		 * @param grabber the native grabber to use for search
 		 * @return Camera devices.
 		 */
-		public List<WebcamDevice> getDevices(OpenIMAJGrabber grabber) {
+		public List<WebcamDevice> getDevices(OpenIMAJGrabber parameterGrabber) {
 
-			this.grabber = grabber;
+			this.grabber = parameterGrabber;
 
 			try {
 				process();

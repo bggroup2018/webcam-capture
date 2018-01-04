@@ -125,8 +125,8 @@ public class OpenIMAJGrabber extends CPPObject {
 
 	// / C type : void*
 	@Field(0)
-	protected OpenIMAJGrabber data(Pointer<?> data) {
-		this.io.setPointerField(this, 0, data);
+	protected OpenIMAJGrabber data(Pointer<?> parameterData) {
+		this.io.setPointerField(this, 0, parameterData);
 		return this;
 	}
 }

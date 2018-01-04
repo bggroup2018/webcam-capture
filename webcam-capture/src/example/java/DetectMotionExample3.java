@@ -56,12 +56,12 @@ public class DetectMotionExample3 extends JFrame implements WebcamPanel.Painter 
 	}
 
 	@Override
-	public void paintPanel(WebcamPanel panel, Graphics2D g2) {
-		panel.getDefaultPainter().paintPanel(panel, g2);
+	public void paintPanel(WebcamPanel parameterPanel, Graphics2D g2) {
+		parameterPanel.getDefaultPainter().paintPanel(parameterPanel, g2);
 	}
 
 	@Override
-	public void paintImage(WebcamPanel panel, BufferedImage image, Graphics2D g2) {
+	public void paintImage(WebcamPanel parameterPanel, BufferedImage image, Graphics2D g2) {
 
 		double s = detector.getMotionArea();
 		Point cog = detector.getMotionCog();
@@ -81,6 +81,6 @@ public class DetectMotionExample3 extends JFrame implements WebcamPanel.Painter 
 
 		g.dispose();
 
-		panel.getDefaultPainter().paintImage(panel, image, g2);
+		parameterPanel.getDefaultPainter().paintImage(parameterPanel, image, g2);
 	}
 }

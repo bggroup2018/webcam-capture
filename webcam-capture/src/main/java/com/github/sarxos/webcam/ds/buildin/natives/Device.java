@@ -70,8 +70,8 @@ public final class Device extends CPPObject {
 
 	// / C type : const char*
 	@Field(0)
-	protected Device name(Pointer<Byte> name) {
-		this.io.setPointerField(this, 0, name);
+	protected Device name(Pointer<Byte> parameterName) {
+		this.io.setPointerField(this, 0, parameterName);
 		return this;
 	}
 
@@ -83,8 +83,8 @@ public final class Device extends CPPObject {
 
 	// / C type : const char*
 	@Field(1)
-	protected Device identifier(Pointer<Byte> identifier) {
-		this.io.setPointerField(this, 1, identifier);
+	protected Device identifier(Pointer<Byte> parameterIdentifier) {
+		this.io.setPointerField(this, 1, parameterIdentifier);
 		return this;
 	}
 

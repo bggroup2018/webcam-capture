@@ -62,20 +62,20 @@ public class WebcamDriverUtils {
 		return null;
 	}
 
-	private static void MetodoDiAppoggio(String nome) {
+	private static void MetodoDiAppoggio(String name) {
 		try {
 			if (clazz == null) {
-				clazz = Class.forName(nome);
+				clazz = Class.forName(name);
 			}
 		} catch (ClassNotFoundException e) {
-			LOG.trace("Class not found {}, fall thru", nome);
+			LOG.trace("Class not found {}, fall thru", name);
 		}
 	}
 
 	// create new istance
-	private static WebcamDriver newIstance(Class<?> clazz){
+	private static WebcamDriver newIstance(Class<?> parameterClazz){
 		try {
-			return (WebcamDriver) clazz.newInstance();
+			return (WebcamDriver) parameterClazz.newInstance();
 		} catch (InstantiationException e) {
 			throw new RuntimeException("Error in the Instantiation of the driver class for the webcam");
 		} catch (IllegalAccessException e) {

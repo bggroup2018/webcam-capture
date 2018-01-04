@@ -80,9 +80,9 @@ public class WebcamDiscoveryService implements Runnable {
 	 * 
 	 * @return List of webcam devices
 	 */
-	private static List<WebcamDevice> getDevices(List<Webcam> webcams) {
+	private static List<WebcamDevice> getDevices(List<Webcam> parameterWebcams) {
 		List<WebcamDevice> devices = new ArrayList<WebcamDevice>();
-		for (Webcam webcam : webcams) {
+		for (Webcam webcam : parameterWebcams) {
 			devices.add(webcam.getDevice());
 		}
 		return devices;

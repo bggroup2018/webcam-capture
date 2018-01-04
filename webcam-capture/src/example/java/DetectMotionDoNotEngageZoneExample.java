@@ -73,12 +73,12 @@ public class DetectMotionDoNotEngageZoneExample extends JFrame implements Webcam
 	}
 
 	@Override
-	public void paintPanel(WebcamPanel panel, Graphics2D g2) {
-		panel.getDefaultPainter().paintPanel(panel, g2);
+	public void paintPanel(WebcamPanel parameterPanel, Graphics2D g2) {
+		parameterPanel.getDefaultPainter().paintPanel(parameterPanel, g2);
 	}
 
 	@Override
-	public void paintImage(WebcamPanel panel, BufferedImage image, Graphics2D g2) {
+	public void paintImage(WebcamPanel parameterPanel, BufferedImage image, Graphics2D g2) {
 
 		final double s = detector.getMotionArea();
 		final Point cog = detector.getMotionCog();
@@ -105,6 +105,6 @@ public class DetectMotionDoNotEngageZoneExample extends JFrame implements Webcam
 
 		g.dispose();
 
-		panel.getDefaultPainter().paintImage(panel, image, g2);
+		parameterPanel.getDefaultPainter().paintImage(parameterPanel, image, g2);
 	}
 }
