@@ -92,8 +92,8 @@ public class DeviceList extends CPPObject {
 
 	public List<Device> asArrayList() {
 		List<Device> devices = new ArrayList<Device>();
-
-		for (int i = 0; i < getNumDevices(); i++) {
+		int numDevices = getNumDevices();
+		for (int i = 0; i < numDevices; i++) {
 			devices.add(getDevice(i).get());
 		}
 
