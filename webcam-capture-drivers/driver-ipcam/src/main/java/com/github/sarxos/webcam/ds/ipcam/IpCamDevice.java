@@ -53,9 +53,9 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 			this.setDaemon(true);
 		}
 
-		private IpCamMJPEGStream request(final URI uri) {
+		private IpCamMJPEGStream request(final URI parameterUri) {
 			try {
-				return new IpCamMJPEGStream(get(uri, true));
+				return new IpCamMJPEGStream(get(parameterUri, true));
 			} catch (Exception e) {
 				throw new WebcamException("Cannot download image. " + e.getMessage()); 
 			}
@@ -136,9 +136,9 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 			}
 		}
 
-		private InputStream request(final URI uri) {
+		private InputStream request(final URI parameterUri) {
 			try {
-				return get(uri, false);
+				return get(parameterUri, false);
 			} catch (Exception e) {
 				throw new WebcamException("Cannot download image");
 			}
@@ -201,22 +201,22 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 
 	}
 
-	protected static final URL toURL(String url) {
-		if (!url.startsWith("http://")) {
-			url = "http://" + url;
+	protected static final URL toURL(String parameterUrl) {
+		if (!parameterUrl.startsWith("http://")) {
+			parameterUrl = "http://" + parameterUrl;
 		}
 		try {
-			return new URL(url);
+			return new URL(parameterUrl);
 		} catch (MalformedURLException e) {
-			throw new WebcamException(String.format("Incorrect URL '%s'", url));
+			throw new WebcamException(String.format("Incorrect URL '%s'", parameterUrl));
 		}
 	}
 
-	private static final URI toURI(URL url) {
+	private static final URI toURI(URL parameterUrl) {
 		try {
-			return url.toURI();
+			return parameterUrl.toURI();
 		} catch (URISyntaxException e) {
-			throw new WebcamException(String.format("Incorrect URL '%s'", url.toURI()));
+			throw new WebcamException(String.format("Incorrect URL '%s'", parameterUrl.toURI()));
 		}
 	}
 
