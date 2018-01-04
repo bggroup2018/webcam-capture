@@ -35,10 +35,11 @@ public class TakePicturesAndPlayExample {
 				@Override
 				public void run() {
 					try {
+						int imagesSize = images.size();
 						do {
 							repaint();
 							Thread.sleep(100);
-						} while (++offset < images.size());
+						} while (++offset < imagesSize);
 
 					}catch (InterruptedException e) {
 						return;
