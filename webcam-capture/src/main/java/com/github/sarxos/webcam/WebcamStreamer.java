@@ -42,7 +42,7 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 		@Override
 		public void run() {
 			try (ServerSocket server = new ServerSocket(port, 50, InetAddress.getByName("0.0.0.0"))) {
-				while (started.get()()) {
+				while (started.get()) {
 					executor.execute(new Connection(server.accept()));
 				}
 			} catch (Exception e) {
