@@ -42,7 +42,7 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 		@Override
 		public void run() {
 			try (ServerSocket server = new ServerSocket(port, 50, InetAddress.getByName("0.0.0.0"))) {
-				while (isInitialized()) {
+				while (started.get()()) {
 					executor.execute(new Connection(server.accept()));
 				}
 			} catch (Exception e) {
@@ -87,7 +87,7 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 				socket.setTcpNoDelay(true);
 				
 				StringBuilder sb = new StringBuilder();
-				while (isInitialized()) {
+				while (started.get()()) {
 					
 					sb.append("HTTP/1.0 200 OK").append(CRLF);
 					sb.append("Connection: close").append(CRLF);
@@ -149,7 +149,7 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 
 					Thread.sleep(delay);
 
-				} while (isInitialized());
+				} while (started.get());
 
 			} catch (SocketException e) {
 				socketDebug();
@@ -205,14 +205,10 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 			}
 		}
 		
-		private boolean isReady(BufferedReader br){
-			return br.ready();
-		}
-		
 		// consume whole input
 		private void ConsumeWholeInput(BufferedReader br){
 			try {
-				while (isReady(br)) {
+				while (br.ready()) {
 					br.readLine();
 				}
 			} catch (IOException e) {

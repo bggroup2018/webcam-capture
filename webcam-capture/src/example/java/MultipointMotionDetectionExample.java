@@ -35,7 +35,7 @@ public class MultipointMotionDetectionExample implements WebcamMotionListener, W
 	/**
 	 * {@link webcam} Webcam
 	 */
-	public static Webcam webcam;
+	public Webcam webcam;
 	
 	/**
 	 * {@link painter}  WebcamPanel.Painter
