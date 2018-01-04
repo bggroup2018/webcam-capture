@@ -174,7 +174,7 @@ public class IpCamDriver implements WebcamDriver, WebcamDiscoverySupport {
 
 		this.CiclomaticComplexityReduced(online, futures);
 
-		return Collections.unmodifiableList((List<? extends WebcamDevice>) online);
+		return Collections.unmodifiableList(online);
 	}
 	
 	private void CiclomaticComplexityReduced(List<IpCamDevice> online, List<Future<IpCamDevice>> futures){
