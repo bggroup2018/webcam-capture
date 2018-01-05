@@ -197,6 +197,7 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 			System.err.println("Failed or interrupted I/O operations");
 			System.exit(0);		
 		}
+		
 	}
 
 	private byte[] readBytes() {
@@ -370,7 +371,8 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 	
 			if (pipe.exists()) {
 				if (!pipe.delete()) {
-					throw new RuntimeException("Cannot remove streaming pipe " + pipe);
+					System.err.println("Cannot remove streaming pipe " + pipe);
+					System.exit(0);
 				}
 			}
 	
@@ -386,7 +388,8 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 				p.waitFor();
 	
 			} catch (IOException e) {
-				throw new RuntimeException("failed or interrupted I/O operation");
+				System.err.println("failed or interrupted I/O operation");
+				System.exit(0);
 			} catch (InterruptedException e) {
 				return;
 			} finally {
@@ -406,7 +409,8 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 					try {
 						dis.close();
 					} catch (IOException e) {
-						throw new RuntimeException("failed or interrupted I/O operation");
+						System.err.println("failed or interrupted I/O operation");
+						System.exit(0);
 					}
 				}
 		
@@ -417,7 +421,8 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 				try {
 					process.waitFor();
 				} catch (InterruptedException e) {
-					throw new RuntimeException("failed or interrupted I/O operation");
+					System.err.println("failed or interrupted I/O operation");
+					System.exit(0);
 				}
 		
 				if (!pipe.delete()) {
