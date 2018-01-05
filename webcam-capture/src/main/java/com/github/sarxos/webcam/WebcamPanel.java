@@ -1,7 +1,5 @@
 package com.github.sarxos.webcam;
 
-import static java.awt.RenderingHints.*;
-
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -12,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
+import java.awt.RenderingHints.Key;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -41,6 +40,14 @@ import org.slf4j.LoggerFactory;
  * @author Bartosz Firyn (SarXos)
  */
 class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListener {
+	
+	private static final Key KEY_ANTIALIASING = null;
+	private static final Key KEY_RENDERING = null;
+	private static final Object VALUE_ANTIALIAS_OFF = null;
+	private static final Object VALUE_RENDER_SPEED = null;
+	private static final Object VALUE_ANTIALIAS_ON = null;
+	private static final Object VALUE_INTERPOLATION_BILINEAR = null;
+	private static final Key KEY_INTERPOLATION = null;
 	
 	/**
 	 * Metodo realizzato per risolvere il problema di casting di una variabile con livello di precisione più alto 
@@ -110,6 +117,7 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 	 * @author Bartosz Firyn (SarXos)
 	 * @author Sylwia Kauczor
 	 */
+	
 	protected class DefaultPainter implements Painter {
 
 		/**
@@ -451,6 +459,7 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 	 * {@link #DEFAULT_IMAGE_RENDERING_HINTS} Map<RenderingHints.Key, Object>
 	 */
 	public static final Map<RenderingHints.Key, Object> DEFAULT_IMAGE_RENDERING_HINTS = new HashMap<RenderingHints.Key, Object>();
+
 	static {
 		DEFAULT_IMAGE_RENDERING_HINTS.put(KEY_INTERPOLATION, VALUE_INTERPOLATION_BILINEAR);
 		DEFAULT_IMAGE_RENDERING_HINTS.put(KEY_RENDERING, VALUE_RENDER_SPEED);
