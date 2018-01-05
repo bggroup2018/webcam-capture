@@ -83,7 +83,8 @@ public class Gst1Driver implements WebcamDriver {
 					devices.add(new Gst1Device(vfile));
 				}
 			} else {
-				throw new RuntimeException("Platform unsupported by GStreamer capture driver");
+				System.err.println("Platform unsupported by GStreamer capture driver");
+				System.exit(0);
 			}
 		} finally {
 			if (source != null) {
