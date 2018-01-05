@@ -494,22 +494,19 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 
 	@Override
 	public void run() {
-
+		boolean isOpen = open.get();
 		do {
-
 			if (refresher.isInterrupted()){
 				LOG.debug("Refresher has been interrupted");
 				return;
 			}
-
 			if (!open.get()) {
 				LOG.debug("Cancelling refresher");
 				return;
 			}
-
+			isOpen = open.get();
 			updateFrameBuffer();
-
-		} while (open.get());
+		} while (isOpen);
 	}
 
 	@Override
