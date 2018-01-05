@@ -42,8 +42,8 @@ public abstract class WebcamTask {
 			handle();
 		} else {
 			if (doSync) {
-				if (processor == null) {
-					throw new RuntimeException("Driver should be synchronized, but processor is null");
+				if (processor == null) { System.err.println("Driver should be synchronized, but processor is null");
+					System.exit(0);
 				}
 				processor.process(this);
 			} else {

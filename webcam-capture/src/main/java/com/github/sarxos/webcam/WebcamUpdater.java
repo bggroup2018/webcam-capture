@@ -295,8 +295,8 @@ public class WebcamUpdater implements Runnable {
 				}
 				isGetted = image.get();
 			}
-		} catch (InterruptedException e) {
-			throw new RuntimeException("The thread has been interrupted");
+		} catch (InterruptedException e) { System.err.println("The thread has been interrupted");
+			System.exit(0);
 		}
 
 		imageNew = false;
