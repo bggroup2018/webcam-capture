@@ -236,7 +236,8 @@ public class GStreamerDevice implements WebcamDevice, RGBDataSink.Listener, Webc
 		} else if (Platform.isLinux()) {
 			return videoFile.getAbsolutePath();
 		} else {
-			throw new RuntimeException("Platform not supported by GStreamer capture driver");
+			System.err.println("Platform not supported by GStreamer capture driver");
+			System.exit(0);
 		}
 	}
 

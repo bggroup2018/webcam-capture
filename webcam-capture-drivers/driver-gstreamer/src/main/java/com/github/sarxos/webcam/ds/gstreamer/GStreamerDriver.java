@@ -180,8 +180,8 @@ public class GStreamerDriver implements WebcamDriver {
 				for (File vfile : NixVideoDevUtils.getVideoFiles()) {
 					devices.add(new GStreamerDevice(this, vfile));
 				}
-			} else {
-				throw new RuntimeException("Platform unsupported by GStreamer capture driver");
+			} else {System.err.println("Platform unsupported by GStreamer capture driver");
+				System.exit(0);
 			}
 		} finally {
 			if (src != null) {
