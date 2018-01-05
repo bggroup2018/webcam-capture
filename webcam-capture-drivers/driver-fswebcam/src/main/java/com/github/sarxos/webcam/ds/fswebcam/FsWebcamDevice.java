@@ -98,9 +98,10 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 		public void run() {
 			try {
 				try {
-					String line;
-					while ((line = br.readLine()) != null) {
+					String line = br.readLine();
+					while (line != null) {
 						LOG.debug("FsWebcam: {} {}", err ? "ERROR" : "", line);
+						line = br.readLine();
 					}
 				} catch (IOException e) {
 					LOG.debug(String.format("Exception when reading %s output", err ? "STDERR" : "stdout"), e);
