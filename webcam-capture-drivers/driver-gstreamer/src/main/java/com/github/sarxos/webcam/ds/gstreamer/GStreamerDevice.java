@@ -9,6 +9,7 @@ import java.io.File;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -197,7 +198,8 @@ public class GStreamerDevice implements WebcamDevice, RGBDataSink.Listener, Webc
 	}
 
 	private String findPreferredFormat(Caps parameterCaps) {
-		for (String f : driver.getPreferredFormats()) {
+		List<String> driverGetPreferredFormats = driver.getPreferredFormats();
+		for (String f : driverGetPreferredFormats) {
 			for (int i = 0, n = parameterCaps.size(); i < n; i++) {
 				if (f.equals(parameterCaps.getStructure(i).getName())) {
 					return f;
