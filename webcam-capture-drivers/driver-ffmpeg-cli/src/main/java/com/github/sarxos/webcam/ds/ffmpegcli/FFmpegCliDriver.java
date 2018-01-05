@@ -97,8 +97,11 @@ public class FFmpegCliDriver implements WebcamDriver, WebcamDiscoverySupport {
 
 				this.CiclomaticComlexityReduced(vfile, cmd, devices, os, is1, is2, process, line, br1, br2);		
 			} 
-		}catch (IOException e) {
-			throw new RuntimeException("failed or interrupted I/O operation");
+		} catch (IOException e) {
+			is1.close();
+			is2.close();
+			System.err.println("Failed or interrupted I/O operations");
+			System.exit(0);
 		} finally {
 				is1.close();
 				is2.close();

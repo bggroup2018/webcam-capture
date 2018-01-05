@@ -194,9 +194,9 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 				}
 			}			
 		} catch (IOException e) {
-			throw new RuntimeException("failed or interrupted I/O operation");
+			System.err.println("Failed or interrupted I/O operations");
+			System.exit(0);		
 		}
-		
 	}
 
 	private byte[] readBytes() {
@@ -226,7 +226,8 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 				} while (!founded);
 	
 			} catch (IOException e) {
-				throw new RuntimeException("failed or interrupted I/O operation");
+				System.err.println("Failed or interrupted I/O operations");
+				System.exit(0);
 			}
 	
 			return baos.toByteArray();
@@ -238,13 +239,15 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 			if (dis != null)
 				dis.close();
 		} catch (IOException e) {
-			throw new RuntimeException("failed or interrupted I/O operation");
+			System.err.println("Failed or interrupted I/O operations");
+			System.exit(0);
 		}		
 	}
 	
 	private final void CiclomaticComplexityReduced3(){
 		if (THREAD_FACTORY.isInterrupted()) {
-			throw new RuntimeException("Thread has been interrupted #"+counter);
+			System.err.println("Thread has been interrupted #" + counter);
+			System.exit(0);
 		}
 	}
 
@@ -265,7 +268,8 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 			try {
 				dis = new DataInputStream(new FileInputStream(pipe));
 			} catch (FileNotFoundException e) {
-				throw new RuntimeException("failed or interrupted I/O operation");
+				System.err.println("Failed or interrupted I/O operation");
+				System.exit(0);
 			}
 
 			ByteArrayInputStream bais = new ByteArrayInputStream(readBytes());
