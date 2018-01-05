@@ -96,7 +96,16 @@ public class Gst1Device implements WebcamDevice, Initializable {
 	@Override
 	public void teardown() {
 		pipeStop();
-		pipeUnlink();
+		//pipe Unlink
+		final Element source = getSource();
+		final Element convert = getConvert();
+		final Element filter = getFilter();
+		final Element sink = getSink();
+		final Bin pipe = getPipeline();
+
+		Element.unlinkMany(source, convert, filter, sink);
+
+		pipe.removeMany(source, convert, filter, sink);
 	}
 
 	@Override
@@ -178,18 +187,6 @@ public class Gst1Device implements WebcamDevice, Initializable {
 		}
 	}
 
-	private void pipeUnlink() {
-
-		final Element source = getSource();
-		final Element convert = getConvert();
-		final Element filter = getFilter();
-		final Element sink = getSink();
-		final Bin pipe = getPipeline();
-
-		Element.unlinkMany(source, convert, filter, sink);
-
-		pipe.removeMany(source, convert, filter, sink);
-	}
 
 	private void pipeReady() {
 		setPipelineState(State.READY);
@@ -215,97 +212,70 @@ public class Gst1Device implements WebcamDevice, Initializable {
 
 	public Pipeline getPipeline() {
 		if (pipe == null) {
-			pipe = createPipeline();
+			pipe = new Pipeline(getName());
 		}
 		return pipe;
 	}
 
-	private Pipeline createPipeline() {
-		return new Pipeline(getName());
-	}
-
 	public Element getConvert() {
 		if (convert == null) {
-			convert = createConvert();
+			//Create Covert
+			final String name = getName();
+			final String id = name + "-videoconvert";
+			
+			convert = ElementFactory.make("videoconvert", id);
 		}
 		return convert;
 	}
 
-	private Element createConvert() {
-
-		final String name = getName();
-		final String id = name + "-videoconvert";
-
-		return ElementFactory.make("videoconvert", id);
-	}
 
 	public Element getFilter() {
 		if (filter == null) {
-			filter = createFilter();
+			//Create Filter
+			final String name = getName();
+			final String id = name + "-capsfilter";
+			filter = ElementFactory.make("capsfilter", id);
 		}
 		return filter;
 	}
 
-	private Element createFilter() {
-
-		final String name = getName();
-		final String id = name + "-capsfilter";
-
-		return ElementFactory.make("capsfilter", id);
-	}
 
 	public AppSink getSink() {
 		if (sink == null) {
-			sink = createSink();
+			//Create Sink
+			final String format = ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN ? "BGRx" : "xRGB";
+			final String name = getName();
+			final String id = name + "-sink";
+			final AppSink tempSink = new AppSink(id);
+			final Caps caps = new Caps("video/x-raw,pixel-aspect-ratio=1/1,format=" + format);
+	
+			LOG.debug("Creating video sink with caps {}", caps);
+	
+			tempSink.set("emit-signals", true);
+			tempSink.connect(new AppSinkNewSampleListener(exchanger));
+			tempSink.setCaps(caps);
+			tempSink.setMaximumLateness(LATENESS, TimeUnit.MILLISECONDS);
+			tempSink.setQOSEnabled(true);
+	
+			LOG.debug("Device {} videosing {} has been created", name, tempSink);
+	
+			sink = tempSink;
 		}
 		return sink;
 	}
 
-	private AppSink createSink() {
 
-		final String format = ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN ? "BGRx" : "xRGB";
-		final String name = getName();
-		final String id = name + "-sink";
-		final AppSink sink = new AppSink(id);
-		final Caps caps = new Caps("video/x-raw,pixel-aspect-ratio=1/1,format=" + format);
-
-		LOG.debug("Creating video sink with caps {}", caps);
-
-		sink.set("emit-signals", true);
-		sink.connect(new AppSinkNewSampleListener(exchanger));
-		sink.setCaps(caps);
-		sink.setMaximumLateness(LATENESS, TimeUnit.MILLISECONDS);
-		sink.setQOSEnabled(true);
-
-		LOG.debug("Device {} videosing {} has been created", name, sink);
-
-		return sink;
-	}
+		
 
 	public Element getSource() {
 		if (source == null) {
-			source = createSource();
+			//Create Source
+			source = ElementFactory.make("v4l2src", "source");
+			source.set("device", name);
 		}
 		return source;
 	}
 
-	private Element createSource() {
-
-		// if (Platform.isWindows()) {
-		// source = ElementFactory.make("dshowvideosrc", "source");
-		// source.set("device-name", name);
-		// } else if (Platform.isLinux()) {
-
-		final Element source = ElementFactory.make("v4l2src", "source");
-		source.set("device", name);
-
-		// source.set("device", name);
-		// } else {
-		// throw new IllegalStateException("Only Linux and Windows is supported");
-		// }
-
-		return source;
-	}
 
 	public String getFormat() {
 		if (format == null) {
@@ -318,9 +288,9 @@ public class Gst1Device implements WebcamDevice, Initializable {
 
 		final Pad pad = getSourcePad();
 		final Caps caps = pad.getCaps();
-
+		int capsSize = caps.size();
 		if (LOG.isDebugEnabled()) {
-			int capsSize = caps.size();
+			
 			for (int i = 0; i < capsSize; i++) {
 				LOG.debug("Device {} has caps structure {}", name, caps.getStructure(i));
 			}
@@ -349,7 +319,6 @@ public class Gst1Device implements WebcamDevice, Initializable {
 				}
 			}
 		}
-
 		throw new WebcamException("Cannot find best format");
 	}
 
