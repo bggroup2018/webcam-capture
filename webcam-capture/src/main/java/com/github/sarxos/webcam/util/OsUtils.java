@@ -39,8 +39,8 @@ public enum OsUtils {
 				os = OSX;
 			} else if (osp.indexOf("nix") >= 0 || osp.indexOf("nux") >= 0) {
 				os = NIX;
-			} else {
-				throw new RuntimeException(osp + " is not supported");
+			} else {System.err.println(osp + " is not supported");
+				System.exit(0);
 			}
 		}
 		return os;

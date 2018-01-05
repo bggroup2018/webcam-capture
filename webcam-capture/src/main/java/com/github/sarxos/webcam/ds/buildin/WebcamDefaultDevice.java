@@ -328,7 +328,8 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 
 		if (size == null) {
 			size = getResolutions()[0];
-			throw new RuntimeException("The resolution size cannot be null");
+			System.err.println("The resolution size cannot be null");
+			System.exit(0);
 		}
 
 		LOG.debug("Webcam device {} starting session, size {}", device.getIdentifierStr(), size);
