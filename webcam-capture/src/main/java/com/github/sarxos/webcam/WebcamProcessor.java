@@ -146,9 +146,10 @@ public class WebcamProcessor {
 
 			LOG.debug("Awaiting tasks termination");
 
-			try {
-				while (runner.isTerminated()) {
+			try {boolean isRunnerTerminated = runner.isTerminated();
+				while (isRunnerTerminated) {
 					runner.awaitTermination(100, TimeUnit.MILLISECONDS);
+					isRunnerTerminated = runner.isTerminated();
 				}
 			} catch (InterruptedException e) {
 				return;

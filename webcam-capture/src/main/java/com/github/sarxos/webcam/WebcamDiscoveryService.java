@@ -268,15 +268,15 @@ public class WebcamDiscoveryService implements Runnable {
 
 		// wait initial time interval since devices has been initially
 		// discovered
-
 		Object monitor = new Object();
 
-		try {
+		try { boolean isRunningGet;
 			do {
 				synchronized (monitor) {
 					monitor.wait(support.getScanInterval()); 
 				}
 				scan();
+				isRunningGet = running.get();
 			} while (running.get());
 			
 		} catch (InterruptedException e) {
