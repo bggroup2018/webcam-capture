@@ -73,8 +73,8 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 
 			long t1;
 			long t2;
-
 			try (final IpCamMJPEGStream stream = request(uri)) {
+				boolean streamIsClosed = stream.isClosed();
 				do {
 					t1 = System.currentTimeMillis();
 					if ((tmp = stream.readFrame()) != null) {
@@ -82,7 +82,8 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 					}
 					t2 = System.currentTimeMillis();
 					fps = (double) 1000 / (t2 - t1 + 1);
-				} while (running && !stream.isClosed());
+					streamIsClosed = stream.isClosed();
+				} while (running && streamIsClosed);
 			} catch (IOException e) {
 				if (e instanceof EOFException) { // EOF, ignore error and recreate stream
 					continue;
