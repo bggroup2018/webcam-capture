@@ -76,10 +76,10 @@ public class WebcamDriverUtils {
 	private static WebcamDriver newIstance(Class<?> parameterClazz){
 		try {
 			return (WebcamDriver) parameterClazz.newInstance();
-		} catch (InstantiationException e) {
-			throw new RuntimeException("Error in the Instantiation of the driver class for the webcam");
-		} catch (IllegalAccessException e) {
-			throw new RuntimeException("The application does not have access to the definition of the specified constructor");
+		} catch (InstantiationException e) { System.err.println("Error in the Instantiation of the driver class for the webcam");
+			System.exit(0);
+		} catch (IllegalAccessException e) { System.err.println("The application does not have access to the definition of the specified constructor");
+			System.exit(0);
 		}
 	}
 	
@@ -104,8 +104,8 @@ public class WebcamDriverUtils {
 		Enumeration<URL> resources = null;
 		try {
 			resources = classLoader.getResources(path);
-		} catch (IOException e) {
-			throw new RuntimeException("Cannot read path " + path);
+		} catch (IOException e) { System.err.println("Cannot read path " + path);
+			System.exit(0);
 		}
 
 		while (resources.hasMoreElements()) {
@@ -116,8 +116,8 @@ public class WebcamDriverUtils {
 			for (File directory : dirs) {
 				classes.addAll(findClasses(directory, pkgname, flat));
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Class not found");
+		} catch (ClassNotFoundException e) { System.err.println("Class not found");
+			System.exit(0);
 		}
 		return classes.toArray(new Class<?>[classes.size()]);
 	}

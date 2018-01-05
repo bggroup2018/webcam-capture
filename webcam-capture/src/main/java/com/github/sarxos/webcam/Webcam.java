@@ -3,35 +3,13 @@ package com.github.sarxos.webcam;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.*;
+import java.util.concurrent.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.sarxos.webcam.WebcamDevice.BufferAccess;
-import com.github.sarxos.webcam.WebcamDevice.Configurable;
-import com.github.sarxos.webcam.WebcamUpdater.DefaultDelayCalculator;
-import com.github.sarxos.webcam.WebcamUpdater.DelayCalculator;
-import com.github.sarxos.webcam.ds.buildin.WebcamDefaultDevice;
-import com.github.sarxos.webcam.ds.buildin.WebcamDefaultDriver;
-import com.github.sarxos.webcam.ds.cgt.WebcamCloseTask;
-import com.github.sarxos.webcam.ds.cgt.WebcamDisposeTask;
-import com.github.sarxos.webcam.ds.cgt.WebcamGetBufferTask;
-import com.github.sarxos.webcam.ds.cgt.WebcamGetImageTask;
-import com.github.sarxos.webcam.ds.cgt.WebcamOpenTask;
-import com.github.sarxos.webcam.ds.cgt.WebcamReadBufferTask;
+import com.github.sarxos.webcam.*;
 
 
 /**
