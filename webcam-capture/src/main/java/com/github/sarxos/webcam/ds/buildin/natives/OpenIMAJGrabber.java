@@ -29,8 +29,6 @@
  */
 package com.github.sarxos.webcam.ds.buildin.natives;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 import org.bridj.BridJ;
 import org.bridj.Platform;
 import org.bridj.Pointer;

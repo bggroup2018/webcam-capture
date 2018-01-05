@@ -49,6 +49,17 @@ public class JHBlurFilter extends JHFilter {
 		this.vRadius = vRadius;
 		this.iterations = iterations;
 	}
+	
+	/**
+	 * Metodo realizzato per risolvere il problema di casting di una variabile con livello di precisione più alto 
+	 * ad una con livello di precisione più basso.
+	 */
+	private static int safeFloatToInt (float l) {
+		if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
+			throw new IllegalArgumentException(l + " cannot be cast to int without changing its value.");
+		}
+		return (int)l;
+	}
 
 	/**
 	 * Set whether to premultiply the alpha channel.
@@ -111,7 +122,7 @@ public class JHBlurFilter extends JHFilter {
 	 */
 	public static void blur(int[] in, int[] out, int width, int height, float radius) {
 		int widthMinus1 = width - 1;
-		int r = (int) radius;
+		int r = safeFloatToInt(radius);
 		int tableSize = 2 * r + 1;
 		int divide[] = new int[256 * tableSize];
 
@@ -158,7 +169,7 @@ public class JHBlurFilter extends JHFilter {
 	}
 
 	public static void blurFractional(int[] in, int[] out, int width, int height, float radius) {
-		radius -= (int) radius;
+		radius -= safeFloatToInt(radius);
 		float f = 1.0f / (1 + 2 * radius);
 		int inIndex = 0;
 
@@ -203,7 +214,7 @@ public class JHBlurFilter extends JHFilter {
 	}
 
 	private static int sumAndRadius(int num1, int num2, float radius){
-		return  ((num1 + num2) * (int)radius);
+		return  ((num1 + num2) * safeFloatToInt(radius));
 	}
 	/**
 	 * Set the horizontal size of the blur. Minimum hRadius value is 0.
