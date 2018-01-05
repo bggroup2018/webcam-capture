@@ -24,7 +24,7 @@ import com.github.sarxos.webcam.WebcamDevice.BufferAccess;
 import com.github.sarxos.webcam.WebcamDevice.Configurable;
 import com.github.sarxos.webcam.WebcamUpdater.DefaultDelayCalculator;
 import com.github.sarxos.webcam.WebcamUpdater.DelayCalculator;
-
+import com.github.sarxos.webcam.ds.buildin.WebcamDefaultDevice;
 import com.github.sarxos.webcam.ds.buildin.WebcamDefaultDriver;
 import com.github.sarxos.webcam.ds.cgt.WebcamCloseTask;
 import com.github.sarxos.webcam.ds.cgt.WebcamDisposeTask;
@@ -856,7 +856,8 @@ public class Webcam {
 		try {
 			return getWebcams(Long.MAX_VALUE);
 		} catch (TimeoutException e) {
-			throw new RuntimeException("No webcam detected");
+			System.err.println("No webcam detected");
+			System.exit(0);
 		}
 	}
 
@@ -926,7 +927,8 @@ public class Webcam {
 		} catch (TimeoutException e) {
 			// this should never happen since user would have to wait 300000000
 			// years for it to occur
-			throw new RuntimeException("No default webcam");
+			System.err.println("No default webcam");
+			System.exit(0);
 		}
 	}
 
