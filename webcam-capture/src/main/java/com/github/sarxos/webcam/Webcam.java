@@ -446,9 +446,10 @@ public class Webcam {
 		}
 
 		notificator.shutdown();
-		try {
-			while (!notificator.isTerminated()) {
+		try {boolean notificatorIsTerminated = notificator.isTerminated();
+			while (!notificatorIsTerminated) {
 				notificator.awaitTermination(100, TimeUnit.MILLISECONDS);
+				notificatorIsTerminated = notificator.isTerminated();
 			}
 		} catch (InterruptedException e) {
 			return false;
