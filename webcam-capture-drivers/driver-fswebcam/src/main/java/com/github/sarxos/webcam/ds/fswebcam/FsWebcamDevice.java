@@ -2,16 +2,7 @@ package com.github.sarxos.webcam.ds.fswebcam;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,10 +17,7 @@ import javax.imageio.ImageIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.sarxos.webcam.WebcamDevice;
-import com.github.sarxos.webcam.WebcamDevice.Configurable;
-import com.github.sarxos.webcam.WebcamExceptionHandler;
-import com.github.sarxos.webcam.WebcamResolution;
+import com.github.sarxos.webcam.*;
 
 /**
  *FsWebcamDevice
@@ -278,7 +266,8 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 				image = ImageIO.read(bais);
 			} catch (IOException e) {
 				process.destroy();
-				throw new RuntimeException("failed or interrupted I/O operation");
+				System.err.println("failed or interrupted I/O operation");
+				System.exit(0);
 			} finally {
 				bais.close();
 			}
