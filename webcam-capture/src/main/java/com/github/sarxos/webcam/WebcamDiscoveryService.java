@@ -270,14 +270,14 @@ public class WebcamDiscoveryService implements Runnable {
 		// discovered
 		Object monitor = new Object();
 
-		try { boolean isRunningGet;
+		try {boolean isRunningGet;
 			do {
 				synchronized (monitor) {
 					monitor.wait(support.getScanInterval()); 
 				}
 				scan();
 				isRunningGet = running.get();
-			} while (running.get());
+			} while (isRunningGet);
 			
 		} catch (InterruptedException e) {
 			System.out.println("The thread has been interrupted");
