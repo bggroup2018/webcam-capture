@@ -66,6 +66,8 @@ public class WebcamLock {
 			}
 
 		}
+		
+	}
 
 	/**
 	 * And the Webcam we will be locking.
@@ -130,13 +132,15 @@ public class WebcamLock {
 			dos.flush();
 
 		} catch (IOException e) {
-			throw new RuntimeException("failed or interrupted I/O operation");
+			System.err.println("failed or interrupted I/O operation");
+			System.exit(0);
 		} finally {
 			if (dos != null) {
 				try {
 					dos.close();
 				} catch (IOException e) {
-					throw new RuntimeException("failed or interrupted I/O operation");
+					System.err.println("failed or interrupted I/O operation");
+					System.exit(0);
 				}
 			}
 		}
@@ -178,7 +182,8 @@ public class WebcamLock {
 					throw new RuntimeException("Not able to create file " + lock);
 				}
 			} catch (IOException e) {
-				throw new RuntimeException("failed or interrupted I/O operation");
+				System.err.println("failed or interrupted I/O operation");
+				System.exit(0);
 			}
 		}
 	}
@@ -203,14 +208,16 @@ public class WebcamLock {
 				try {
 					fos.close();
 				} catch (IOException e) {
-					throw new RuntimeException("failed or interrupted I/O operation");
+					System.err.println("failed or interrupted I/O operation");
+					System.exit(0);
 				}
 			}
 			if (fis != null) {
 				try {
 					fis.close();
 				} catch (IOException e) {
-					throw new RuntimeException("failed or interrupted I/O operation");
+					System.err.println("failed or interrupted I/O operation");
+					System.exit(0);
 				}
 			}
 		}
@@ -261,13 +268,15 @@ public class WebcamLock {
 				LOG.debug("Webcam lock is broken - EOF when reading long variable from stream", e);
 				broken = true;
 			} catch (IOException e) {
-				throw new RuntimeException("failed or interrupted I/O operation");
+				System.err.println("failed or interrupted I/O operation");
+				System.exit(0);
 			} finally {
 				if (dis != null) {
 					try {
 						dis.close();
 					} catch (IOException e) {
-						throw new RuntimeException("failed or interrupted I/O operation");
+						System.err.println("failed or interrupted I/O operation");
+						System.exit(0);
 					}
 				}
 			}
@@ -393,5 +402,6 @@ public class WebcamLock {
 
 	public File getLockFile() {
 		return lock;
+
 	}
 }
