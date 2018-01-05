@@ -343,10 +343,11 @@ public class WebcamComposite extends Composite implements WebcamListener, PaintL
 		wc.start();
 
 		shell.open();
-
-		while (!shell.isDisposed()) {
+		boolean shellDisposed = shell.isDisposed();
+		while (!shellDisposed) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
+				shellDisposed = shell.isDisposed();
 			}
 		}
 
