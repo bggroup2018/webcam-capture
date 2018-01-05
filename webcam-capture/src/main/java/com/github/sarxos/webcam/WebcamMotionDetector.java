@@ -68,9 +68,12 @@ public class WebcamMotionDetector {
 		public void run() {
 
 			running.set(true);
-
-			while (running.get() && webcam.isOpen()) {
+			boolean isRunningGet = running.get();
+			boolean isWebcamOpen = webcam.isOpen();
+			while (isRunningGet && isWebcamOpen) {
 				MetodoDiAppoggio();
+				isRunningGet = running.get();
+				isWebcamOpen = webcam.isOpen();
 			}
 
 			running.set(false);
@@ -101,12 +104,12 @@ public class WebcamMotionDetector {
 			int delay = 0;
 			boolean interrupt = false;
 			
-			try {
-				while (running.get()) {
-
+			try {boolean isRunningGet = running.get();
+				while (isRunningGet) {
 					if (interrupt == true) {
 						break;
 					}
+					isRunningGet = running.get();
 					Thread.sleep(10);
 				}
 			} catch (InterruptedException e) {
