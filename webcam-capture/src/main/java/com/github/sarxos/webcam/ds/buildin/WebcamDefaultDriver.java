@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.bridj.Pointer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -41,6 +41,17 @@ import org.slf4j.LoggerFactory;
  * @author Bartosz Firyn (SarXos)
  */
 class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListener {
+	
+	/**
+	 * Metodo realizzato per risolvere il problema di casting di una variabile con livello di precisione più alto 
+	 * ad una con livello di precisione più basso.
+	 */
+	private static int safeDoubleToInt (double l) {
+		if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
+			throw new IllegalArgumentException(l + " cannot be cast to int without changing its value.");
+		}
+		return (int)l;
+	}
 
 	/**
 	 * This enum is to control of how image will be drawn in the panel bounds.
@@ -232,10 +243,10 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 					double nih = ih / s;
 					double dx = (pw - niw) / 2;
 					double dy = (ph - nih) / 2;
-					w = (int) niw;
-					h = (int) nih;
-					x = (int) dx;
-					y = (int) dy;
+					w = safeDoubleToInt(niw);
+					h = safeDoubleToInt(nih);
+					x = safeDoubleToInt(dx);
+					y = safeDoubleToInt(dy);
 					break;
 				default:
 					break;

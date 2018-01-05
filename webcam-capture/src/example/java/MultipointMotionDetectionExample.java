@@ -7,7 +7,7 @@ import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.JFrame;
 
@@ -125,7 +125,7 @@ public class MultipointMotionDetectionExample implements WebcamMotionListener, W
 
 		ArrayList<Point> rem = new ArrayList<Point>();
 
-		for (Map.Entry<Point, Integer> ent : motionPoints.entrySet()) {
+		for (Entry<Point, Integer> ent : motionPoints.entrySet()) {
 			Point p = ent.getKey();
 
 			if (ent.getValue() != null) {
@@ -148,7 +148,7 @@ public class MultipointMotionDetectionExample implements WebcamMotionListener, W
 		// Gets all the remaining points after removing the exceeded ones and then renders the
 		// current ones as a red square
 		
-		for (Map.Entry<Point, Integer> ent : motionPoints.entrySet()) {
+		for (Entry<Point, Integer> ent : motionPoints.entrySet()) {
 
 			Point p = ent.getKey();
 			int xx = p.x - (renderSize / 2), yy = p.y - (renderSize / 2);

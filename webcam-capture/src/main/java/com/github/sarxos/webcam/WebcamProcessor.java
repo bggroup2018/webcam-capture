@@ -31,6 +31,7 @@ public class WebcamProcessor {
 		public ProcessorThread(Runnable r) {
 			super(r, String.format("atomic-processor-%d", N.incrementAndGet()));
 		}
+		public void run() {}
 	}
 
 	/**

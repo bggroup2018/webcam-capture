@@ -24,7 +24,7 @@ import com.github.sarxos.webcam.WebcamDevice.BufferAccess;
 import com.github.sarxos.webcam.WebcamDevice.Configurable;
 import com.github.sarxos.webcam.WebcamUpdater.DefaultDelayCalculator;
 import com.github.sarxos.webcam.WebcamUpdater.DelayCalculator;
-import com.github.sarxos.webcam.ds.buildin.WebcamDefaultDevice;
+
 import com.github.sarxos.webcam.ds.buildin.WebcamDefaultDriver;
 import com.github.sarxos.webcam.ds.cgt.WebcamCloseTask;
 import com.github.sarxos.webcam.ds.cgt.WebcamDisposeTask;
