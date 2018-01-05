@@ -37,7 +37,8 @@ public class IpCamStorage {
 		try {
 			c = JAXBContext.newInstance(CLASSES);
 		} catch (JAXBException e) {
-			throw new RuntimeException("JAXB error");
+			System.err.println("JAXB error");
+			System.exit(0);
 		} finally {
 			CTX = c;
 		}
