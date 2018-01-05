@@ -148,7 +148,8 @@ public class WebcamDiscoveryService implements Runnable {
 			}
 
 		} catch (InterruptedException e) {
-			throw new RuntimeException("Interruption of the thread");
+			System.err.println("Interruption of the thread");
+			System.exit(0);
 		} catch (ExecutionException e) {
 			throw new WebcamException("the result of the task can't be retrieve");
 		}
@@ -282,7 +283,8 @@ public class WebcamDiscoveryService implements Runnable {
 		} catch (InterruptedException e) {
 			System.out.println("The thread has been interrupted");
 		} catch (Exception e) {
-			throw new RuntimeException("Problem waiting on monitor");
+			System.err.println("Problem waiting on monitor");
+			System.exit(0);
 		}
 
 		LOG.debug("Webcam discovery service loop has been stopped");
