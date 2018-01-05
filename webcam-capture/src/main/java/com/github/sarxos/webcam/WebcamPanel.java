@@ -1,34 +1,11 @@
 package com.github.sarxos.webcam;
 
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsEnvironment;
-import java.awt.RenderingHints;
-import java.awt.RenderingHints.Key;
-import java.awt.image.BufferedImage;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.concurrent.Executors;
-import java.util.concurrent.RejectedExecutionException;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.*;
 
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -522,8 +499,8 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 					while (starting) {
 						Thread.sleep(50);
 					}
-				} catch (InterruptedException e) {
-					throw new RuntimeException("The thread has been interrupted");
+				} catch (InterruptedException e) { System.err.println("The thread has been interrupted");
+					System.exit(0);
 				}
 
 				// schedule update when webcam is open, otherwise schedule
@@ -900,8 +877,8 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 
 		try {
 			updater.stop();
-		} catch (InterruptedException e) {
-			throw new RuntimeException("The thread has been interrupted");
+		} catch (InterruptedException e) { System.err.println("The thread has been interrupted");
+			System.exit(0);
 		}
 
 		image = null;
