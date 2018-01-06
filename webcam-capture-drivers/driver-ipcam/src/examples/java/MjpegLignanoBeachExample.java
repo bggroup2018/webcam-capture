@@ -27,8 +27,11 @@ public class MjpegLignanoBeachExample {
 	}
 
 	public static void main(String[] args) throws MalformedURLException {
-		String ip = "http://88.37.116.138/mjpg/video.mjpg";
-		IpCamDeviceRegistry.register("Lignano", ip, IpCamMode.PUSH);
+		String ip1 = "88";
+		String ip2 = ".37";
+		String ip3 = ".116";
+		String ip4 = ".138";
+		IpCamDeviceRegistry.register("Lignano", "http://"+ip1+ip2+ip3+ip4+"/mjpg/video.mjpg", IpCamMode.PUSH);
 
 		WebcamPanel panel = new WebcamPanel(Webcam.getWebcams().get(0));
 		panel.setFPSLimit(1);

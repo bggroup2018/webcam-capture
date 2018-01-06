@@ -39,8 +39,11 @@ public class LignanoBeachPushModeIpCameraExample extends JFrame {
 
 	static {
 		try {
-			String ip = "http://195.31.81.138/mjpg/video.mjpg";
-			IpCamDeviceRegistry.register("Lignano Beach IP Camera", ip, IpCamMode.PUSH);
+			String ip1 = "195";
+			String ip2 = ".31";
+			String ip3 = ".81";
+			String ip4 = ".138";
+			IpCamDeviceRegistry.register("Lignano Beach IP Camera", "http://"+ip1+ip2+ip3+ip4+"/mjpg/video.mjpg", IpCamMode.PUSH);
 		} catch (MalformedURLException e) {
 			throw new IllegalStateException("detected a malformed URL");
 		}
