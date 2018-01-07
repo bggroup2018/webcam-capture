@@ -35,7 +35,7 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 
 	private static final String BOUNDARY = "mjpegframe";
 
-	private static final String CRLF = "\r\n";
+	private static final String CRLF = System.getProperty("line.separator");
 
 	private class Acceptor implements Runnable {
 
@@ -179,7 +179,7 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 		
 		private void writeBos(BufferedOutputStream bos, Exception e){
 			try {
-				bos.write("HTTP/1.0 501 Internal Server Error".getBytes());
+				bos.write("HTTP/1.0 501 Internal Server Error\r\n\r\n\r\n".getBytes());
 			} catch (IOException e1) {
 				LOG.error("Not ablte to write to output stream", e);
 			}
