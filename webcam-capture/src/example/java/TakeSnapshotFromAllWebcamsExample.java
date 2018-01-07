@@ -37,7 +37,7 @@ public class TakeSnapshotFromAllWebcamsExample {
 		// open all at once (this is the most time-consuming operation, all
 		// others are executed instantly)
 		for (Webcam webcam : webcams) {
-			System.out.format("Opening %s\n", webcam.getName());
+			System.out.println("Opening "+ webcam.getName() );
 			webcam.open();
 		}
 
@@ -45,13 +45,13 @@ public class TakeSnapshotFromAllWebcamsExample {
 		int webcamSize = webcams.size();
 		for (int i = 0; i < webcamSize; i++) {
 			Webcam webcam = webcams.get(i);
-			System.out.format("Capturing %s\n", webcam.getName());
+			System.out.println("Capturing " +  webcam.getName());
 			ImageIO.write(webcam.getImage(), "PNG", new File(String.format("test-%d.png", i)));
 		}
 
 		// close all
 		for (Webcam webcam : webcams) {
-			System.out.format("Closing %s\n", webcam.getName());
+			System.out.println("Closing " + webcam.getName());
 			webcam.close();
 		}
 	}

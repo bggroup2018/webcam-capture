@@ -334,7 +334,8 @@ public class FsWebcamDevice implements WebcamDevice, Configurable {
 			for (String cc : cmd) {
 				sb.append(cc).append(' ');
 			}
-			LOG.debug("Invoking command: #"+counter+" \n"+ sb.toString());
+			LOG.debug("Invoking command: #"+counter);
+			LOG.debug(sb.toString());
 		}
 		
 		process = RT.exec(cmd);

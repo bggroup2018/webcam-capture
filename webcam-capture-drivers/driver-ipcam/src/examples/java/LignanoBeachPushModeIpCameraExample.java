@@ -67,7 +67,7 @@ public class LignanoBeachPushModeIpCameraExample extends JFrame {
 					Webcam webcam = webcams.get(i);
 					file = new File(String.format("test-%d.jpg", i));
 					ImageIO.write(webcam.getImage(), "JPG", file);
-					System.out.format("Image for %s saved in %s \n", webcam.getName(), file);
+					System.out.println("Image for " + webcam.getName() + " saved in " + file ); 
 				}
 			} catch (IOException e1) {
 				System.out.println("failed or interrupted I/O operation");

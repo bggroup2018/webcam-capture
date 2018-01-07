@@ -36,7 +36,7 @@ public class TakeSnapshotFromVideoExample extends JFrame {
 				for (int i = 0; i < webcamsSize; i++) {
 					Webcam webcam = webcams.get(i);
 					ImageIO.write(webcam.getImage(), "JPG", file);
-					System.out.format("Image for %s saved in %s \n", webcam.getName(), file);
+					System.out.println("Image for " + webcam.getName() + " saved in " + file);
 				}
 			} catch (IOException e1) {
 				System.out.println("Operation of writing an image to file failed or interrupted");

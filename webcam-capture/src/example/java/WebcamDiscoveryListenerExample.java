@@ -12,17 +12,19 @@ public class WebcamDiscoveryListenerExample implements WebcamDiscoveryListener {
 			System.out.println("Webcam detected: " + webcam.getName());
 		}
 		Webcam.addDiscoveryListener(this);
-		System.out.println("\n\nPlease connect additional webcams, or disconnect already connected ones. Listening for events...");
+		System.out.println();
+		System.out.println();
+		System.out.println("Please connect additional webcams, or disconnect already connected ones. Listening for events...");
 	}
 
 	@Override
 	public void webcamFound(WebcamDiscoveryEvent event) {
-		System.out.format("Webcam connected: %s \n", event.getWebcam().getName());
+		System.out.println("Webcam connected: " + event.getWebcam().getName());
 	}
 
 	@Override
 	public void webcamGone(WebcamDiscoveryEvent event) {
-		System.out.format("Webcam disconnected: %s \n", event.getWebcam().getName());
+		System.out.println("Webcam disconnected: " + event.getWebcam().getName());
 	}
 
 	public static void main(String[] args) throws Throwable {

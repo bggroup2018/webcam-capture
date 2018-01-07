@@ -32,7 +32,7 @@ public class TakePictureExample2 {
 				try {
 					String name = String.format("test-%d.jpg", System.currentTimeMillis());
 					ImageIO.write(webcam.getImage(), "JPG", new File(name));
-					System.out.format("File %s has been saved\n", name);
+					System.out.println("File " + name + " has been saved");
 				} catch (IOException t) {
 					System.out.println("Operation of writing an image to file failed or interrupted");
 				}
