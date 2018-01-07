@@ -379,6 +379,29 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 				setName(String.format("repaint-scheduler-%s", webcam.getName()));
 				setDaemon(true);
 			}
+			/**
+			 * Metodo utilizzato per ridurre la complessità ciclomatica del metodo run().
+			 */
+			private boolean CyclomaticComplexityRun () {
+				boolean end = false;
+				if(webcam == null || executor == null){
+					end = true;;
+				} else {
+					if (webcam.isOpen()) {
+						// TODO: rename FPS value in panel to rendering
+						// frequency
+						if (isFPSLimited()) {
+							executor.scheduleAtFixedRate(updater, 0, (long) (1000 / frequency), TimeUnit.MILLISECONDS);
+						} else {
+							executor.scheduleWithFixedDelay(updater, 100, 1, TimeUnit.MILLISECONDS);
+						}
+					} else {
+						executor.schedule(this, 500, TimeUnit.MILLISECONDS);
+					}
+				}
+				return end;
+			}
+			
 			@Override
 			public void run() {
 				// do nothing when not running
@@ -394,7 +417,8 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 					while (starting) {
 						Thread.sleep(50);
 					}
-				} catch (InterruptedException e) { System.err.println("The thread has been interrupted");
+				} catch (InterruptedException e) { 
+					System.err.println("The thread has been interrupted");
 					System.exit(0);
 				}
 				// schedule update when webcam is open, otherwise schedule
@@ -403,24 +427,11 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 					// FPS limit means that panel rendering frequency is
 					// limited to the specific value and panel will not be
 					// rendered more often then specific value
-					if(webcam == null || executor == null){
+					if (CyclomaticComplexityRun()) {
 						return;
-					}else{
-						if (webcam.isOpen()) {
-							// TODO: rename FPS value in panel to rendering
-							// frequency
-							if (isFPSLimited()) {
-								executor.scheduleAtFixedRate(updater, 0, (long) (1000 / frequency), TimeUnit.MILLISECONDS);
-							} else {
-								executor.scheduleWithFixedDelay(updater, 100, 1, TimeUnit.MILLISECONDS);
-							}
-						} else {
-							executor.schedule(this, 500, TimeUnit.MILLISECONDS);
-						}
 					}
 				} catch (RejectedExecutionException e) {
-					// executor has been shut down, which means that someone
-					// stopped panel / webcam device before it was actually
+					// executor has been shut down, which means that someone stopped panel / webcam device before it was actually
 					// completely started (it was in "starting" timeframe)
 					LOG.warn("Executor rejected paint update");
 					LOG.trace("Executor rejected paint update because of", e);
