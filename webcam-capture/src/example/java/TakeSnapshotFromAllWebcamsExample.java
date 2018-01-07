@@ -11,6 +11,9 @@ import com.github.sarxos.webcam.Webcam;
  * @author Bartosz Firyn (SarXos)
  */
 public class TakeSnapshotFromAllWebcamsExample {
+	
+
+	public static final String NEW_LINE = System.getProperty("line.separator");
 
 	public static void main(String[] args) throws IOException {
 
@@ -37,7 +40,7 @@ public class TakeSnapshotFromAllWebcamsExample {
 		// open all at once (this is the most time-consuming operation, all
 		// others are executed instantly)
 		for (Webcam webcam : webcams) {
-			System.out.println("Opening "+ webcam.getName() );
+			System.out.format("Opening %s" + NEW_LINE, webcam.getName());
 			webcam.open();
 		}
 
@@ -45,13 +48,13 @@ public class TakeSnapshotFromAllWebcamsExample {
 		int webcamSize = webcams.size();
 		for (int i = 0; i < webcamSize; i++) {
 			Webcam webcam = webcams.get(i);
-			System.out.println("Capturing " +  webcam.getName());
+			System.out.format("Capturing %s" + NEW_LINE, webcam.getName());
 			ImageIO.write(webcam.getImage(), "PNG", new File(String.format("test-%d.png", i)));
 		}
 
 		// close all
 		for (Webcam webcam : webcams) {
-			System.out.println("Closing " + webcam.getName());
+			System.out.format("Closing %s" + NEW_LINE, webcam.getName());
 			webcam.close();
 		}
 	}
