@@ -100,10 +100,6 @@ public final class Device extends CPPObject {
 		return getIdentifier().getCString();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.bridj.NativeObject#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object o) {
 		if(o instanceof Device){
@@ -112,10 +108,6 @@ public final class Device extends CPPObject {
 		else return false; 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		return this.toString().hashCode();
