@@ -383,8 +383,9 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 			 * Metodo utilizzato per ridurre la complessità ciclomatica del metodo run().
 			 */
 			private boolean CyclomaticComplexityRun () {
+				boolean end = false;
 				if(webcam == null || executor == null){
-					return true;
+					end = true;;
 				} else {
 					if (webcam.isOpen()) {
 						// TODO: rename FPS value in panel to rendering
@@ -397,8 +398,8 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 					} else {
 						executor.schedule(this, 500, TimeUnit.MILLISECONDS);
 					}
-					return false;
 				}
+				return end;
 			}
 			
 			@Override
