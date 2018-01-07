@@ -107,19 +107,24 @@ public class WebcamComposite extends Composite implements WebcamListener, PaintL
 					System.exit(0);
 				} 
 
-				if(webcam != null && executor != null){
-					if (webcam.isOpen()) {
-						if (isFPSLimited()) {
-							executor.scheduleAtFixedRate(updater, 0, (long) (1000 / frequency), TimeUnit.MILLISECONDS);
-						} else {
-							executor.scheduleWithFixedDelay(updater, 100, 1, TimeUnit.MILLISECONDS);
-						}
-					} else {
-						executor.schedule(this, 500, TimeUnit.MILLISECONDS);
-					}
-				}
+				executorSchedule();
 			}
 
+		}
+		
+		private void executorSchedule(){
+			if(webcam != null && executor != null){
+				if (webcam.isOpen()) {
+					if (isFPSLimited()) {
+						executor.scheduleAtFixedRate(updater, 0, (long) (1000 / frequency), TimeUnit.MILLISECONDS);
+					} else {
+						executor.scheduleWithFixedDelay(updater, 100, 1, TimeUnit.MILLISECONDS);
+					}
+				} else {
+					executor.schedule(this, 500, TimeUnit.MILLISECONDS);
+				}
+			}
+			
 		}
 
 		private Thread scheduler = new RepaintScheduler();
