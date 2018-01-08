@@ -667,6 +667,7 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 	}
 	/**
 	 * Open webcam and start rendering.
+	 * @throws Exception
 	 */
 	public void start() {
 		if (!started.compareAndSet(false, true)) {
@@ -697,6 +698,7 @@ class WebcamPanel extends JPanel implements WebcamListener, PropertyChangeListen
 	}
 	/**
 	 * Stop rendering and close webcam.
+	 * @throws Exception
 	 */
 	public void stop() {
 		if (!started.compareAndSet(true, false)) {
