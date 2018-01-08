@@ -14,7 +14,10 @@ import com.github.sarxos.webcam.Webcam;
  * @author Bartosz Firyn (SarXos)
  */
 public class TakePictureExample {
-
+	/**
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 
 		// get default webcam and open it
