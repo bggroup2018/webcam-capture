@@ -12,7 +12,11 @@ public class NonBlockingModeExample {
 	static {
 		Webcam.setHandleTermSignal(true);
 	}
-
+	
+	/**
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
 
 		Webcam webcam = Webcam.getDefault();
