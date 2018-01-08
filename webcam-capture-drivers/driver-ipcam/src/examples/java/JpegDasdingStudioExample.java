@@ -38,7 +38,10 @@ public class JpegDasdingStudioExample {
 	static {
 		Webcam.setDriver(new IpCamDriver(new IpCamStorage("src/examples/resources/cameras.xml")));
 	}
-
+	/**
+	 * @param args
+	 * @throws MalformedURLException
+	 */
 	public static void main(String[] args) throws MalformedURLException {
 
 		JFrame f = new JFrame("Dasding Studio Live IP Cameras Demo");
