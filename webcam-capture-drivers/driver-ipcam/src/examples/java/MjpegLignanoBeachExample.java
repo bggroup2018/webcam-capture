@@ -25,7 +25,10 @@ public class MjpegLignanoBeachExample {
 	static {
 		Webcam.setDriver(new IpCamDriver());
 	}
-
+	/**
+	 * @param args
+	 * @throws MalformedURLException
+	 */
 	public static void main(String[] args) throws MalformedURLException {
 		String ip1 = "88";
 		String ip2 = ".37";
