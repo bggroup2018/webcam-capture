@@ -74,7 +74,7 @@ public class GStreamerDevice implements WebcamDevice, RGBDataSink.Listener, Webc
 	private Element[] elements = null;
 	private RGBDataSink sink = null;
 
-	private Caps ObjectCaps = null;
+	private Caps caps = null;
 
 	/* logic */
 
@@ -281,15 +281,15 @@ public class GStreamerDevice implements WebcamDevice, RGBDataSink.Listener, Webc
 		image.setAccelerationPriority(0);
 		image.flush();
 
-		if (ObjectCaps != null) {
-			ObjectCaps.dispose();
+		if (caps != null) {
+			caps.dispose();
 		}
 
-		ObjectCaps = Caps.fromString(String.format("%s,framerate=30/1,width=%d,height=%d", format, size.width, size.height));
+		caps = Caps.fromString(String.format("%s,framerate=30/1,width=%d,height=%d", format, size.width, size.height));
 		if(filter != null){
-			filter.setCaps(ObjectCaps);
+			filter.setCaps(caps);
 
-			LOG.debug("Using filter caps: {}", ObjectCaps);
+			LOG.debug("Using filter caps: {}", caps);
 
 			pipelinePlay();
 
@@ -391,7 +391,7 @@ public class GStreamerDevice implements WebcamDevice, RGBDataSink.Listener, Webc
 			source.dispose();
 			filter.dispose();
 			jpegdec.dispose();
-			ObjectCaps.dispose();
+			caps.dispose();
 			sink.dispose();
 			pipe.dispose();
 		}
@@ -452,6 +452,6 @@ public class GStreamerDevice implements WebcamDevice, RGBDataSink.Listener, Webc
 	}
 
 	public Caps getCaps() {
-		return ObjectCaps;
+		return caps;
 	}
 }
