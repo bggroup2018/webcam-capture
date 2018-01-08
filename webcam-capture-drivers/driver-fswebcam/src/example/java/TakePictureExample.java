@@ -19,7 +19,10 @@ public class TakePictureExample {
 	static {
 		Webcam.setDriver(new FsWebcamDriver());
 	}
-
+	/**
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 
 		// get default webcam and open it
