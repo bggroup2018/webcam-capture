@@ -242,26 +242,26 @@ public class IpCamDevice implements WebcamDevice, FPSSource {
 
 	private HttpContext createContext() {
 
-		final IpCamAuth auth = getAuth();
+		final IpCamAuth ConstAuth = getAuth();
 
-		if (auth == null) {
+		if (ConstAuth == null) {
 			return null;
 		}
 
 		final URI uri = toURI(url);
 		final HttpHost host = new HttpHost(uri.getHost(), uri.getPort(), uri.getScheme());
-		final Credentials credentials = new UsernamePasswordCredentials(auth.getUserName(), auth.getPassword());
+		final Credentials credentials = new UsernamePasswordCredentials(ConstAuth.getUserName(), ConstAuth.getPassword());
 		final CredentialsProvider provider = new BasicCredentialsProvider();
 		provider.setCredentials(AuthScope.ANY, credentials);
 
 		final AuthCache cache = new BasicAuthCache();
 		cache.put(host, new BasicScheme());
 
-		final HttpClientContext context = HttpClientContext.create();
-		context.setCredentialsProvider(provider);
-		context.setAuthCache(cache);
+		final HttpClientContext ConstContext = HttpClientContext.create();
+		ConstContext.setCredentialsProvider(provider);
+		ConstContext.setAuthCache(cache);
 
-		return context;
+		return ConstContext;
 	}
 
 	private InputStream get(final URI uri, boolean withoutImageMime) throws UnsupportedOperationException, IOException {

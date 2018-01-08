@@ -664,11 +664,11 @@ public class Webcam {
 			if (tunit == null) {
 				throw new IllegalArgumentException("Time unit cannot be null!");
 			}
-			WebcamDiscoveryService discovery = getDiscoveryService();
-			assert discovery != null;
-			List<Webcam> webcams = discovery.getWebcams(timeout, tunit);
-			if (!discovery.isRunning()) {
-				discovery.start();
+			WebcamDiscoveryService VarDiscovery = getDiscoveryService();
+			assert VarDiscovery != null;
+			List<Webcam> webcams = VarDiscovery.getWebcams(timeout, tunit);
+			if (!VarDiscovery.isRunning()) {
+				VarDiscovery.start();
 			}
 			return webcams;
 		}
@@ -968,9 +968,9 @@ public class Webcam {
 	 */
 	protected static void shutdown() {
 		// stop discovery service
-		WebcamDiscoveryService discovery = getDiscoveryServiceRef();
-		if (discovery != null) {
-			discovery.stop();
+		WebcamDiscoveryService VarDiscovery = getDiscoveryServiceRef();
+		if (VarDiscovery != null) {
+			VarDiscovery.stop();
 		}
 		// stop processor
 		WebcamProcessor.getInstance().shutdown();

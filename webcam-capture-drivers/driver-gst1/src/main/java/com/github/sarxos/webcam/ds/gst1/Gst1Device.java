@@ -97,11 +97,11 @@ public class Gst1Device implements WebcamDevice, Initializable {
 	public void teardown() {
 		pipeStop();
 		//pipe Unlink
-		final Element source = getSource();
-		final Element convert = getConvert();
-		final Element filter = getFilter();
-		final Element sink = getSink();
-		final Bin pipe = getPipeline();
+		final Element ConstSource = getSource();
+		final Element ConstConvert = getConvert();
+		final Element ConstFilter = getFilter();
+		final Element ConstSink = getSink();
+		final Bin ConstPipe = getPipeline();
 
 		Element.unlinkMany(source, convert, filter, sink);
 
@@ -120,8 +120,8 @@ public class Gst1Device implements WebcamDevice, Initializable {
 
 		initializer.initialize();
 
-		final String name = getName();
-		final Dimension resolution = getResolution();
+		final String ConstName = getName();
+		final Dimension ConstResolution = getResolution();
 		final String str = new StringBuilder(MIME_VIDEO_X_RAW)
 			.append(",")
 			.append("width=").append(resolution.width).append(",")
@@ -155,14 +155,14 @@ public class Gst1Device implements WebcamDevice, Initializable {
 
 		final Pad pad = getSourcePad();
 		final Caps caps = pad.getCaps();
-		final String format = getFormat();
+		final String ConstFormat = getFormat();
 
 		return GsUtils.getResolutionsFromCaps(caps, format);
 	}
 
 	private Pad getSourcePad() {
 
-		final Element source = getSource();
+		final Element ConstSource = getSource();
 		final List<Pad> pads = source.getPads();
 
 		if (pads.isEmpty()) {
@@ -174,11 +174,11 @@ public class Gst1Device implements WebcamDevice, Initializable {
 
 	private void pipeLink() {
 
-		final Element source = getSource();
-		final Element convert = getConvert();
-		final Element filter = getFilter();
-		final Element sink = getSink();
-		final Bin pipe = getPipeline();
+		final Element ConstSource = getSource();
+		final Element ConstConvert = getConvert();
+		final Element ConstFilter = getFilter();
+		final Element ConstSink = getSink();
+		final Bin ConstPipe = getPipeline();
 
 		pipe.addMany(source, convert, filter, sink);
 
@@ -220,7 +220,7 @@ public class Gst1Device implements WebcamDevice, Initializable {
 	public Element getConvert() {
 		if (convert == null) {
 			//Create Covert
-			final String name = getName();
+			final String ConstName = getName();
 			final String id = name + "-videoconvert";
 			
 			convert = ElementFactory.make("videoconvert", id);
@@ -232,7 +232,7 @@ public class Gst1Device implements WebcamDevice, Initializable {
 	public Element getFilter() {
 		if (filter == null) {
 			//Create Filter
-			final String name = getName();
+			final String ConstName = getName();
 			final String id = name + "-capsfilter";
 			filter = ElementFactory.make("capsfilter", id);
 		}
@@ -243,8 +243,8 @@ public class Gst1Device implements WebcamDevice, Initializable {
 	public AppSink getSink() {
 		if (sink == null) {
 			//Create Sink
-			final String format = ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN ? "BGRx" : "xRGB";
-			final String name = getName();
+			final String ConstFormat = ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN ? "BGRx" : "xRGB";
+			final String ConstName = getName();
 			final String id = name + "-sink";
 			final AppSink tempSink = new AppSink(id);
 			final Caps caps = new Caps("video/x-raw,pixel-aspect-ratio=1/1,format=" + format);
@@ -300,8 +300,8 @@ public class Gst1Device implements WebcamDevice, Initializable {
 			for (int i = 0; i < capsSize; i++) {
 
 				final Structure struct = caps.getStructure(i);
-				final String name = struct.getName();
-				final String format = struct.getString("format");
+				final String ConstName = struct.getName();
+				final String ConstFormat = struct.getString("format");
 
 				// TODO add support for mjpeg
 
@@ -340,7 +340,7 @@ public class Gst1Device implements WebcamDevice, Initializable {
 
 		if (resolution == null) {
 
-			final Dimension[] resolutions = getResolutions();
+			final Dimension[] ConstResolutions = getResolutions();
 			if (resolutions.length == 0) {
 				throw new WebcamException("Supported resolutions has not been detected");
 			}

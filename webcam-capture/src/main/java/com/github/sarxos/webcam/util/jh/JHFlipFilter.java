@@ -58,8 +58,8 @@ public class JHFlipFilter extends JHFilter {
 		constructorSetOperation(operation);
 	}
 
-	private final void constructorSetOperation(int operation){
-		setOperation(operation);
+	private final void constructorSetOperation(int ParameterOperation){
+		setOperation(ParameterOperation);
 	}
 
 	/**

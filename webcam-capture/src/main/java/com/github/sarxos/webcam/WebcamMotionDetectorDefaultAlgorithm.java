@@ -92,9 +92,9 @@ public class WebcamMotionDetectorDefaultAlgorithm implements WebcamMotionDetecto
 		SetPixelANdAreaThreshold( pixelThreshold, areaThreshold);
 	}
 	
-	private final void SetPixelANdAreaThreshold(int pixel, double area){
-		setPixelThreshold(pixel);
-		setAreaThreshold(area);
+	private final void SetPixelANdAreaThreshold (int ParameterPixel, double ParameterArea) {
+		setPixelThreshold(ParameterPixel);
+		setAreaThreshold(ParameterArea);
 	}
 
 	@Override

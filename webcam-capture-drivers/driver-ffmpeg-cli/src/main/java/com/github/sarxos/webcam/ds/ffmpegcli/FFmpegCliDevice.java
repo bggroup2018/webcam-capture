@@ -52,15 +52,15 @@ public class FFmpegCliDevice implements WebcamDevice, WebcamDevice.BufferAccess 
 
 	private Dimension[] readResolutions(String res) {
 
-		List<Dimension> resolutions = new ArrayList<Dimension>();
+		List<Dimension> ObjResolutions = new ArrayList<Dimension>();
 		String[] parts = res.split(" ");
 
 		for (String part : parts) {
 			String[] xy = part.split("x");
-			resolutions.add(new Dimension(Integer.parseInt(xy[0]), Integer.parseInt(xy[1])));
+			ObjResolutions.add(new Dimension(Integer.parseInt(xy[0]), Integer.parseInt(xy[1])));
 		}
 
-		return resolutions.toArray(new Dimension[resolutions.size()]);
+		return ObjResolutions.toArray(new Dimension[ObjResolutions.size()]);
 	}
 
 	@Override

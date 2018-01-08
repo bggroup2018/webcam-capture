@@ -90,10 +90,10 @@ public class WebcamDummyDevice implements WebcamDevice {
 			return null;
 		}
 
-		Dimension resolution = getResolution();
+		Dimension VarResolution = getResolution();
 
-		int w = resolution.width;
-		int h = resolution.height;
+		int w = VarResolution.width;
+		int h = VarResolution.height;
 
 		String s = getName();
 

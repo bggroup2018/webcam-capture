@@ -400,11 +400,11 @@ public class WebcamDefaultDevice implements WebcamDevice, BufferAccess, Runnable
 	 * @return Refresher thread
 	 */
 	private Thread startFramesRefresher() {
-		Thread refresher = new Thread(this, String.format("frames-refresher-[%s]", id));
-		refresher.setUncaughtExceptionHandler(WebcamExceptionHandler.getInstance());
-		refresher.setDaemon(true);
-		refresher.start();
-		return refresher;
+		Thread ObjRefresher = new Thread(this, String.format("frames-refresher-[%s]", id));
+		ObjRefresher.setUncaughtExceptionHandler(WebcamExceptionHandler.getInstance());
+		ObjRefresher.setDaemon(true);
+		ObjRefresher.start();
+		return ObjRefresher;
 	}
 
 	@Override

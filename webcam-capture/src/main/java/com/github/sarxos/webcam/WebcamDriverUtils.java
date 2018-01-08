@@ -37,18 +37,18 @@ public class WebcamDriverUtils {
 
 			LOG.info("Searching driver {}", name);
 
-			Class<?> clazz = null;
+			Class<?> ObjClazz = null;
 
 			for (Class<?> c : classes) {
 				if (c.getCanonicalName().equals(name)) {
-					clazz = c;
+					ObjClazz = c;
 					break;
 				}
 			}
 
 			MetodoDiAppoggio(name);
 
-			if (clazz == null) {
+			if (ObjClazz == null) {
 				LOG.debug("Driver {} not found", name);
 				continue;
 			}
@@ -56,7 +56,7 @@ public class WebcamDriverUtils {
 			LOG.info("Webcam driver {} has been found", name);
 
 			// create new istance 
-			return newIstance(clazz);
+			return newIstance(ObjClazz);
 		}
 
 		return null;
